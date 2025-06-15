@@ -651,6 +651,79 @@ const modelComparisonSummary = [
   }
 ]
 
+// Detailed ViAdverNLI Analysis Data
+const detailedStatsPerRound = [
+  {
+    round: "R1",
+    numSamples: 5347,
+    avgClaimLen: 44.02,
+    minClaimLen: 8,
+    maxClaimLen: 126,
+    avgContextLen: 271.46,
+    minContextLen: 33,
+    maxContextLen: 1935,
+    vocabSize: 21022
+  },
+  {
+    round: "R2", 
+    numSamples: 5961,
+    avgClaimLen: 51.5,
+    minClaimLen: 12,
+    maxClaimLen: 179,
+    avgContextLen: 249.19,
+    minContextLen: 50,
+    maxContextLen: 1422,
+    vocabSize: 21054
+  },
+  {
+    round: "R3",
+    numSamples: 9954,
+    avgClaimLen: 44.86,
+    minClaimLen: 10,
+    maxClaimLen: 198,
+    avgContextLen: 283.68,
+    minContextLen: 62,
+    maxContextLen: 1783,
+    vocabSize: 25697
+  }
+]
+
+const dataOriginDistribution = [
+  { origin: "VNEXPRESS", count: 2746, round: "R1" },
+  { origin: "WIKI", count: 2601, round: "R1" },
+  { origin: "WIKI", count: 2150, round: "R2" },
+  { origin: "VNEXPRESS", count: 1155, round: "R2" },
+  { origin: "BÁO PHÁP LUẬT", count: 630, round: "R2" },
+  { origin: "BÁO CHÍNH PHỦ", count: 614, round: "R2" },
+  { origin: "BÁO NHÂN DÂN", count: 566, round: "R2" },
+  { origin: "THANHNIEN.VN", count: 457, round: "R2" },
+  { origin: "BÁO LAO ĐỘNG", count: 389, round: "R2" },
+  { origin: "WIKI", count: 5222, round: "R3" },
+  { origin: "VNEXPRESS", count: 2122, round: "R3" },
+  { origin: "BÁO LAO ĐỘNG", count: 1095, round: "R3" },
+  { origin: "BÁO NHÂN DÂN", count: 522, round: "R3" },
+  { origin: "BÁO CHÍNH PHỦ", count: 500, round: "R3" },
+  { origin: "BÁO PHÁP LUẬT", count: 493, round: "R3" }
+]
+
+const splitDistribution = [
+  { split: "dev", nei: 642, refuted: 377, supported: 201, round: "R1" },
+  { split: "test", nei: 674, refuted: 354, supported: 193, round: "R1" },
+  { split: "train", nei: 548, refuted: 1004, supported: 1354, round: "R1" },
+  { split: "dev", nei: 630, refuted: 473, supported: 384, round: "R2" },
+  { split: "test", nei: 645, refuted: 473, supported: 370, round: "R2" },
+  { split: "train", nei: 822, refuted: 1052, supported: 1112, round: "R2" },
+  { split: "dev", nei: 527, refuted: 576, supported: 712, round: "R3" },
+  { split: "test", nei: 535, refuted: 569, supported: 712, round: "R3" },
+  { split: "train", nei: 2367, refuted: 2058, supported: 1898, round: "R3" }
+]
+
+const jaccardSimilarity = [
+  { round: "R1", avgJaccard: 0.1561, minJaccard: 0.0094, maxJaccard: 0.5714 },
+  { round: "R2", avgJaccard: 0.1543, minJaccard: 0, maxJaccard: 0.587 },
+  { round: "R3", avgJaccard: 0.1268, minJaccard: 0, maxJaccard: 0.5449 }
+]
+
 export default function ADFCDashboard() {
   const [selectedRound, setSelectedRound] = useState("overview")
   const [expandedContexts, setExpandedContexts] = useState<{ [key: string]: boolean }>({})
@@ -916,6 +989,277 @@ export default function ADFCDashboard() {
                       </div>
                     ))}
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Detailed Statistics Per Round */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Database className="w-5 h-5" />
+                  Thống kê Chi tiết theo Vòng
+                </CardTitle>
+                <CardDescription>Phân tích độ dài claim/context, vocabulary size và các thống kê cơ bản</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse border border-gray-300">
+                    <thead>
+                      <tr className="bg-gray-100">
+                        <th className="border border-gray-300 p-2 text-left">Round</th>
+                        <th className="border border-gray-300 p-2 text-center">Samples</th>
+                        <th className="border border-gray-300 p-2 text-center">Avg Claim Len</th>
+                        <th className="border border-gray-300 p-2 text-center">Claim Range</th>
+                        <th className="border border-gray-300 p-2 text-center">Avg Context Len</th>
+                        <th className="border border-gray-300 p-2 text-center">Context Range</th>
+                        <th className="border border-gray-300 p-2 text-center">Vocab Size</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {detailedStatsPerRound.map((stat, index) => (
+                        <tr key={stat.round} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                          <td className="border border-gray-300 p-2 font-medium">{stat.round}</td>
+                          <td className="border border-gray-300 p-2 text-center">{stat.numSamples.toLocaleString()}</td>
+                          <td className="border border-gray-300 p-2 text-center">{stat.avgClaimLen}</td>
+                          <td className="border border-gray-300 p-2 text-center">{stat.minClaimLen}-{stat.maxClaimLen}</td>
+                          <td className="border border-gray-300 p-2 text-center">{stat.avgContextLen}</td>
+                          <td className="border border-gray-300 p-2 text-center">{stat.minContextLen}-{stat.maxContextLen}</td>
+                          <td className="border border-gray-300 p-2 text-center">{stat.vocabSize.toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Data Origin Distribution */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpen className="w-5 h-5" />
+                  Phân bố Nguồn gốc Dữ liệu Chi tiết
+                </CardTitle>
+                <CardDescription>Số lượng mẫu từ từng nguồn báo chí và Wikipedia qua các rounds</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <ResponsiveContainer width="100%" height={400}>
+                      <BarChart data={detailedStatsPerRound}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="round" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="numSamples" fill="#8884d8" name="Số mẫu" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <h4 className="font-medium">Top nguồn dữ liệu theo Round:</h4>
+                    <div className="grid grid-cols-1 gap-4">
+                      {["R1", "R2", "R3"].map(round => (
+                        <div key={round} className="p-3 border rounded-lg">
+                          <h5 className="font-medium mb-2">{round}</h5>
+                          <div className="space-y-1 text-sm">
+                            {dataOriginDistribution
+                              .filter(item => item.round === round)
+                              .sort((a, b) => b.count - a.count)
+                              .slice(0, 3)
+                              .map((item, index) => (
+                                <div key={index} className="flex justify-between">
+                                  <span>{item.origin}</span>
+                                  <span className="font-medium">{item.count.toLocaleString()}</span>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Train/Dev/Test Split Analysis */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="w-5 h-5" />
+                  Phân tích Train/Dev/Test Split
+                </CardTitle>
+                <CardDescription>Phân bố nhãn trong các tập train, dev, test qua các rounds</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="R1" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="R1">Round 1</TabsTrigger>
+                    <TabsTrigger value="R2">Round 2</TabsTrigger>
+                    <TabsTrigger value="R3">Round 3</TabsTrigger>
+                  </TabsList>
+
+                  {["R1", "R2", "R3"].map(round => (
+                    <TabsContent key={round} value={round}>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                          <ResponsiveContainer width="100%" height={300}>
+                            <BarChart 
+                              data={splitDistribution.filter(item => item.round === round)}
+                              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                            >
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <XAxis dataKey="split" />
+                              <YAxis />
+                              <Tooltip />
+                              <Legend />
+                              <Bar dataKey="supported" fill="#10b981" name="SUPPORTED" />
+                              <Bar dataKey="refuted" fill="#ef4444" name="REFUTED" />
+                              <Bar dataKey="nei" fill="#6b7280" name="NEI" />
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+
+                        <div className="space-y-3">
+                          {splitDistribution
+                            .filter(item => item.round === round)
+                            .map((split, index) => {
+                              const total = split.supported + split.refuted + split.nei
+                              return (
+                                <div key={index} className="p-3 border rounded-lg">
+                                  <h5 className="font-medium mb-2 capitalize">{split.split} ({total.toLocaleString()} mẫu)</h5>
+                                  <div className="space-y-2">
+                                    <div className="flex justify-between text-sm">
+                                      <span>SUPPORTED</span>
+                                      <span>{split.supported} ({(split.supported/total*100).toFixed(1)}%)</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm">
+                                      <span>REFUTED</span>
+                                      <span>{split.refuted} ({(split.refuted/total*100).toFixed(1)}%)</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm">
+                                      <span>NEI</span>
+                                      <span>{split.nei} ({(split.nei/total*100).toFixed(1)}%)</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
+                            })}
+                        </div>
+                      </div>
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </CardContent>
+            </Card>
+
+            {/* Similarity Analysis */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Brain className="w-5 h-5" />
+                  Phân tích Độ tương đồng (Jaccard Similarity)
+                </CardTitle>
+                <CardDescription>Độ tương đồng từ vựng giữa claim và context qua các rounds</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={jaccardSimilarity}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="round" />
+                        <YAxis domain={[0, 0.6]} />
+                        <Tooltip formatter={(value, name) => [(value * 100).toFixed(2) + '%', name]} />
+                        <Legend />
+                        <Bar dataKey="avgJaccard" fill="#3b82f6" name="Avg Jaccard" />
+                        <Bar dataKey="maxJaccard" fill="#10b981" name="Max Jaccard" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h4 className="font-medium">Insight về Độ tương đồng:</h4>
+                    {jaccardSimilarity.map((sim, index) => (
+                      <div key={index} className="p-3 border rounded-lg">
+                        <h5 className="font-medium">{sim.round}</h5>
+                        <div className="space-y-1 text-sm mt-2">
+                          <div className="flex justify-between">
+                            <span>Trung bình:</span>
+                            <span className="font-medium">{(sim.avgJaccard * 100).toFixed(2)}%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Tối thiểu:</span>
+                            <span className="font-medium">{(sim.minJaccard * 100).toFixed(2)}%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Tối đa:</span>
+                            <span className="font-medium">{(sim.maxJaccard * 100).toFixed(2)}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    
+                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <h5 className="font-medium text-blue-800">📊 Nhận xét:</h5>
+                      <ul className="text-sm text-blue-700 mt-2 space-y-1">
+                        <li>• Độ tương đồng từ vựng giảm dần qua các rounds</li>
+                        <li>• R3 có độ khó cao nhất (Jaccard thấp nhất)</li>
+                        <li>• Adversarial claims ngày càng tinh vi hơn</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Text Length Analysis */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5" />
+                  Phân tích Độ dài Text
+                </CardTitle>
+                <CardDescription>So sánh độ dài claim và context qua các rounds</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-medium mb-3">Độ dài Claim</h4>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={detailedStatsPerRound}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="round" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="avgClaimLen" fill="#f59e0b" name="Avg Length" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium mb-3">Độ dài Context</h4>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={detailedStatsPerRound}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="round" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="avgContextLen" fill="#8b5cf6" name="Avg Length" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <h4 className="font-medium text-yellow-800 mb-2">🔍 Observations:</h4>
+                  <ul className="text-sm text-yellow-700 space-y-1">
+                    <li>• <strong>R2 có claim dài nhất</strong> (51.5 từ trung bình) - phức tạp nhất</li>
+                    <li>• <strong>R3 có context dài nhất</strong> (283.68 từ) - nhiều thông tin nhất</li>
+                    <li>• <strong>Vocabulary tăng</strong> từ 21K (R1,R2) lên 25K (R3)</li>
+                    <li>• <strong>Độ dài range rộng</strong>: Context từ 33-1935 từ, Claim từ 8-198 từ</li>
+                  </ul>
                 </div>
               </CardContent>
             </Card>
