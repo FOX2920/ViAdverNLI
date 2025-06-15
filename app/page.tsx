@@ -852,25 +852,42 @@ export default function ADFCDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-gray-900">ADFC Dashboard</h1>
-          <p className="text-xl text-gray-600">
-            Adversarial Fact-Checking Dataset for Vietnamese - Phân tích Toàn diện
-          </p>
-          <div className="flex justify-center gap-4">
-            <Badge variant="outline" className="px-4 py-2">
-              <Database className="w-4 h-4 mr-2" />
-              21,262 mẫu dữ liệu
-            </Badge>
-            <Badge variant="outline" className="px-4 py-2">
-              <Brain className="w-4 h-4 mr-2" />3 Rounds đối kháng
-            </Badge>
-            <Badge variant="outline" className="px-4 py-2">
-              <Target className="w-4 h-4 mr-2" />7 Datasets đánh giá
-            </Badge>
+        {/* Enhanced Header */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 rounded-xl shadow-xl">
+          <div className="absolute inset-0 bg-black opacity-10"></div>
+          <div className="relative px-8 py-12 text-center space-y-6">
+            <div className="flex justify-center items-center gap-3 mb-4">
+              <div className="p-3 bg-white bg-opacity-20 rounded-xl">
+                <Brain className="w-8 h-8 text-white" />
+              </div>
+              <h1 className="text-5xl font-bold text-white">ViAdverNLI Dashboard</h1>
+            </div>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+              Phân tích toàn diện bộ dữ liệu Fact-checking & Suy luận ngôn ngữ tự nhiên đối kháng tiếng Việt
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
+              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-3 flex items-center gap-2">
+                <Database className="w-5 h-5 text-blue-200" />
+                <span className="text-white font-semibold">21,262 mẫu dữ liệu</span>
+              </div>
+              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-3 flex items-center gap-2">
+                <Shield className="w-5 h-5 text-blue-200" />
+                <span className="text-white font-semibold">3 Rounds đối kháng</span>
+              </div>
+              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-3 flex items-center gap-2">
+                <Target className="w-5 h-5 text-blue-200" />
+                <span className="text-white font-semibold">7 Datasets đánh giá</span>
+              </div>
+              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-3 flex items-center gap-2">
+                <Award className="w-5 h-5 text-blue-200" />
+                <span className="text-white font-semibold">Kappa &gt; 0.80</span>
+              </div>
+            </div>
+            <div className="mt-6 text-blue-100 text-sm">
+              <p>🏆 Bộ dữ liệu thử thách khó nhất cho NLI tiếng Việt • 🎯 SOTA chỉ đạt 58% accuracy</p>
+            </div>
           </div>
         </div>
 
