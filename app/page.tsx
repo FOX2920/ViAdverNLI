@@ -2505,7 +2505,7 @@ export default function ADFCDashboard() {
                     <h4 className="font-medium text-purple-800 mb-3">💳 Ngân sách Trung bình</h4>
                     <ul className="text-sm text-purple-700 space-y-2">
                       <li>• <strong>Khuyến nghị:</strong> LLM API Fine-tune</li>
-                      <li>• <strong>Chi phí:</strong> $50-200/model</li>
+                      <li>• <strong>Chi phí:</strong> $25.00/1M token</li>
                       <li>• <strong>Infrastructure:</strong> Managed</li>
                       <li>• <strong>Hiệu suất tốt nhất:</strong> GPT-4o ~58.15%</li>
                       <li>• <strong>Thời gian:</strong> 30 phút - 2 giờ</li>
@@ -2516,7 +2516,7 @@ export default function ADFCDashboard() {
                     <h4 className="font-medium text-red-800 mb-3">💎 Ngân sách Cao</h4>
                     <ul className="text-sm text-red-700 space-y-2">
                       <li>• <strong>Khuyến nghị:</strong> H100 Local Fine-tune</li>
-                      <li>• <strong>Chi phí:</strong> $2-8/giờ GPU</li>
+                      <li>• <strong>Chi phí:</strong> $5.62/hour</li>
                       <li>• <strong>GPU:</strong> H100 SXM5 (80GB)</li>
                       <li>• <strong>Hiệu suất tốt nhất:</strong> DEEPSEEK ~54.2%</li>
                       <li>• <strong>Thời gian:</strong> 1-3 giờ/model</li>
@@ -3142,7 +3142,7 @@ export default function ADFCDashboard() {
                         <li>• Managed infrastructure</li>
                       </ul>
                       <p className="font-medium text-purple-800 mt-3">Best choice: GPT-4o</p>
-                      <p className="text-xs text-purple-600">58.15% R3 - $50-200/model</p>
+                      <p className="text-xs text-purple-600">58.15% R3 - $25.00/1M token</p>
                     </div>
                   </div>
 
@@ -3200,6 +3200,14 @@ export default function ADFCDashboard() {
                           <p className="text-sm text-gray-600">GPT-4o (58.15%)</p>
                         </div>
                         <Badge className="bg-blue-100 text-blue-800">$$$</Badge>
+                      </div>
+
+                      <div className="flex justify-between items-center p-3 bg-teal-50 rounded-lg">
+                        <div>
+                          <p className="font-medium">Best Budget LLM</p>
+                          <p className="text-sm text-gray-600">Gemini 2.0 (56.72%)</p>
+                        </div>
+                        <Badge className="bg-teal-100 text-teal-800">$3/1M token</Badge>
                       </div>
 
                       <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
