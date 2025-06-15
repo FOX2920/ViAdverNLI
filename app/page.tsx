@@ -33,6 +33,11 @@ import {
   CheckCircle,
   XCircle,
   HelpCircle,
+  Settings,
+  Cpu,
+  DollarSign,
+  Server,
+  Cloud,
 } from "lucide-react"
 
 // Data for charts
@@ -517,6 +522,135 @@ const dataSourcesBreakdown = {
   "Thanh Niên": { total: 457, percentage: 2.1, rounds: { R1: 0, R2: 457, R3: 0 } },
 }
 
+// Hyperparameters và Training Configuration Data
+const plmHyperparameters = {
+  environment: "Kaggle Notebook - Tesla P100 (16GB VRAM)",
+  config: {
+    epochs: 20,
+    batchSize: 8,
+    gradientAccumulation: 2,
+    learningRate: "5e-5",
+    weightDecay: "1e-5",
+    maxSequenceLength: 256,
+    mixedPrecision: true,
+    optimizer: "AdamW",
+    scheduler: "StepLR(step=5, gamma=0.1)",
+    earlyStoppingPatience: 3,
+    maxGradientNorm: 1.0,
+    device: "Tesla P100"
+  },
+  models: [
+    { name: "mBERT", fullName: "bert-base-multilingual-cased" },
+    { name: "phoBERT", fullName: "vinai/phobert-large" },
+    { name: "XLM-R", fullName: "xlm-roberta-large" }
+  ]
+}
+
+const llmApiHyperparameters = {
+  environment: "GPT-4o: OpenAI Dashboard, Gemini 2.0 Flash: Vertex AI (GCP)",
+  config: {
+    epochs: 3,
+    batchSize: "5 (R1, R2), 12 (R3)",
+    learningRateMultiplier: 2,
+    seed: 42,
+    maxSequenceLength: "~1024 (tự động xử lý)",
+    optimizer: "Hệ thống backend tự động tối ưu",
+    mixedPrecision: "Có (ẩn sau API)",
+    device: "A100 / TPU (backend hệ thống)"
+  }
+}
+
+const llmLocalHyperparameters = {
+  environment: "Dedicated server - 1× NVIDIA H100 SXM5, 16 CPU, 192GB RAM",
+  config: {
+    epochs: 3,
+    batchSize: "5 (R1, R2), 12 (R3)",
+    learningRate: "1e-5",
+    gradientAccumulation: 4,
+    sequenceLength: 2048,
+    checkpointSteps: 1000,
+    mixedPrecision: true,
+    optimizer: "AdamW (mặc định)",
+    device: "H100 SXM5"
+  },
+  models: ["Gemma3", "Qwen3", "DEEPSEEK R1"]
+}
+
+// PLM Performance Data (Fine-tune + BM25)
+const plmDetailedResults = {
+  mBERT: [
+    { evidence: "top1", R1: 27.73, R2: 50.86, R3: 62.42 },
+    { evidence: "top2", R1: 24.94, R2: 12.95, R3: 63.53 },
+    { evidence: "top3", R1: 39.48, R2: 32.54, R3: 60.18 },
+    { evidence: "top4", R1: 25.72, R2: 45.51, R3: 61.96 },
+    { evidence: "full_context", R1: 37.05, R2: 16.83, R3: 61.48 }
+  ],
+  pho_BERT: [
+    { evidence: "top1", R1: 40.57, R2: 43.96, R3: 53.45 },
+    { evidence: "top2", R1: 47.37, R2: 42.53, R3: 65.20 },
+    { evidence: "top3", R1: 41.92, R2: 44.74, R3: 61.85 },
+    { evidence: "top4", R1: 44.41, R2: 47.54, R3: 66.89 },
+    { evidence: "full_context", R1: 43.10, R2: 26.03, R3: 64.48 }
+  ],
+  "XLM-R": [
+    { evidence: "top1", R1: 29.93, R2: 47.36, R3: 64.62 },
+    { evidence: "top2", R1: 29.77, R2: 54.55, R3: 55.99 },
+    { evidence: "top3", R1: 47.22, R2: 50.79, R3: 65.18 },
+    { evidence: "top4", R1: 30.72, R2: 48.26, R3: 54.34 },
+    { evidence: "full_context", R1: 33.41, R2: 11.70, R3: 64.02 }
+  ]
+}
+
+// LLM Fine-tune Results (full_context)
+const llmFinetuneResults = [
+  { model: "GPT-4o", R1: 50.7, R2: 57.95, R3: 58.15, type: "API", note: "mini" },
+  { model: "Gemini 2.0", R1: 47.08, R2: 52.93, R3: 56.72, type: "API", note: "" },
+  { model: "Gemma3", R1: 41.66, R2: 50.68, R3: 53.77, type: "Local", note: "" },
+  { model: "Qwen3", R1: 37.57, R2: 47.86, R3: 51.12, type: "Local", note: "" },
+  { model: "DEEPSEEK R1", R1: 42.4, R2: 50.16, R3: 54.2, type: "Local", note: "" }
+]
+
+// LLM Prompt Results
+const llmPromptResults = [
+  { model: "qwen3:14b", method: "Prompt", type: "Open", R1: 45.51, R2: 46.72, R3: 32.37 },
+  { model: "deepseek-r1:32b", method: "Prompt", type: "Open", R1: 30.5, R2: 39.44, R3: 35.7 },
+  { model: "magistral", method: "Prompt", type: "Open", R1: 37.91, R2: 45.74, R3: 40.16 },
+  { model: "cogito:14b", method: "Prompt", type: "Open", R1: 40.41, R2: 46.25, R3: 29.93 },
+  { model: "gemma3", method: "Prompt", type: "Open", R1: 38.83, R2: 45.08, R3: 43.34 },
+  { model: "phi4-reasoning:14b", method: "Prompt", type: "Open", R1: 41.74, R2: 47.65, R3: 34.68 },
+  { model: "gemma_3n_e4b_it", method: "Prompt", type: "Open", R1: 38.73, R2: 45.08, R3: 42.88 },
+  { model: "o4_mini", method: "Prompt", type: "Closed", R1: 45.10, R2: 46.77, R3: 30.86 },
+  { model: "gemini 2.5 flash", method: "Prompt", type: "Closed", R1: 44.69, R2: 43.94, R3: 31.9 }
+]
+
+// Model Comparison Summary
+const modelComparisonSummary = [
+  {
+    group: "PLM (P100 - Kaggle)",
+    advantages: "Dễ triển khai, chi phí thấp",
+    disadvantages: "Giới hạn bộ nhớ, sequence ngắn",
+    color: "bg-green-100 text-green-800"
+  },
+  {
+    group: "LLM (Prompt - OLlama)",
+    advantages: "Triển khai nhanh, không cần huấn luyện",
+    disadvantages: "Hiệu suất giảm ở R3, không ổn định",
+    color: "bg-blue-100 text-blue-800"
+  },
+  {
+    group: "GPT-4o / Gemini Flash",
+    advantages: "Backend tối ưu, hiệu suất cao",
+    disadvantages: "Không tùy chỉnh chi tiết được",
+    color: "bg-purple-100 text-purple-800"
+  },
+  {
+    group: "Gemma3 / Qwen3 (H100)",
+    advantages: "Toàn quyền kiểm soát, mạnh với long text",
+    disadvantages: "Tốn tài nguyên, cần GPU mạnh",
+    color: "bg-red-100 text-red-800"
+  }
+]
+
 export default function ADFCDashboard() {
   const [selectedRound, setSelectedRound] = useState("overview")
   const [expandedContexts, setExpandedContexts] = useState<{ [key: string]: boolean }>({})
@@ -572,10 +706,11 @@ export default function ADFCDashboard() {
 
         {/* Main Tabs */}
         <Tabs value={selectedRound} onValueChange={setSelectedRound} className="w-full">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="overview">Tổng quan</TabsTrigger>
             <TabsTrigger value="dataset">Phân tích Dữ liệu</TabsTrigger>
             <TabsTrigger value="performance">Hiệu suất Mô hình</TabsTrigger>
+            <TabsTrigger value="training">Cấu hình Huấn luyện</TabsTrigger>
             <TabsTrigger value="weaknesses">Điểm yếu Mô hình</TabsTrigger>
             <TabsTrigger value="insights">Insights</TabsTrigger>
             <TabsTrigger value="recommendations">Khuyến nghị</TabsTrigger>
@@ -860,6 +995,37 @@ export default function ADFCDashboard() {
               </CardContent>
             </Card>
 
+            {/* Method Comparison Chart */}
+            <Card>
+              <CardHeader>
+                <CardTitle>So sánh Hiệu suất các Phương pháp</CardTitle>
+                <CardDescription>
+                  So sánh hiệu suất tốt nhất của PLM, LLM Fine-tune và LLM Prompt trên R1, R2, R3
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart
+                    data={[
+                      { round: "R1", PLM: 47.22, "LLM Fine-tune": 50.7, "LLM Prompt": 45.51 },
+                      { round: "R2", PLM: 54.55, "LLM Fine-tune": 57.95, "LLM Prompt": 47.65 },
+                      { round: "R3", PLM: 66.89, "LLM Fine-tune": 58.15, "LLM Prompt": 43.34 }
+                    ]}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="round" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="PLM" fill="#10b981" name="PLM (Best: XLM-R/phoBERT)" />
+                    <Bar dataKey="LLM Fine-tune" fill="#8b5cf6" name="LLM Fine-tune (GPT-4o)" />
+                    <Bar dataKey="LLM Prompt" fill="#3b82f6" name="LLM Prompt (phi4-reasoning)" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
             {/* Adversarial Training Impact */}
             <Card>
               <CardHeader>
@@ -889,7 +1055,7 @@ export default function ADFCDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Hiệu suất Cao nhất</CardTitle>
+                  <CardTitle className="text-sm">Hiệu suất Cao nhất (PLM)</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-green-600">84.50%</div>
@@ -899,31 +1065,31 @@ export default function ADFCDashboard() {
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Dataset Khó nhất</CardTitle>
+                  <CardTitle className="text-sm">Hiệu suất Cao nhất (LLM)</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-red-600">42.01%</div>
-                  <p className="text-xs text-gray-600">ViA1 (Round 1)</p>
+                  <div className="text-2xl font-bold text-purple-600">58.15%</div>
+                  <p className="text-xs text-gray-600">GPT-4o trên R3</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Cải thiện Lớn nhất</CardTitle>
+                  <CardTitle className="text-sm">Best Prompt Model</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-blue-600">+14.74%</div>
-                  <p className="text-xs text-gray-600">ViA1 khi thêm adversarial data</p>
+                  <div className="text-2xl font-bold text-blue-600">47.65%</div>
+                  <p className="text-xs text-gray-600">phi4-reasoning:14b</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Mô hình Tốt nhất</CardTitle>
+                  <CardTitle className="text-sm">Cost-Effective</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-purple-600">XLM-R</div>
-                  <p className="text-xs text-gray-600">Ưu việt trên tất cả datasets</p>
+                  <div className="text-2xl font-bold text-orange-600">66.89%</div>
+                  <p className="text-xs text-gray-600">phoBERT (Free on Kaggle)</p>
                 </CardContent>
               </Card>
             </div>
@@ -1263,6 +1429,515 @@ export default function ADFCDashboard() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* Training Configuration Tab */}
+          <TabsContent value="training" className="space-y-6">
+            {/* Training Environment Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="border-l-4 border-l-green-500">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Cpu className="w-5 h-5 text-green-600" />
+                    PLM Fine-tune
+                  </CardTitle>
+                  <CardDescription>Kaggle - Tesla P100</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Chi phí:</span>
+                    <span className="text-green-600 font-medium">Miễn phí</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Triển khai:</span>
+                    <span className="text-green-600 font-medium">Dễ</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tùy chỉnh:</span>
+                    <span className="text-green-600 font-medium">Cao</span>
+                  </div>
+                  <Badge className="bg-green-100 text-green-800 w-full justify-center">
+                    mBERT, phoBERT, XLM-R
+                  </Badge>
+                </CardContent>
+              </Card>
+
+              <Card className="border-l-4 border-l-purple-500">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Cloud className="w-5 h-5 text-purple-600" />
+                    LLM API Fine-tune
+                  </CardTitle>
+                  <CardDescription>OpenAI / Google Cloud</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Chi phí:</span>
+                    <span className="text-purple-600 font-medium">Cao</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Triển khai:</span>
+                    <span className="text-purple-600 font-medium">Rất dễ</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tùy chỉnh:</span>
+                    <span className="text-purple-600 font-medium">Thấp</span>
+                  </div>
+                  <Badge className="bg-purple-100 text-purple-800 w-full justify-center">
+                    GPT-4o, Gemini 2.0
+                  </Badge>
+                </CardContent>
+              </Card>
+
+              <Card className="border-l-4 border-l-red-500">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Server className="w-5 h-5 text-red-600" />
+                    LLM Local Fine-tune
+                  </CardTitle>
+                  <CardDescription>H100 SXM5 Server</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Chi phí:</span>
+                    <span className="text-red-600 font-medium">Rất cao</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Triển khai:</span>
+                    <span className="text-red-600 font-medium">Khó</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tùy chỉnh:</span>
+                    <span className="text-red-600 font-medium">Tối đa</span>
+                  </div>
+                  <Badge className="bg-red-100 text-red-800 w-full justify-center">
+                    Gemma3, Qwen3, DEEPSEEK
+                  </Badge>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Model Comparison Summary */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="w-5 h-5" />
+                  So sánh Tổng quan theo Mô hình
+                </CardTitle>
+                <CardDescription>Ưu điểm và hạn chế của từng nhóm mô hình</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {modelComparisonSummary.map((item, index) => (
+                    <div key={index} className="p-4 border rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-medium">{item.group}</h4>
+                        <Badge className={item.color}>{item.group.split('(')[0].trim()}</Badge>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <p className="text-green-700 font-medium">✅ Ưu điểm:</p>
+                          <p className="text-gray-600">{item.advantages}</p>
+                        </div>
+                        <div>
+                          <p className="text-red-700 font-medium">❌ Hạn chế:</p>
+                          <p className="text-gray-600">{item.disadvantages}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* PLM Hyperparameters Detail */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Cpu className="w-5 h-5 text-green-600" />
+                  Chi tiết Cấu hình PLM (mBERT, phoBERT, XLM-R)
+                </CardTitle>
+                <CardDescription>{plmHyperparameters.environment}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-medium mb-3">⚙️ Hyperparameters</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Epochs:</span>
+                        <span className="font-medium">{plmHyperparameters.config.epochs}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Batch Size:</span>
+                        <span className="font-medium">{plmHyperparameters.config.batchSize}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Learning Rate:</span>
+                        <span className="font-medium">{plmHyperparameters.config.learningRate}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Max Sequence Length:</span>
+                        <span className="font-medium">{plmHyperparameters.config.maxSequenceLength}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Optimizer:</span>
+                        <span className="font-medium">{plmHyperparameters.config.optimizer}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Mixed Precision:</span>
+                        <span className="font-medium">{plmHyperparameters.config.mixedPrecision ? 'Có' : 'Không'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium mb-3">🔧 Chi tiết Kỹ thuật</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Gradient Accumulation:</span>
+                        <span className="font-medium">{plmHyperparameters.config.gradientAccumulation}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Weight Decay:</span>
+                        <span className="font-medium">{plmHyperparameters.config.weightDecay}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Scheduler:</span>
+                        <span className="font-medium">{plmHyperparameters.config.scheduler}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Early Stopping:</span>
+                        <span className="font-medium">{plmHyperparameters.config.earlyStoppingPatience} epochs</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Max Gradient Norm:</span>
+                        <span className="font-medium">{plmHyperparameters.config.maxGradientNorm}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>GPU:</span>
+                        <span className="font-medium">{plmHyperparameters.config.device}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t">
+                  <h4 className="font-medium mb-3">🤖 Mô hình cụ thể</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {plmHyperparameters.models.map((model, index) => (
+                      <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                        <p className="font-medium">{model.name}</p>
+                        <p className="text-xs text-gray-600">{model.fullName}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* LLM Configurations */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Cloud className="w-5 h-5 text-purple-600" />
+                    Cấu hình LLM API (GPT-4o / Gemini)
+                  </CardTitle>
+                  <CardDescription>{llmApiHyperparameters.environment}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span>Epochs:</span>
+                      <span className="font-medium">{llmApiHyperparameters.config.epochs}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Batch Size:</span>
+                      <span className="font-medium">{llmApiHyperparameters.config.batchSize}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>LR Multiplier:</span>
+                      <span className="font-medium">{llmApiHyperparameters.config.learningRateMultiplier}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Seed:</span>
+                      <span className="font-medium">{llmApiHyperparameters.config.seed}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Max Sequence:</span>
+                      <span className="font-medium">{llmApiHyperparameters.config.maxSequenceLength}</span>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-purple-50 rounded-lg">
+                    <p className="text-xs text-purple-700">
+                      💡 Backend tự động tối ưu hyperparameters và infrastructure
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Server className="w-5 h-5 text-red-600" />
+                    Cấu hình LLM Local (H100)
+                  </CardTitle>
+                  <CardDescription>{llmLocalHyperparameters.environment}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span>Epochs:</span>
+                      <span className="font-medium">{llmLocalHyperparameters.config.epochs}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Batch Size:</span>
+                      <span className="font-medium">{llmLocalHyperparameters.config.batchSize}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Learning Rate:</span>
+                      <span className="font-medium">{llmLocalHyperparameters.config.learningRate}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Gradient Accumulation:</span>
+                      <span className="font-medium">{llmLocalHyperparameters.config.gradientAccumulation}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sequence Length:</span>
+                      <span className="font-medium">{llmLocalHyperparameters.config.sequenceLength}</span>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-red-50 rounded-lg">
+                    <p className="text-xs text-red-700">
+                      ⚡ Toàn quyền kiểm soát, xử lý long text tốt nhất
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {llmLocalHyperparameters.models.map((model, index) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {model}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Performance Results from New Data */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="w-5 h-5" />
+                  Kết quả Hiệu suất PLM (Fine-tune + BM25)
+                </CardTitle>
+                <CardDescription>Hiệu suất chi tiết với các loại evidence khác nhau</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="mBERT" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="mBERT">mBERT</TabsTrigger>
+                    <TabsTrigger value="pho_BERT">phoBERT</TabsTrigger>
+                    <TabsTrigger value="XLM-R">XLM-R</TabsTrigger>
+                  </TabsList>
+
+                  {Object.entries(plmDetailedResults).map(([modelName, results]) => (
+                    <TabsContent key={modelName} value={modelName}>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm border-collapse border border-gray-300">
+                          <thead>
+                            <tr className="bg-gray-100">
+                              <th className="border border-gray-300 p-2 text-left">Evidence Type</th>
+                              <th className="border border-gray-300 p-2 text-center">R1</th>
+                              <th className="border border-gray-300 p-2 text-center">R2</th>
+                              <th className="border border-gray-300 p-2 text-center">R3</th>
+                              <th className="border border-gray-300 p-2 text-center">Best</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {results.map((row, index) => {
+                              const best = Math.max(row.R1, row.R2, row.R3)
+                              return (
+                                <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                                  <td className="border border-gray-300 p-2 font-medium">{row.evidence}</td>
+                                  <td className={`border border-gray-300 p-2 text-center ${getPerformanceColor(row.R1)}`}>
+                                    {row.R1}
+                                  </td>
+                                  <td className={`border border-gray-300 p-2 text-center ${getPerformanceColor(row.R2)}`}>
+                                    {row.R2}
+                                  </td>
+                                  <td className={`border border-gray-300 p-2 text-center ${getPerformanceColor(row.R3)}`}>
+                                    {row.R3}
+                                  </td>
+                                  <td className={`border border-gray-300 p-2 text-center font-bold ${getPerformanceColor(best)}`}>
+                                    {best}
+                                  </td>
+                                </tr>
+                              )
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </CardContent>
+            </Card>
+
+            {/* LLM Results Comparison */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Zap className="w-5 h-5" />
+                    LLM Fine-tune Results
+                  </CardTitle>
+                  <CardDescription>Hiệu suất mô hình LLM sau fine-tuning</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {llmFinetuneResults.map((model, index) => (
+                      <div key={index} className="p-3 border rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-medium">{model.model}</h4>
+                            <Badge variant="outline" className={model.type === 'API' ? 'bg-purple-100 text-purple-800' : 'bg-red-100 text-red-800'}>
+                              {model.type}
+                            </Badge>
+                            {model.note && <Badge variant="secondary">{model.note}</Badge>}
+                          </div>
+                          <div className="text-right">
+                            <div className="text-sm font-bold text-blue-600">Best: {Math.max(model.R1, model.R2, model.R3)}%</div>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-sm">
+                          <div className="text-center">
+                            <div className="text-gray-500">R1</div>
+                            <div className={`font-medium ${getPerformanceColor(model.R1)}`}>{model.R1}%</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-gray-500">R2</div>
+                            <div className={`font-medium ${getPerformanceColor(model.R2)}`}>{model.R2}%</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-gray-500">R3</div>
+                            <div className={`font-medium ${getPerformanceColor(model.R3)}`}>{model.R3}%</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Brain className="w-5 h-5" />
+                    LLM Prompt Results (Top 5)
+                  </CardTitle>
+                  <CardDescription>Hiệu suất mô hình LLM với prompting</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {llmPromptResults
+                      .slice()
+                      .sort((a, b) => Math.max(b.R1, b.R2, b.R3) - Math.max(a.R1, a.R2, a.R3))
+                      .slice(0, 5)
+                      .map((model, index) => (
+                        <div key={index} className="p-3 border rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <h4 className="font-medium text-sm">{model.model}</h4>
+                              <Badge variant="outline" className={model.type === 'Open' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}>
+                                {model.type}
+                              </Badge>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-sm font-bold text-green-600">Best: {Math.max(model.R1, model.R2, model.R3)}%</div>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-sm">
+                            <div className="text-center">
+                              <div className="text-gray-500">R1</div>
+                              <div className={`font-medium ${getPerformanceColor(model.R1)}`}>{model.R1}%</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-gray-500">R2</div>
+                              <div className={`font-medium ${getPerformanceColor(model.R2)}`}>{model.R2}%</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-gray-500">R3</div>
+                              <div className={`font-medium ${getPerformanceColor(model.R3)}`}>{model.R3}%</div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Cost & Resource Analysis */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <DollarSign className="w-5 h-5" />
+                  Phân tích Chi phí & Tài nguyên
+                </CardTitle>
+                <CardDescription>So sánh chi phí và khuyến nghị lựa chọn theo ngân sách</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 className="font-medium text-green-800 mb-3">💰 Ngân sách Thấp</h4>
+                    <ul className="text-sm text-green-700 space-y-2">
+                      <li>• <strong>Khuyến nghị:</strong> PLM trên Kaggle</li>
+                      <li>• <strong>Chi phí:</strong> Miễn phí</li>
+                      <li>• <strong>GPU:</strong> Tesla P100 (16GB)</li>
+                      <li>• <strong>Hiệu suất tốt nhất:</strong> XLM-R ~66.89%</li>
+                      <li>• <strong>Thời gian:</strong> 2-4 giờ/model</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                    <h4 className="font-medium text-purple-800 mb-3">💳 Ngân sách Trung bình</h4>
+                    <ul className="text-sm text-purple-700 space-y-2">
+                      <li>• <strong>Khuyến nghị:</strong> LLM API Fine-tune</li>
+                      <li>• <strong>Chi phí:</strong> $50-200/model</li>
+                      <li>• <strong>Infrastructure:</strong> Managed</li>
+                      <li>• <strong>Hiệu suất tốt nhất:</strong> GPT-4o ~58.15%</li>
+                      <li>• <strong>Thời gian:</strong> 30 phút - 2 giờ</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <h4 className="font-medium text-red-800 mb-3">💎 Ngân sách Cao</h4>
+                    <ul className="text-sm text-red-700 space-y-2">
+                      <li>• <strong>Khuyến nghị:</strong> H100 Local Fine-tune</li>
+                      <li>• <strong>Chi phí:</strong> $2-8/giờ GPU</li>
+                      <li>• <strong>GPU:</strong> H100 SXM5 (80GB)</li>
+                      <li>• <strong>Hiệu suất tốt nhất:</strong> DEEPSEEK ~54.2%</li>
+                      <li>• <strong>Thời gian:</strong> 1-3 giờ/model</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <h4 className="font-medium text-blue-800 mb-2">🎯 Khuyến nghị Tổng thể</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="font-medium text-blue-700">Cho Research/Học tập:</p>
+                      <p className="text-blue-600">PLM trên Kaggle - Miễn phí, hiệu suất ổn, dễ tái tạo</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-blue-700">Cho Production:</p>
+                      <p className="text-blue-600">GPT-4o API - Hiệu suất cao nhất, ổn định, scalable</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Weaknesses Analysis Tab */}
@@ -1767,12 +2442,22 @@ export default function ADFCDashboard() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <h4 className="font-medium text-green-800">🏆 XLM-R Large - Lựa chọn tối ưu</h4>
+                    <h4 className="font-medium text-green-800">🏆 XLM-R Large - Lựa chọn PLM tối ưu</h4>
                     <ul className="mt-2 text-sm text-green-700 space-y-1">
                       <li>✅ Hiệu suất ổn định cao trên tất cả dataset</li>
                       <li>✅ Khả năng xử lý dữ liệu đối kháng tốt nhất</li>
                       <li>✅ Đạt 84.50% - mức cao nhất trên ISE-DSC01</li>
-                      <li>✅ Cải thiện đáng kể khi có đủ dữ liệu training</li>
+                      <li>✅ Miễn phí trên Kaggle, dễ tái tạo</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                    <h4 className="font-medium text-purple-800">🚀 GPT-4o - Lựa chọn LLM tối ưu</h4>
+                    <ul className="mt-2 text-sm text-purple-700 space-y-1">
+                      <li>✅ Hiệu suất cao nhất trong LLM (58.15%)</li>
+                      <li>✅ Ổn định qua các rounds R1-R3</li>
+                      <li>✅ Backend OpenAI tự động tối ưu</li>
+                      <li>✅ Scalable cho production</li>
                     </ul>
                   </div>
 
@@ -1819,6 +2504,141 @@ export default function ADFCDashboard() {
               </Card>
             </div>
 
+            {/* Method-based Recommendations */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="w-5 h-5" />
+                  Khuyến nghị theo Phương pháp
+                </CardTitle>
+                <CardDescription>Lựa chọn phương pháp phù hợp với từng use case</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 className="font-medium text-green-800 mb-3">🔧 PLM Fine-tuning</h4>
+                    <div className="space-y-2 text-sm">
+                      <p><strong>Phù hợp với:</strong></p>
+                      <ul className="text-green-700 space-y-1">
+                        <li>• Research projects</li>
+                        <li>• Budget constraints</li>
+                        <li>• High customization needs</li>
+                        <li>• Reproducibility focus</li>
+                      </ul>
+                      <p className="font-medium text-green-800 mt-3">Best choice: XLM-R</p>
+                      <p className="text-xs text-green-600">66.89% (phoBERT top4) - Miễn phí</p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                    <h4 className="font-medium text-purple-800 mb-3">🚀 LLM Fine-tuning</h4>
+                    <div className="space-y-2 text-sm">
+                      <p><strong>Phù hợp với:</strong></p>
+                      <ul className="text-purple-700 space-y-1">
+                        <li>• Production systems</li>
+                        <li>• High performance needs</li>
+                        <li>• Quick deployment</li>
+                        <li>• Managed infrastructure</li>
+                      </ul>
+                      <p className="font-medium text-purple-800 mt-3">Best choice: GPT-4o</p>
+                      <p className="text-xs text-purple-600">58.15% R3 - $50-200/model</p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 className="font-medium text-blue-800 mb-3">💬 LLM Prompting</h4>
+                    <div className="space-y-2 text-sm">
+                      <p><strong>Phù hợp với:</strong></p>
+                      <ul className="text-blue-700 space-y-1">
+                        <li>• Quick prototyping</li>
+                        <li>• No training data</li>
+                        <li>• Experiment-heavy workflows</li>
+                        <li>• Local deployment</li>
+                      </ul>
+                      <p className="font-medium text-blue-800 mt-3">Best choice: phi4-reasoning</p>
+                      <p className="text-xs text-blue-600">47.65% R2 - Miễn phí local</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Performance vs Cost Analysis */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <DollarSign className="w-5 h-5" />
+                  Ma trận Hiệu suất vs Chi phí
+                </CardTitle>
+                <CardDescription>So sánh ROI của các phương pháp khác nhau</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-medium mb-3">🏆 Champions by Category</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                        <div>
+                          <p className="font-medium">Best Free Option</p>
+                          <p className="text-sm text-gray-600">phoBERT (66.89%)</p>
+                        </div>
+                        <Badge className="bg-green-100 text-green-800">Free</Badge>
+                      </div>
+                      
+                      <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                        <div>
+                          <p className="font-medium">Best Overall Performance</p>
+                          <p className="text-sm text-gray-600">XLM-R ISE-DSC01 (84.5%)</p>
+                        </div>
+                        <Badge className="bg-purple-100 text-purple-800">Free</Badge>
+                      </div>
+
+                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                        <div>
+                          <p className="font-medium">Best LLM Performance</p>
+                          <p className="text-sm text-gray-600">GPT-4o (58.15%)</p>
+                        </div>
+                        <Badge className="bg-blue-100 text-blue-800">$$$</Badge>
+                      </div>
+
+                      <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                        <div>
+                          <p className="font-medium">Best No-Training</p>
+                          <p className="text-sm text-gray-600">phi4-reasoning (47.65%)</p>
+                        </div>
+                        <Badge className="bg-orange-100 text-orange-800">Free</Badge>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium mb-3">💡 Decision Framework</h4>
+                    <div className="space-y-3 text-sm">
+                      <div className="p-3 border-l-4 border-l-green-500 bg-gray-50">
+                        <p className="font-medium">If you have: No budget</p>
+                        <p className="text-gray-600">→ PLM on Kaggle (XLM-R/phoBERT)</p>
+                      </div>
+                      
+                      <div className="p-3 border-l-4 border-l-blue-500 bg-gray-50">
+                        <p className="font-medium">If you need: Quick results</p>
+                        <p className="text-gray-600">→ LLM Prompting (phi4-reasoning)</p>
+                      </div>
+
+                      <div className="p-3 border-l-4 border-l-purple-500 bg-gray-50">
+                        <p className="font-medium">If you want: Best performance</p>
+                        <p className="text-gray-600">→ GPT-4o Fine-tuning</p>
+                      </div>
+
+                      <div className="p-3 border-l-4 border-l-red-500 bg-gray-50">
+                        <p className="font-medium">If you need: Full control</p>
+                        <p className="text-gray-600">→ H100 Local Fine-tuning</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Future Directions */}
             <Card>
               <CardHeader>
@@ -1841,6 +2661,9 @@ export default function ADFCDashboard() {
                       <li>
                         • <strong>Mục tiêu:</strong> Tạo ra claim cực kỳ tinh vi
                       </li>
+                      <li>
+                        • <strong>Target:</strong> Phá vỡ rào cản 60% accuracy
+                      </li>
                     </ul>
                   </div>
 
@@ -1848,10 +2671,13 @@ export default function ADFCDashboard() {
                     <h4 className="font-medium mb-3">🔬 Cải tiến Kỹ thuật</h4>
                     <ul className="text-sm space-y-2">
                       <li>
-                        • <strong>Language Augmentation:</strong> Paraphrase, back-translation
+                        • <strong>Ensemble methods:</strong> Kết hợp PLM + LLM
                       </li>
                       <li>
                         • <strong>Multi-domain:</strong> Y tế, luật pháp, khoa học
+                      </li>
+                      <li>
+                        • <strong>Advanced prompting:</strong> CoT, RAG, ReAct
                       </li>
                       <li>
                         • <strong>Defense:</strong> Robust training, ensemble methods
