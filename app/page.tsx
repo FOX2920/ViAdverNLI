@@ -2435,45 +2435,96 @@ export default function ADFCDashboard() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Brain className="w-5 h-5" />
-                    LLM Prompt Results (Top 5)
+                    Full LLM Prompt Results
                   </CardTitle>
-                  <CardDescription>Hiệu suất mô hình LLM với prompting</CardDescription>
+                  <CardDescription>Hiệu suất đầy đủ của tất cả mô hình LLM với prompting</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    {llmPromptResults
-                      .slice()
-                      .sort((a, b) => Math.max(b.R1, b.R2, b.R3) - Math.max(a.R1, a.R2, a.R3))
-                      .slice(0, 5)
-                      .map((model, index) => (
-                        <div key={index} className="p-3 border rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                              <h4 className="font-medium text-sm">{model.model}</h4>
-                              <Badge variant="outline" className={model.type === 'Open' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}>
-                                {model.type}
-                              </Badge>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-3 text-left">Model</th>
+                          <th className="border border-gray-300 p-3 text-center">Method</th>
+                          <th className="border border-gray-300 p-3 text-center">Type</th>
+                          <th className="border border-gray-300 p-3 text-center">R1</th>
+                          <th className="border border-gray-300 p-3 text-center">R2</th>
+                          <th className="border border-gray-300 p-3 text-center">R3</th>
+                          <th className="border border-gray-300 p-3 text-center">Best</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {llmPromptResults
+                          .slice()
+                          .sort((a, b) => Math.max(b.R1, b.R2, b.R3) - Math.max(a.R1, a.R2, a.R3))
+                          .map((model, index) => (
+                            <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                              <td className="border border-gray-300 p-3 font-medium">{model.model}</td>
+                              <td className="border border-gray-300 p-3 text-center">{model.method}</td>
+                              <td className="border border-gray-300 p-3 text-center">
+                                <Badge variant="outline" className={model.type === 'Open' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}>
+                                  {model.type}
+                                </Badge>
+                              </td>
+                              <td className={`border border-gray-300 p-3 text-center font-medium ${getPerformanceColor(model.R1)}`}>
+                                {model.R1}%
+                              </td>
+                              <td className={`border border-gray-300 p-3 text-center font-medium ${getPerformanceColor(model.R2)}`}>
+                                {model.R2}%
+                              </td>
+                              <td className={`border border-gray-300 p-3 text-center font-medium ${getPerformanceColor(model.R3)}`}>
+                                {model.R3}%
+                              </td>
+                              <td className="border border-gray-300 p-3 text-center">
+                                <span className="font-bold text-green-600">{Math.max(model.R1, model.R2, model.R3)}%</span>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <h4 className="font-medium text-green-800 mb-3">🏆 Top Open Source Models</h4>
+                      <div className="space-y-2 text-sm">
+                        {llmPromptResults
+                          .filter(model => model.type === 'Open')
+                          .sort((a, b) => Math.max(b.R1, b.R2, b.R3) - Math.max(a.R1, a.R2, a.R3))
+                          .slice(0, 3)
+                          .map((model, index) => (
+                            <div key={index} className="flex justify-between">
+                              <span>{model.model}</span>
+                              <span className="font-medium text-green-600">{Math.max(model.R1, model.R2, model.R3)}%</span>
                             </div>
-                            <div className="text-right">
-                              <div className="text-sm font-bold text-green-600">Best: {Math.max(model.R1, model.R2, model.R3)}%</div>
+                          ))}
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <h4 className="font-medium text-blue-800 mb-3">🔒 Top Closed Source Models</h4>
+                      <div className="space-y-2 text-sm">
+                        {llmPromptResults
+                          .filter(model => model.type === 'Closed')
+                          .sort((a, b) => Math.max(b.R1, b.R2, b.R3) - Math.max(a.R1, a.R2, a.R3))
+                          .map((model, index) => (
+                            <div key={index} className="flex justify-between">
+                              <span>{model.model}</span>
+                              <span className="font-medium text-blue-600">{Math.max(model.R1, model.R2, model.R3)}%</span>
                             </div>
-                          </div>
-                          <div className="grid grid-cols-3 gap-2 text-sm">
-                            <div className="text-center">
-                              <div className="text-gray-500">R1</div>
-                              <div className={`font-medium ${getPerformanceColor(model.R1)}`}>{model.R1}%</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-gray-500">R2</div>
-                              <div className={`font-medium ${getPerformanceColor(model.R2)}`}>{model.R2}%</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-gray-500">R3</div>
-                              <div className={`font-medium ${getPerformanceColor(model.R3)}`}>{model.R3}%</div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <h4 className="font-medium text-yellow-800 mb-2">📊 Key Insights từ LLM Prompt Results:</h4>
+                    <ul className="text-sm text-yellow-700 space-y-1">
+                      <li>• <strong>phi4-reasoning:14b</strong> đạt hiệu suất cao nhất trong Open Source (47.65% R2)</li>
+                      <li>• <strong>o4_mini</strong> dẫn đầu Closed Source (46.77% R2)</li>
+                      <li>• <strong>Xu hướng giảm hiệu suất R3:</strong> Hầu hết models đều yếu hơn ở Round 3 (adversarial khó nhất)</li>
+                      <li>• <strong>Open Source cạnh tranh tốt:</strong> Chênh lệch không lớn so với Closed Source</li>
+                    </ul>
                   </div>
                 </CardContent>
               </Card>
