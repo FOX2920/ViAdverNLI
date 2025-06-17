@@ -2460,12 +2460,13 @@ export default function ADFCDashboard() {
                   <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <h4 className="font-medium text-yellow-800 mb-2">📊 Key Insights từ LLM Fine-tune Results:</h4>
                     <ul className="text-sm text-yellow-700 space-y-1">
-                      <li>• <strong>GPT-4o mini</strong> dẫn đầu toàn bộ với hiệu suất cao nhất (58.15% R3)</li>
-                      <li>• <strong>API models vượt trội:</strong> GPT-4o và Gemini 2.0 đều đạt >56% ở Round cuối</li>
-                      <li>• <strong>Xu hướng tăng hiệu suất qua rounds:</strong> Tất cả models đều cải thiện từ R1 → R3</li>
-                      <li>• <strong>Local models cạnh tranh:</strong> DEEPSEEK R1 đạt 55.47% R3, gần với API models</li>
-                      <li>• <strong>Fine-tuning hiệu quả:</strong> Kết quả cao hơn đáng kể so với prompting thuần túy</li>
-                      <li>• <strong>Gemma3 & Qwen3:</strong> Stable performance với sự cải thiện đều đặn qua các rounds</li>
+                      <li>• <strong>GPT-4o dẫn đầu:</strong> Hiệu suất cao nhất 58.15% R3, tăng mạnh từ 50.70% R1</li>
+                      <li>• <strong>Gemini 2.0 Flash runner-up:</strong> 56.72% R3, stable performance qua các rounds</li>
+                      <li>• <strong>DEEPSEEK R1 ấn tượng:</strong> 55.72% R3, local model tốt nhất, cạnh tranh với API</li>
+                      <li>• <strong>Xu hướng tăng dần:</strong> Tất cả models đều cải thiện đáng kể từ R1 → R3</li>
+                      <li>• <strong>Fine-tuning vượt trội:</strong> Hiệu suất cao hơn 10-15% so với prompting thuần túy</li>
+                      <li>• <strong>Gap API vs Local:</strong> Chỉ ~3% chênh lệch, cho thấy local models ngày càng mạnh</li>
+                      <li>• <strong>Consistency:</strong> Gemma3 và Qwen3 đều ổn định, cải thiện đều đặn qua rounds</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -2560,10 +2561,13 @@ export default function ADFCDashboard() {
                   <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <h4 className="font-medium text-yellow-800 mb-2">📊 Key Insights từ LLM Prompt Results:</h4>
                     <ul className="text-sm text-yellow-700 space-y-1">
-                      <li>• <strong>phi4-reasoning:14b</strong> đạt hiệu suất cao nhất trong Open Source (47.65% R2)</li>
-                      <li>• <strong>o4_mini</strong> dẫn đầu Closed Source (46.77% R2)</li>
-                      <li>• <strong>Xu hướng giảm hiệu suất R3:</strong> Hầu hết models đều yếu hơn ở Round 3 (adversarial khó nhất)</li>
-                      <li>• <strong>Open Source cạnh tranh tốt:</strong> Chênh lệch không lớn so với Closed Source</li>
+                      <li>• <strong>phi4-reasoning:14b hàng đầu Open Source:</strong> 47.65% R2, suy luận logic tốt nhất</li>
+                      <li>• <strong>o4_mini dẫn đầu Closed Source:</strong> 46.77% R2, nhưng yếu đi ở R3 (30.86%)</li>
+                      <li>• <strong>R3 Challenge hiệu ứng:</strong> Tất cả models đều giảm mạnh hiệu suất ở Round 3</li>
+                      <li>• <strong>qwen3:14b ổn định:</strong> Performance cao và ít bị ảnh hưởng bởi adversarial attacks</li>
+                      <li>• <strong>Open vs Closed gap nhỏ:</strong> Chênh lệch chỉ ~1-2%, Open Source cạnh tranh mạnh</li>
+                      <li>• <strong>gemma3 series consistency:</strong> Cả hai variants đều stable qua rounds</li>
+                      <li>• <strong>Adversarial vulnerability:</strong> Prompting kém robust hơn fine-tuning khi gặp attacks</li>
                     </ul>
                   </div>
                 </CardContent>
