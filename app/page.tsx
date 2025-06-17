@@ -2469,6 +2469,53 @@ export default function ADFCDashboard() {
                       <li>• <strong>Consistency:</strong> Gemma3 và Qwen3 đều ổn định, cải thiện đều đặn qua rounds</li>
                     </ul>
                   </div>
+
+                  {/* LLM Fine-tune Prompt Template */}
+                  <div className="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <h4 className="font-medium text-slate-800 mb-3">🔧 Prompt Template cho LLM Fine-tune:</h4>
+                    <div className="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <div className="text-blue-400 mb-2">// Fine-tune Messages Format</div>
+                      <pre className="whitespace-pre-wrap text-xs">
+{`prompt_msgs = [
+    {
+        "role": "system",
+        "content": (
+            "You are a fact-checking assistant. "
+            "Given the context and a claim, decide whether the claim is "
+            "SUPPORTED, REFUTED, or NEI (Not Enough Information). "
+            "Respond with only one word: SUPPORTED, REFUTED, or NEI."
+        )
+    },
+    {
+        "role": "user",
+        "content": f"Context: {row['context']}\\nClaim: {row['claim']}"
+    }
+]`}
+                      </pre>
+                    </div>
+                    
+                    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <h5 className="font-medium text-slate-700 text-sm">✨ Đặc điểm Fine-tune Template:</h5>
+                        <ul className="text-xs text-slate-600 space-y-1">
+                          <li>• <strong>Simple & Direct:</strong> Yêu cầu output đơn giản</li>
+                          <li>• <strong>Messages Format:</strong> System + User role rõ ràng</li>
+                          <li>• <strong>Minimal Instruction:</strong> Tối ưu cho fine-tuning</li>
+                          <li>• <strong>One Word Output:</strong> Dễ parse và đánh giá</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <h5 className="font-medium text-slate-700 text-sm">🎯 So sánh với Prompting:</h5>
+                        <ul className="text-xs text-slate-600 space-y-1">
+                          <li>• <strong>Ngắn gọn hơn:</strong> Không cần 4-step reasoning</li>
+                          <li>• <strong>Hiệu quả hơn:</strong> +10-15% accuracy improvement</li>
+                          <li>• <strong>Ổn định hơn:</strong> Ít bị ảnh hưởng bởi adversarial</li>
+                          <li>• <strong>Chi phí thấp hơn:</strong> Sau khi fine-tune</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
