@@ -2617,27 +2617,6 @@ export default function ADFCDashboard() {
                       <li>• <strong>Adversarial vulnerability:</strong> Prompting kém robust hơn fine-tuning khi gặp attacks</li>
                     </ul>
                   </div>
-
-                  {/* Compact Prompt Template Section */}
-                  <div className="mt-6">
-                    <div className="flex items-center gap-2 mb-4">
-                      <BookOpen className="w-5 h-5 text-slate-600" />
-                      <h3 className="text-lg font-semibold text-slate-800">🔧 Prompt Template cho LLM Prompting</h3>
-                    </div>
-                    
-                    <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                      <div className="text-sm text-slate-700 mb-3">
-                        <strong>4-bước Vietnamese Fact-Checking:</strong> Chuyên gia fact-checking tiếng Việt → So sánh số liệu → Phát hiện thông tin phụ → JSON output
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-2">
-                        <Badge variant="outline" className="bg-blue-50 text-blue-700 text-xs">4 bước structured</Badge>
-                        <Badge variant="outline" className="bg-green-50 text-green-700 text-xs">phi4-reasoning: 47.65%</Badge>
-                        <Badge variant="outline" className="bg-purple-50 text-purple-700 text-xs">JSON format</Badge>
-                        <Badge variant="outline" className="bg-orange-50 text-orange-700 text-xs">Vietnamese expert</Badge>
-                      </div>
-                    </div>
-                  </div>
                 </CardContent>
               </Card>
             </div>
