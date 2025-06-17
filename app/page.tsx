@@ -2359,11 +2359,70 @@ export default function ADFCDashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="w-5 h-5" />
-                  Kết quả Hiệu suất PLM (Fine-tune + BM25)
+                  Kết quả Hiệu suất PLM (Fine-tune + SBERT + BM25)
                 </CardTitle>
-                <CardDescription>Hiệu suất chi tiết với các loại evidence khác nhau</CardDescription>
+                <CardDescription>Hiệu suất chi tiết với evidence retrieval sử dụng SBERT + BM25 hybrid approach</CardDescription>
               </CardHeader>
               <CardContent>
+                {/* Evidence Retrieval Methodology */}
+                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Settings className="w-5 h-5 text-blue-600" />
+                    <h3 className="text-lg font-semibold text-blue-800">🔍 Evidence Retrieval Methodology</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-medium text-blue-800 mb-2">📋 Hybrid Retrieval Pipeline:</h4>
+                      <div className="space-y-2 text-sm text-blue-700">
+                        <div className="flex items-start gap-2">
+                          <span className="font-mono bg-blue-100 px-2 py-1 rounded text-xs">1.</span>
+                          <span><strong>SBERT Encoding:</strong> sentence-transformers/all-MiniLM-L6-v2</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="font-mono bg-blue-100 px-2 py-1 rounded text-xs">2.</span>
+                          <span><strong>BM25 Scoring:</strong> Traditional keyword-based retrieval</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="font-mono bg-blue-100 px-2 py-1 rounded text-xs">3.</span>
+                          <span><strong>Hybrid Fusion:</strong> Combine semantic + lexical signals</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="font-mono bg-blue-100 px-2 py-1 rounded text-xs">4.</span>
+                          <span><strong>Top-N Selection:</strong> Extract most relevant evidence chunks</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-medium text-blue-800 mb-2">🎯 Evidence Types & Performance:</h4>
+                      <div className="space-y-2 text-sm text-blue-700">
+                        <div className="flex justify-between items-center p-2 bg-blue-100 rounded">
+                          <span><strong>top1:</strong> Most relevant chunk only</span>
+                          <span className="font-mono text-xs">Precision focused</span>
+                        </div>
+                        <div className="flex justify-between items-center p-2 bg-blue-100 rounded">
+                          <span><strong>top2-4:</strong> Multiple evidence chunks</span>
+                          <span className="font-mono text-xs">Recall balanced</span>
+                        </div>
+                        <div className="flex justify-between items-center p-2 bg-blue-100 rounded">
+                          <span><strong>full_context:</strong> Complete document</span>
+                          <span className="font-mono text-xs">Baseline approach</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded">
+                    <h5 className="font-medium text-green-800 mb-1">✅ Best Configuration Found:</h5>
+                    <p className="text-sm text-green-700">
+                      <strong>XLM-R + top4 evidence:</strong> Đạt 66.89% trên R3, cân bằng tốt giữa precision và recall. 
+                      SBERT semantic understanding + BM25 keyword matching tạo ra evidence quality tối ưu.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Performance Tables */}
                 <Tabs defaultValue="mBERT" className="w-full">
                   <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="mBERT">mBERT</TabsTrigger>
