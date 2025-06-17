@@ -2617,6 +2617,45 @@ export default function ADFCDashboard() {
                       <li>• <strong>Adversarial vulnerability:</strong> Prompting kém robust hơn fine-tuning khi gặp attacks</li>
                     </ul>
                   </div>
+
+                  {/* Prompt Template Section */}
+                  <div className="mt-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <BookOpen className="w-5 h-5 text-slate-600" />
+                      <h3 className="text-lg font-semibold text-slate-800">🔧 Prompt Template cho LLM Prompting</h3>
+                    </div>
+                    
+                    <div className="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <div className="text-green-400 mb-2">// Prompt Template for Vietnamese Fact-Checking</div>
+                      <pre className="whitespace-pre-wrap">
+{`prompt = f"""Bạn là chuyên gia fact-checking tiếng Việt. Hãy thực hiện **ngầm** các bước:
+        1. So khớp và **so sánh số liệu** (nếu có) giữa CONTEXT và CLAIM.
+        2. **So sánh** bất kỳ **giá trị số** hoặc **thời gian** (nếu có) giữa CONTEXT và CLAIM.  
+        3. Kiểm tra xem CLAIM có chèn thêm **thông tin phụ** (extra detail) không xuất hiện trong CONTEXT → nếu có, gán \`NEI\`.
+        4. Đưa ra kết luận:  
+           - \`SUPPORTED\` nếu CLAIM được xác nhận hoàn toàn bởi bằng chứng.  
+           - \`REFUTED\` nếu CLAIM bị bác bỏ trực tiếp.  
+           - \`NEI\` nếu không có đủ thông tin.
+        CONTEXT:
+        {context}
+        
+        CLAIM:
+        {claim}
+        CUỐI CÙNG chỉ trả về **một JSON** duy nhất:
+        {{"Label": "SUPPORTED"}} hoặc {{"Label": "REFUTED"}} hoặc {{"Label": "NEI"}}, không thêm bất cứ chữ nào khác."""`}
+                      </pre>
+                    </div>
+                    
+                    <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <h4 className="font-medium text-blue-800 mb-2">🔍 Đặc điểm Template:</h4>
+                      <ul className="text-sm text-blue-700 space-y-1">
+                        <li>• <strong>4-bước structured reasoning:</strong> So sánh số liệu → Phát hiện extra details → Kết luận</li>
+                        <li>• <strong>Vietnamese expertise:</strong> Được thiết kế riêng cho fact-checking tiếng Việt</li>
+                        <li>• <strong>JSON output format:</strong> Chuẩn hóa kết quả, dễ parse và evaluation</li>
+                        <li>• <strong>Best performance:</strong> phi4-reasoning:14b đạt 47.65% trên R2</li>
+                      </ul>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
