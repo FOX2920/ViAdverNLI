@@ -2617,8 +2617,6 @@ export default function ADFCDashboard() {
                       <li>• <strong>Adversarial vulnerability:</strong> Prompting kém robust hơn fine-tuning khi gặp attacks</li>
                     </ul>
                   </div>
-                </CardContent>
-              </Card>
 
                   {/* Compact Prompt Template Section */}
                   <div className="mt-6">
@@ -2640,6 +2638,8 @@ export default function ADFCDashboard() {
                       </div>
                     </div>
                   </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Cost & Resource Analysis */}
