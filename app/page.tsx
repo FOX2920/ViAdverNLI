@@ -650,18 +650,7 @@ const referencesData = [
   { reference: "o4mini2025", title: "O3 and O4-mini System Card", link: "https://cdn.openai.com/pdf/2221c875-02dc-4789-800b-e7758f3722c1/o3-and-o4-mini-system-card.pdf", category: "Models" }
 ]
 
-// LLM Prompt Results
-const llmPromptResults = [
-  { model: "qwen3:14b", method: "Prompt", type: "Open", R1: 45.51, R2: 46.72, R3: 32.37 },
-  { model: "deepseek-r1:32b", method: "Prompt", type: "Open", R1: 30.5, R2: 39.44, R3: 35.7 },
-  { model: "magistral", method: "Prompt", type: "Open", R1: 37.91, R2: 45.74, R3: 40.16 },
-  { model: "cogito:14b", method: "Prompt", type: "Open", R1: 40.41, R2: 46.25, R3: 29.93 },
-  { model: "gemma3", method: "Prompt", type: "Open", R1: 38.83, R2: 45.08, R3: 43.34 },
-  { model: "phi4-reasoning:14b", method: "Prompt", type: "Open", R1: 41.74, R2: 47.65, R3: 34.68 },
-  { model: "gemma_3n_e4b_it", method: "Prompt", type: "Open", R1: 38.73, R2: 45.08, R3: 42.88 },
-  { model: "o4_mini", method: "Prompt", type: "Closed", R1: 45.10, R2: 46.77, R3: 30.86 },
-  { model: "gemini 2.5 flash", method: "Prompt", type: "Closed", R1: 44.69, R2: 43.94, R3: 31.9 }
-]
+
 
 // Model Comparison Summary
 const modelComparisonSummary = [
