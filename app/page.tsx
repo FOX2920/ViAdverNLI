@@ -581,33 +581,46 @@ const plmDetailedResults = {
   mBERT: [
     { evidence: "top1", R1: 27.73, R2: 50.86, R3: 62.42 },
     { evidence: "top2", R1: 24.94, R2: 12.95, R3: 63.53 },
-    { evidence: "top3", R1: 39.48, R2: 32.54, R3: 60.18 },
-    { evidence: "top4", R1: 25.72, R2: 45.51, R3: 61.96 },
-    { evidence: "full_context", R1: 37.05, R2: 16.83, R3: 61.48 }
+    { evidence: "top3", R1: 39.48, R2: 32.47, R3: 60.18 },
+    { evidence: "top4", R1: 25.72, R2: 45.35, R3: 61.90 },
+    { evidence: "full_context", R1: 37.05, R2: 16.83, R3: 61.46 }
   ],
   pho_BERT: [
     { evidence: "top1", R1: 40.57, R2: 43.96, R3: 53.45 },
-    { evidence: "top2", R1: 47.37, R2: 42.53, R3: 65.20 },
+    { evidence: "top2", R1: 29.77, R2: 42.53, R3: 65.20 },
     { evidence: "top3", R1: 41.92, R2: 44.74, R3: 61.85 },
-    { evidence: "top4", R1: 44.41, R2: 47.54, R3: 66.89 },
+    { evidence: "top4", R1: 44.41, R2: 47.54, R3: 54.34 },
     { evidence: "full_context", R1: 43.10, R2: 26.03, R3: 64.48 }
   ],
   "XLM-R": [
     { evidence: "top1", R1: 29.93, R2: 47.36, R3: 64.62 },
-    { evidence: "top2", R1: 29.77, R2: 54.55, R3: 55.99 },
+    { evidence: "top2", R1: 47.37, R2: 54.55, R3: 55.99 },
     { evidence: "top3", R1: 47.22, R2: 50.79, R3: 65.18 },
-    { evidence: "top4", R1: 30.72, R2: 48.26, R3: 54.34 },
+    { evidence: "top4", R1: 30.72, R2: 48.26, R3: 66.89 },
     { evidence: "full_context", R1: 33.41, R2: 11.70, R3: 64.02 }
   ]
 }
 
 // LLM Fine-tune Results (full_context)
 const llmFinetuneResults = [
-  { model: "GPT-4o", R1: 50.7, R2: 57.95, R3: 58.15, type: "API", note: "mini" },
-  { model: "Gemini 2.0", R1: 47.08, R2: 52.93, R3: 56.72, type: "API", note: "" },
-  { model: "Gemma3", R1: 41.66, R2: 50.68, R3: 53.77, type: "Local", note: "" },
-  { model: "Qwen3", R1: 37.57, R2: 47.86, R3: 51.12, type: "Local", note: "" },
-  { model: "DEEPSEEK R1", R1: 42.4, R2: 50.16, R3: 55.47, type: "Local", note: "" }
+  { model: "GPT-4o", R1: 50.70, R2: 57.95, R3: 58.15, type: "API", note: "mini" },
+  { model: "Gemini 2.0 Flash", R1: 47.08, R2: 52.93, R3: 56.72, type: "API", note: "" },
+  { model: "Gemma3", R1: 41.82, R2: 50.75, R3: 53.94, type: "Local", note: "" },
+  { model: "Qwen3", R1: 37.98, R2: 47.93, R3: 51.44, type: "Local", note: "" },
+  { model: "DEEPSEEK R1", R1: 42.67, R2: 50.31, R3: 55.72, type: "Local", note: "" }
+]
+
+// LLM Prompt Results
+const llmPromptResults = [
+  { model: "qwen3:14b", method: "Prompt", type: "Open", R1: 45.51, R2: 46.72, R3: 32.37 },
+  { model: "deepseek-r1:32b", method: "Prompt", type: "Open", R1: 30.50, R2: 39.44, R3: 35.70 },
+  { model: "magistral", method: "Prompt", type: "Open", R1: 37.91, R2: 45.74, R3: 40.16 },
+  { model: "cogito:14b", method: "Prompt", type: "Open", R1: 40.41, R2: 46.25, R3: 29.93 },
+  { model: "gemma3", method: "Prompt", type: "Open", R1: 38.83, R2: 45.04, R3: 43.34 },
+  { model: "phi4-reasoning:14b", method: "Prompt", type: "Open", R1: 41.74, R2: 47.65, R3: 34.68 },
+  { model: "gemma_3n_e4b_it", method: "Prompt", type: "Open", R1: 38.73, R2: 45.08, R3: 42.88 },
+  { model: "o4_mini", method: "Prompt", type: "Closed", R1: 45.10, R2: 46.77, R3: 30.86 },
+  { model: "gemini 2.5 flash", method: "Prompt", type: "Closed", R1: 44.69, R2: 43.94, R3: 31.90 }
 ]
 
 // LLM Prompt Results
@@ -2854,7 +2867,7 @@ export default function ADFCDashboard() {
                 <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
                   <h4 className="font-medium text-green-800">✅ Kết luận về Chất lượng Dữ liệu</h4>
                   <p className="text-sm text-green-700 mt-2">
-                    Tất cả 3 rounds đều đạt Fleiss' Kappa &gt; 0.80, cho thấy chất lượng dữ liệu rất cao với mức độ đồng
+                    Tất cả 3 rounds đều đạt Fleiss' Kappa {'>'} 0.80, cho thấy chất lượng dữ liệu rất cao với mức độ đồng
                     thuận xuất sắc giữa các mô hình tạo dữ liệu. Điều này đảm bảo tính tin cậy và nhất quán trong bộ dữ
                     liệu ViAdverNLI.
                   </p>

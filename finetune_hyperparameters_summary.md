@@ -78,49 +78,44 @@
 
 ## 5. Hiệu suất mô hình (Weighted F1 đầy đủ)
 
-### PLM (Fine-tune + BM25)
+### Fine-tuned PLMs (SBERT + BM25 Retrieval)
 
-| Model    | Evidence     | R1        | R2        | R3        |
-| -------- | ------------ | --------- | --------- | --------- |
-| mBERT    | top1         | 27.73     | 50.86     | 62.42     |
-|          | top2         | 24.94     | 12.95     | 63.53     |
-|          | top3         | 39.48     | 32.54     | 60.18     |
-|          | top4         | 25.72     | 45.51     | 61.96     |
-|          | full_context | 37.05     | 16.83     | 61.48     |
-| pho_BERT | top1         | 40.57     | 43.96     | 53.45     |
-|          | top2         | 47.37     | 42.53     | 65.20     |
-|          | top3         | 41.92     | 44.74     | 61.85     |
-|          | top4         | 44.41     | 47.54     | **66.89** |
-|          | full_context | 43.10     | 26.03     | 64.48     |
-| XLM-R    | top1         | 29.93     | 47.36     | 64.62     |
-|          | top2         | 29.77     | 54.55     | 55.99     |
-|          | top3         | **47.22** | 50.79     | 65.18     |
-|          | top4         | 30.72     | 48.26     | 54.34     |
-|          | full_context | 33.41     | **11.70** | 64.02     |
+| Model                | Method    | Retrieval    | R1    | R2    | R3    |
+| -------------------- | --------- | ------------ | ----- | ----- | ----- |
+| **mBERT**            | Fine-tune | top1         | 27.73 | 50.86 | 62.42 |
+|                      |           | top2         | 24.94 | 12.95 | 63.53 |
+|                      |           | top3         | 39.48 | 32.47 | 60.18 |
+|                      |           | top4         | 25.72 | 45.35 | 61.90 |
+|                      |           | full_context | 37.05 | 16.83 | 61.46 |
+| **pho_BERT**         | Fine-tune | top1         | 40.57 | 43.96 | 53.45 |
+|                      |           | top2         | 29.77 | 42.53 | 65.20 |
+|                      |           | top3         | 41.92 | 44.74 | 61.85 |
+|                      |           | top4         | 44.41 | 47.54 | 54.34 |
+|                      |           | full_context | 43.10 | 26.03 | 64.48 |
+| **XLM-R**            | Fine-tune | top1         | 29.93 | 47.36 | 64.62 |
+|                      |           | top2         | 47.37 | 54.55 | 55.99 |
+|                      |           | top3         | 47.22 | 50.79 | 65.18 |
+|                      |           | top4         | 30.72 | 48.26 | 66.89 |
+|                      |           | full_context | 33.41 | 11.70 | 64.02 |
+| **GPT-4o**           | Fine-tune | full_context | 50.70 | 57.95 | 58.15 |
+| **gemini 2.0 flash** | Fine-tune | full_context | 47.08 | 52.93 | 56.72 |
+| **gemma3**           | Fine-tune | full_context | 41.82 | 50.75 | 53.94 |
+| **qwen3**            | Fine-tune | full_context | 37.98 | 47.93 | 51.44 |
+| **deepseek-r1**      | Fine-tune | full_context | 42.67 | 50.31 | 55.72 |
 
-### LLM Fine-tune (full_context)
+### Prompted LLMs
 
-| Model      | R1       | R2        | R3               |
-| ---------- | -------- | --------- | ---------------- |
-| GPT-4o     | **50.7** | **57.95** | **58.15** (mini) |
-| gemini 2.0 | 47.08    | 52.93     | 56.72            |
-| gemma3     | 41.66    | 50.68     | 53.77            |
-| qwen3      | 37.57    | 47.86     | 51.12            |
-| deepseekr1 | 42.4     | 50.16     | 54.2             |
-
-### LLM Prompt
-
-| Model              | Method | Type   | R1    | R2        | R3        |
-| ------------------ | ------ | ------ | ----- | --------- | --------- |
-| qwen3:14b          | Prompt | Open   | 45.51 | 46.72     | 32.37     |
-| deepseek-r1:32b    | Prompt | Open   | 30.5  | 39.44     | 35.7      |
-| magistral          | Prompt | Open   | 37.91 | 45.74     | 40.16     |
-| cogito:14b         | Prompt | Open   | 40.41 | 46.25     | 29.93     |
-| gemma3             | Prompt | Open   | 38.83 | 45.08     | 43.34     |
-| phi4-reasoning:14b | Prompt | Open   | 41.74 | **47.65** | 34.68     |
-| gemma_3n_e4b_it    | Prompt | Open   | 38.73 | 45.08     | **42.88** |
-| o4_mini            | Prompt | Closed | 45.10 | 46.77     | 30.86     |
-| gemini 2.5 flash   | Prompt | Closed | 44.69 | 43.94     | 31.9      |
+| Model (LLM)        | Method | Model Type | R1    | R2    | R3    |
+| ------------------ | ------ | ---------- | ----- | ----- | ----- |
+| qwen3:14b          | Prompt | Open       | 45.51 | 46.72 | 32.37 |
+| deepseek-r1:32b    | Prompt | Open       | 30.50 | 39.44 | 35.70 |
+| magistral          | Prompt | Open       | 37.91 | 45.74 | 40.16 |
+| cogito:14b         | Prompt | Open       | 40.41 | 46.25 | 29.93 |
+| gemma3             | Prompt | Open       | 38.83 | 45.04 | 43.34 |
+| phi4-reasoning:14b | Prompt | Open       | 41.74 | 47.65 | 34.68 |
+| gemma_3n_e4b_it    | Prompt | Open       | 38.73 | 45.08 | 42.88 |
+| o4_mini            | Prompt | Closed     | 45.10 | 46.77 | 30.86 |
+| gemini 2.5 flash   | Prompt | Closed     | 44.69 | 43.94 | 31.90 |
 
 ---
 
