@@ -1,0 +1,24 @@
+reference,title,link
+fever2018,FEVER: a large-scale dataset for Fact Extraction and VERification,https://arxiv.org/abs/1803.05355
+thorne2019adversarial,Adversarial attacks against Fact Extraction and VERification,https://arxiv.org/abs/1903.05543
+williams2020adversarialnli,Adversarial NLI: A New Benchmark for Natural Language Understanding,https://aclanthology.org/2020.acl-main.485
+schuster2021vitaminc,Get Your Vitamin C: Robust Fact Verification with Contrastive Evidence,https://arxiv.org/abs/2103.08541
+devlin2019bert,BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding,https://arxiv.org/abs/1810.04805
+conneau2019xlm,Cross-lingual Language Model Pretraining,https://arxiv.org/abs/1901.07291
+nguyen2020phobert,PhoBERT: Pre-trained language models for Vietnamese,https://arxiv.org/abs/2003.00744
+huynh2022vinli,ViNLI: A Vietnamese Corpus for Studies on Open-Domain Natural Language Inference,https://aclanthology.org/2022.coling-1.339/
+thang2024viwikifc,ViWikiFC: Fact-Checking for Vietnamese Wikipedia-Based Textual Knowledge Source,https://arxiv.org/abs/2405.07615
+tran2025vifactcheck,ViFactCheck: A New Benchmark Dataset and Methods for Multi-domain News Fact-Checking in Vietnamese,https://arxiv.org/abs/2412.15308
+tran2025bertviet,BERT-based Model for Vietnamese Fact Verification Dataset,https://arxiv.org/abs/2503.00356
+uit2023,Vietnamese Fact Verification,https://codalab.lisn.upsaclay.fr/competitions/15497
+huyen2024vihealthnli,ViHealthNLI: A Dataset for Vietnamese NLI in Healthcare,https://sigul-2024.ilc.cnr.it/wp-content/uploads/2024/05/Huyen-et-al.pdf
+google2024gemini2,Introducing Gemini 2.0: Our New AI Model for the Agentic Era,https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/
+google2025gemini2flash,Gemini 2.0 Flash System Card,https://storage.googleapis.com/model-cards/documents/gemini-2-flash.pdf
+google2025gemini25flash,Gemini 2.5 Flash Preview,https://storage.googleapis.com/model-cards/documents/gemini-2.5-flash-preview.pdf
+yang2025qwen3,Qwen3 Technical Report,https://arxiv.org/abs/2505.09388
+guo2025deepseekr1,DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning,https://arxiv.org/abs/2501.12948
+mistral2025magistral,Magistral,https://arxiv.org/abs/2506.10910
+gemma2025v3,Gemma 3 Technical Report,https://arxiv.org/abs/2503.19786
+abdin2025phi4,Phi-4-Reasoning Technical Report,https://arxiv.org/abs/2504.21318
+deepcogito2025cogito,Introducing Cogito v1 Preview,https://www.deepcogito.com/research/cogito-v1-preview
+o4mini2025,O3 and O4-mini System Card,https://cdn.openai.com/pdf/2221c875-02dc-4789-800b-e7758f3722c1/o3-and-o4-mini-system-card.pdf

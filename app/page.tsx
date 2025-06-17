@@ -623,6 +623,33 @@ const llmPromptResults = [
   { model: "gemini 2.5 flash", method: "Prompt", type: "Closed", R1: 44.69, R2: 43.94, R3: 31.90 }
 ]
 
+// References Data
+const referencesData = [
+  { reference: "fever2018", title: "FEVER: a large-scale dataset for Fact Extraction and VERification", link: "https://arxiv.org/abs/1803.05355", category: "Dataset" },
+  { reference: "thorne2019adversarial", title: "Adversarial attacks against Fact Extraction and VERification", link: "https://arxiv.org/abs/1903.05543", category: "Adversarial" },
+  { reference: "williams2020adversarialnli", title: "Adversarial NLI: A New Benchmark for Natural Language Understanding", link: "https://aclanthology.org/2020.acl-main.485", category: "Adversarial" },
+  { reference: "schuster2021vitaminc", title: "Get Your Vitamin C: Robust Fact Verification with Contrastive Evidence", link: "https://arxiv.org/abs/2103.08541", category: "Methods" },
+  { reference: "devlin2019bert", title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding", link: "https://arxiv.org/abs/1810.04805", category: "Models" },
+  { reference: "conneau2019xlm", title: "Cross-lingual Language Model Pretraining", link: "https://arxiv.org/abs/1901.07291", category: "Models" },
+  { reference: "nguyen2020phobert", title: "PhoBERT: Pre-trained language models for Vietnamese", link: "https://arxiv.org/abs/2003.00744", category: "Models" },
+  { reference: "huynh2022vinli", title: "ViNLI: A Vietnamese Corpus for Studies on Open-Domain Natural Language Inference", link: "https://aclanthology.org/2022.coling-1.339/", category: "Dataset" },
+  { reference: "thang2024viwikifc", title: "ViWikiFC: Fact-Checking for Vietnamese Wikipedia-Based Textual Knowledge Source", link: "https://arxiv.org/abs/2405.07615", category: "Dataset" },
+  { reference: "tran2025vifactcheck", title: "ViFactCheck: A New Benchmark Dataset and Methods for Multi-domain News Fact-Checking in Vietnamese", link: "https://arxiv.org/abs/2412.15308", category: "Dataset" },
+  { reference: "tran2025bertviet", title: "BERT-based Model for Vietnamese Fact Verification Dataset", link: "https://arxiv.org/abs/2503.00356", category: "Methods" },
+  { reference: "uit2023", title: "Vietnamese Fact Verification", link: "https://codalab.lisn.upsaclay.fr/competitions/15497", category: "Competition" },
+  { reference: "huyen2024vihealthnli", title: "ViHealthNLI: A Dataset for Vietnamese NLI in Healthcare", link: "https://sigul-2024.ilc.cnr.it/wp-content/uploads/2024/05/Huyen-et-al.pdf", category: "Dataset" },
+  { reference: "google2024gemini2", title: "Introducing Gemini 2.0: Our New AI Model for the Agentic Era", link: "https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/", category: "Models" },
+  { reference: "google2025gemini2flash", title: "Gemini 2.0 Flash System Card", link: "https://storage.googleapis.com/model-cards/documents/gemini-2-flash.pdf", category: "Models" },
+  { reference: "google2025gemini25flash", title: "Gemini 2.5 Flash Preview", link: "https://storage.googleapis.com/model-cards/documents/gemini-2.5-flash-preview.pdf", category: "Models" },
+  { reference: "yang2025qwen3", title: "Qwen3 Technical Report", link: "https://arxiv.org/abs/2505.09388", category: "Models" },
+  { reference: "guo2025deepseekr1", title: "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning", link: "https://arxiv.org/abs/2501.12948", category: "Models" },
+  { reference: "mistral2025magistral", title: "Magistral", link: "https://arxiv.org/abs/2506.10910", category: "Models" },
+  { reference: "gemma2025v3", title: "Gemma 3 Technical Report", link: "https://arxiv.org/abs/2503.19786", category: "Models" },
+  { reference: "abdin2025phi4", title: "Phi-4-Reasoning Technical Report", link: "https://arxiv.org/abs/2504.21318", category: "Models" },
+  { reference: "deepcogito2025cogito", title: "Introducing Cogito v1 Preview", link: "https://www.deepcogito.com/research/cogito-v1-preview", category: "Models" },
+  { reference: "o4mini2025", title: "O3 and O4-mini System Card", link: "https://cdn.openai.com/pdf/2221c875-02dc-4789-800b-e7758f3722c1/o3-and-o4-mini-system-card.pdf", category: "Models" }
+]
+
 // LLM Prompt Results
 const llmPromptResults = [
   { model: "qwen3:14b", method: "Prompt", type: "Open", R1: 45.51, R2: 46.72, R3: 32.37 },
@@ -913,7 +940,7 @@ export default function ADFCDashboard() {
             <TabsTrigger value="training">Cấu hình Huấn luyện</TabsTrigger>
             <TabsTrigger value="weaknesses">Điểm yếu Mô hình</TabsTrigger>
             <TabsTrigger value="insights">Insights</TabsTrigger>
-            <TabsTrigger value="recommendations">Khuyến nghị</TabsTrigger>
+            <TabsTrigger value="references">Tham khảo</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -3106,298 +3133,217 @@ export default function ADFCDashboard() {
             </Card>
           </TabsContent>
 
-          {/* Recommendations Tab */}
-          <TabsContent value="recommendations" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Target className="w-5 h-5" />
-                    Khuyến nghị Mô hình
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <h4 className="font-medium text-green-800">🏆 XLM-R Large - Lựa chọn PLM tối ưu</h4>
-                    <ul className="mt-2 text-sm text-green-700 space-y-1">
-                      <li>✅ Hiệu suất ổn định cao trên tất cả dataset</li>
-                      <li>✅ Khả năng xử lý dữ liệu đối kháng tốt nhất</li>
-                      <li>✅ Đạt 84.50% - mức cao nhất trên ISE-DSC01</li>
-                      <li>✅ Miễn phí trên Kaggle, dễ tái tạo</li>
-                    </ul>
-                  </div>
-
-                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-                    <h4 className="font-medium text-purple-800">🚀 GPT-4o - Lựa chọn LLM tối ưu</h4>
-                    <ul className="mt-2 text-sm text-purple-700 space-y-1">
-                      <li>✅ Hiệu suất cao nhất trong LLM (58.15%)</li>
-                      <li>✅ Ổn định qua các rounds R1-R3</li>
-                      <li>✅ Backend OpenAI tự động tối ưu</li>
-                      <li>✅ Scalable cho production</li>
-                    </ul>
-                  </div>
-
-                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <h4 className="font-medium text-blue-800">📚 Combination Dữ liệu Tối ưu</h4>
-                    <p className="mt-2 text-sm text-blue-700">
-                      <strong>ViNLI + ViWikiFC + ViFactCheck + ViA1 + ViA2 + ISE-DSC01</strong>
-                    </p>
-                    <ul className="mt-2 text-sm text-blue-700 space-y-1">
-                      <li>🔄 Cung cấp diversity cao</li>
-                      <li>📊 Bao gồm cả dữ liệu thực và đối kháng</li>
-                      <li>🛡️ Giúp mô hình robust trước nhiều loại attack</li>
-                    </ul>
-                  </div>
+          {/* References Tab */}
+          <TabsContent value="references" className="space-y-6">
+            {/* Reference Categories */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <Card className="text-center">
+                <CardContent className="p-4">
+                  <Database className="w-8 h-8 mx-auto text-blue-600 mb-2" />
+                  <h3 className="font-medium">Datasets</h3>
+                  <p className="text-2xl font-bold text-blue-600">
+                    {referencesData.filter(ref => ref.category === "Dataset").length}
+                  </p>
+                  <p className="text-sm text-gray-600">Vietnamese NLI & Fact-Checking</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Zap className="w-5 h-5" />
-                    Chiến lược Theo Mục tiêu
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="p-3 border rounded-lg">
-                    <h4 className="font-medium">🎯 Tối ưu ISE-DSC01</h4>
-                    <p className="text-sm text-gray-600 mt-1">XLM-R + ViNLI+ViWikiFC+ViFactCheck+ViA1+ViA2+ISE-DSC01</p>
-                    <p className="text-sm font-medium text-green-600">→ 84.50% accuracy</p>
-                  </div>
+              <Card className="text-center">
+                <CardContent className="p-4">
+                  <Brain className="w-8 h-8 mx-auto text-purple-600 mb-2" />
+                  <h3 className="font-medium">Models</h3>
+                  <p className="text-2xl font-bold text-purple-600">
+                    {referencesData.filter(ref => ref.category === "Models").length}
+                  </p>
+                  <p className="text-sm text-gray-600">PLMs & LLMs</p>
+                </CardContent>
+              </Card>
 
-                  <div className="p-3 border rounded-lg">
-                    <h4 className="font-medium">🛡️ Tối ưu Adversarial Robustness</h4>
-                    <p className="text-sm text-gray-600 mt-1">XLM-R + Full dataset + ViA3</p>
-                    <p className="text-sm font-medium text-green-600">→ 57.65% trên ViA3</p>
-                  </div>
+              <Card className="text-center">
+                <CardContent className="p-4">
+                  <Shield className="w-8 h-8 mx-auto text-red-600 mb-2" />
+                  <h3 className="font-medium">Adversarial</h3>
+                  <p className="text-2xl font-bold text-red-600">
+                    {referencesData.filter(ref => ref.category === "Adversarial").length}
+                  </p>
+                  <p className="text-sm text-gray-600">Attack & Defense</p>
+                </CardContent>
+              </Card>
 
-                  <div className="p-3 border rounded-lg">
-                    <h4 className="font-medium">⚖️ Balance tổng thể</h4>
-                    <p className="text-sm text-gray-600 mt-1">XLM-R + ViNLI+ViWikiFC+ViFactCheck+ViA1+ViA2</p>
-                    <p className="text-sm font-medium text-green-600">→ Performance tốt trên tất cả</p>
-                  </div>
+              <Card className="text-center">
+                <CardContent className="p-4">
+                  <Zap className="w-8 h-8 mx-auto text-green-600 mb-2" />
+                  <h3 className="font-medium">Methods</h3>
+                  <p className="text-2xl font-bold text-green-600">
+                    {referencesData.filter(ref => ref.category === "Methods" || ref.category === "Competition").length}
+                  </p>
+                  <p className="text-sm text-gray-600">Techniques & Competitions</p>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Method-based Recommendations */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Settings className="w-5 h-5" />
-                  Khuyến nghị theo Phương pháp
-                </CardTitle>
-                <CardDescription>Lựa chọn phương pháp phù hợp với từng use case</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <h4 className="font-medium text-green-800 mb-3">🔧 PLM Fine-tuning</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Phù hợp với:</strong></p>
-                      <ul className="text-green-700 space-y-1">
-                        <li>• Research projects</li>
-                        <li>• Budget constraints</li>
-                        <li>• High customization needs</li>
-                        <li>• Reproducibility focus</li>
-                      </ul>
-                      <p className="font-medium text-green-800 mt-3">Best choice: XLM-R</p>
-                      <p className="text-xs text-green-600">66.89% (phoBERT top4) - Miễn phí</p>
-                    </div>
-                  </div>
+            {/* References by Category */}
+            <Tabs defaultValue="all" className="w-full">
+              <TabsList className="grid w-full grid-cols-5">
+                <TabsTrigger value="all">Tất cả</TabsTrigger>
+                <TabsTrigger value="Dataset">Datasets</TabsTrigger>
+                <TabsTrigger value="Models">Models</TabsTrigger>
+                <TabsTrigger value="Adversarial">Adversarial</TabsTrigger>
+                <TabsTrigger value="Methods">Methods</TabsTrigger>
+              </TabsList>
 
-                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-                    <h4 className="font-medium text-purple-800 mb-3">🚀 LLM Fine-tuning</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Phù hợp với:</strong></p>
-                      <ul className="text-purple-700 space-y-1">
-                        <li>• Production systems</li>
-                        <li>• High performance needs</li>
-                        <li>• Quick deployment</li>
-                        <li>• Managed infrastructure</li>
-                      </ul>
-                      <p className="font-medium text-purple-800 mt-3">Best choice: GPT-4o</p>
-                      <p className="text-xs text-purple-600">58.15% R3 - $25.00/1M token</p>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <h4 className="font-medium text-blue-800 mb-3">💬 LLM Prompting</h4>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Phù hợp với:</strong></p>
-                      <ul className="text-blue-700 space-y-1">
-                        <li>• Quick prototyping</li>
-                        <li>• No training data</li>
-                        <li>• Experiment-heavy workflows</li>
-                        <li>• Local deployment</li>
-                      </ul>
-                      <p className="font-medium text-blue-800 mt-3">Best choice: phi4-reasoning</p>
-                      <p className="text-xs text-blue-600">47.65% R2 - Miễn phí local</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Performance vs Cost Analysis */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <DollarSign className="w-5 h-5" />
-                  Ma trận Hiệu suất vs Chi phí
-                </CardTitle>
-                <CardDescription>So sánh ROI của các phương pháp khác nhau</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium mb-3">🏆 Champions by Category</h4>
+              <TabsContent value="all" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <BookOpen className="w-5 h-5" />
+                      Tài liệu Tham khảo Đầy đủ
+                    </CardTitle>
+                    <CardDescription>
+                      Danh sách đầy đủ các tài liệu nghiên cứu liên quan đến ViAdverNLI và fact-checking tiếng Việt
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
                     <div className="space-y-3">
-                      <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                        <div>
-                          <p className="font-medium">Best Free Option</p>
-                          <p className="text-sm text-gray-600">phoBERT (66.89%)</p>
+                      {referencesData.map((ref, index) => (
+                        <div key={index} className="flex items-start gap-3 p-3 border rounded-lg hover:bg-gray-50">
+                          <Badge variant="outline" className={
+                            ref.category === "Dataset" ? "bg-blue-50 text-blue-700" :
+                            ref.category === "Models" ? "bg-purple-50 text-purple-700" :
+                            ref.category === "Adversarial" ? "bg-red-50 text-red-700" :
+                            "bg-green-50 text-green-700"
+                          }>
+                            {ref.category}
+                          </Badge>
+                          <div className="flex-1">
+                            <h4 className="font-medium text-sm">{ref.title}</h4>
+                            <p className="text-xs text-gray-500 mt-1">
+                              <code className="bg-gray-100 px-1 rounded">{ref.reference}</code>
+                            </p>
+                            <a 
+                              href={ref.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-xs text-blue-600 hover:text-blue-800 underline mt-1 inline-block"
+                            >
+                              {ref.link.length > 60 ? `${ref.link.substring(0, 60)}...` : ref.link}
+                            </a>
+                          </div>
                         </div>
-                        <Badge className="bg-green-100 text-green-800">Free</Badge>
-                      </div>
-                      
-                      <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
-                        <div>
-                          <p className="font-medium">Best Overall Performance</p>
-                          <p className="text-sm text-gray-600">XLM-R ISE-DSC01 (84.5%)</p>
-                        </div>
-                        <Badge className="bg-purple-100 text-purple-800">Free</Badge>
-                      </div>
-
-                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                        <div>
-                          <p className="font-medium">Best LLM Performance</p>
-                          <p className="text-sm text-gray-600">GPT-4o (58.15%)</p>
-                        </div>
-                        <Badge className="bg-blue-100 text-blue-800">$$$</Badge>
-                      </div>
-
-                      <div className="flex justify-between items-center p-3 bg-teal-50 rounded-lg">
-                        <div>
-                          <p className="font-medium">Best Budget LLM</p>
-                          <p className="text-sm text-gray-600">Gemini 2.0 (56.72%)</p>
-                        </div>
-                        <Badge className="bg-teal-100 text-teal-800">$3/1M token</Badge>
-                      </div>
-
-                      <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
-                        <div>
-                          <p className="font-medium">Best No-Training</p>
-                          <p className="text-sm text-gray-600">phi4-reasoning (47.65%)</p>
-                        </div>
-                        <Badge className="bg-orange-100 text-orange-800">Free</Badge>
-                      </div>
+                      ))}
                     </div>
-                  </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-                  <div>
-                    <h4 className="font-medium mb-3">💡 Decision Framework</h4>
-                    <div className="space-y-3 text-sm">
-                      <div className="p-3 border-l-4 border-l-green-500 bg-gray-50">
-                        <p className="font-medium">If you have: No budget</p>
-                        <p className="text-gray-600">→ PLM on Kaggle (XLM-R/phoBERT)</p>
+              {["Dataset", "Models", "Adversarial", "Methods"].map(category => (
+                <TabsContent key={category} value={category} className="space-y-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        {category === "Dataset" && <Database className="w-5 h-5 text-blue-600" />}
+                        {category === "Models" && <Brain className="w-5 h-5 text-purple-600" />}
+                        {category === "Adversarial" && <Shield className="w-5 h-5 text-red-600" />}
+                        {category === "Methods" && <Zap className="w-5 h-5 text-green-600" />}
+                        {category === "Dataset" ? "Vietnamese NLI & Fact-Checking Datasets" :
+                         category === "Models" ? "Pre-trained Language Models & LLMs" :
+                         category === "Adversarial" ? "Adversarial Attacks & Defense" :
+                         "Methods & Competitions"}
+                      </CardTitle>
+                      <CardDescription>
+                        {category === "Dataset" ? "Các bộ dữ liệu NLI và fact-checking tiếng Việt" :
+                         category === "Models" ? "Các mô hình ngôn ngữ được sử dụng trong nghiên cứu" :
+                         category === "Adversarial" ? "Nghiên cứu về tấn công và phòng thủ adversarial" :
+                         "Phương pháp và cuộc thi liên quan"}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {referencesData
+                          .filter(ref => category === "Methods" ? 
+                            (ref.category === "Methods" || ref.category === "Competition") : 
+                            ref.category === category)
+                          .map((ref, index) => (
+                            <div key={index} className="flex items-start gap-3 p-3 border rounded-lg hover:bg-gray-50">
+                              <Badge variant="outline" className={
+                                category === "Dataset" ? "bg-blue-50 text-blue-700" :
+                                category === "Models" ? "bg-purple-50 text-purple-700" :
+                                category === "Adversarial" ? "bg-red-50 text-red-700" :
+                                "bg-green-50 text-green-700"
+                              }>
+                                {ref.category}
+                              </Badge>
+                              <div className="flex-1">
+                                <h4 className="font-medium text-sm">{ref.title}</h4>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  <code className="bg-gray-100 px-1 rounded">{ref.reference}</code>
+                                </p>
+                                <a 
+                                  href={ref.link} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-xs text-blue-600 hover:text-blue-800 underline mt-1 inline-block"
+                                >
+                                  {ref.link.length > 60 ? `${ref.link.substring(0, 60)}...` : ref.link}
+                                </a>
+                              </div>
+                            </div>
+                          ))}
                       </div>
-                      
-                      <div className="p-3 border-l-4 border-l-blue-500 bg-gray-50">
-                        <p className="font-medium">If you need: Quick results</p>
-                        <p className="text-gray-600">→ LLM Prompting (phi4-reasoning)</p>
-                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              ))}
+            </Tabs>
 
-                      <div className="p-3 border-l-4 border-l-purple-500 bg-gray-50">
-                        <p className="font-medium">If you want: Best performance</p>
-                        <p className="text-gray-600">→ GPT-4o Fine-tuning</p>
-                      </div>
-
-                      <div className="p-3 border-l-4 border-l-red-500 bg-gray-50">
-                        <p className="font-medium">If you need: Full control</p>
-                        <p className="text-gray-600">→ H100 Local Fine-tuning</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Future Directions */}
+            {/* Citation Guidelines */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Brain className="w-5 h-5" />
-                  Hướng Phát triển Tương lai
+                  <Award className="w-5 h-5" />
+                  Hướng dẫn Trích dẫn
                 </CardTitle>
+                <CardDescription>
+                  Cách trích dẫn ViAdverNLI và các tài liệu liên quan trong nghiên cứu
+                </CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium mb-3">🚀 ViAdverNLI R4 - Thế hệ tiếp theo</h4>
-                    <ul className="text-sm space-y-2">
-                      <li>
-                        • <strong>Mô hình:</strong> GPT-4O, Claude-3.5, Gemini-Pro
-                      </li>
-                      <li>
-                        • <strong>Dữ liệu:</strong> Full dataset hiện tại + ViA3
-                      </li>
-                      <li>
-                        • <strong>Mục tiêu:</strong> Tạo ra claim cực kỳ tinh vi
-                      </li>
-                      <li>
-                        • <strong>Target:</strong> Phá vỡ rào cản 60% accuracy
-                      </li>
-                    </ul>
+              <CardContent className="space-y-4">
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <h4 className="font-medium text-blue-800 mb-2">📖 Trích dẫn ViAdverNLI</h4>
+                  <div className="bg-white p-3 rounded border text-sm font-mono">
+                    @inproceedings{"{"}viadvernli2025,<br />
+                    &nbsp;&nbsp;title={"{"}ViAdverNLI: A Vietnamese Adversarial Natural Language Inference Dataset{"}"}, <br />
+                    &nbsp;&nbsp;author={"{"}Author Names{"}"}, <br />
+                    &nbsp;&nbsp;booktitle={"{"}Proceedings of Conference{"}"}, <br />
+                    &nbsp;&nbsp;year={"{"}2025{"}"}, <br />
+                    &nbsp;&nbsp;url={"{"}https://github.com/your-repo/ViAdverNLI{"}"} <br />
+                    {"}"}
                   </div>
+                </div>
 
-                  <div>
-                    <h4 className="font-medium mb-3">🔬 Cải tiến Kỹ thuật</h4>
-                    <ul className="text-sm space-y-2">
-                      <li>
-                        • <strong>Ensemble methods:</strong> Kết hợp PLM + LLM
-                      </li>
-                      <li>
-                        • <strong>Multi-domain:</strong> Y tế, luật pháp, khoa học
-                      </li>
-                      <li>
-                        • <strong>Advanced prompting:</strong> CoT, RAG, ReAct
-                      </li>
-                      <li>
-                        • <strong>Defense:</strong> Robust training, ensemble methods
-                      </li>
-                    </ul>
-                  </div>
+                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <h4 className="font-medium text-green-800 mb-2">🔗 Liên kết và Chia sẻ</h4>
+                  <ul className="text-sm text-green-700 space-y-1">
+                    <li>• Dataset có thể được sử dụng cho mục đích nghiên cứu</li>
+                    <li>• Vui lòng trích dẫn paper gốc khi sử dụng</li>
+                    <li>• Chia sẻ kết quả nghiên cứu với cộng đồng</li>
+                    <li>• Liên hệ tác giả nếu có câu hỏi về dataset</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <h4 className="font-medium text-yellow-800 mb-2">⚠️ Lưu ý Quan trọng</h4>
+                  <ul className="text-sm text-yellow-700 space-y-1">
+                    <li>• Dataset được tạo ra chỉ cho mục đích nghiên cứu khoa học</li>
+                    <li>• Không sử dụng cho mục đích thương mại mà không có sự cho phép</li>
+                    <li>• Tuân thủ các nguyên tắc đạo đức trong nghiên cứu AI</li>
+                    <li>• Báo cáo các vấn đề bias hoặc limitation trong nghiên cứu</li>
+                  </ul>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Action Items */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Hành động Cụ thể</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <h4 className="font-medium">Ngắn hạn (1-3 tháng)</h4>
-                    <ul className="text-sm space-y-1">
-                      <li>✅ Deploy XLM-R với configuration tối ưu</li>
-                      <li>✅ Phân tích error cases chi tiết</li>
-                      <li>✅ Tối ưu hyperparameters cho từng dataset</li>
-                    </ul>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-medium">Dài hạn (3-6 tháng)</h4>
-                    <ul className="text-sm space-y-1">
-                      <li>🚀 Phát triển ViAdverNLI R4</li>
-                      <li>🚀 Nghiên cứu defensive techniques</li>
-                      <li>🚀 Mở rộng sang domain khác</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+
           </TabsContent>
         </Tabs>
       </div>
