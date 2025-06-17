@@ -607,7 +607,7 @@ const llmFinetuneResults = [
   { model: "Gemini 2.0", R1: 47.08, R2: 52.93, R3: 56.72, type: "API", note: "" },
   { model: "Gemma3", R1: 41.66, R2: 50.68, R3: 53.77, type: "Local", note: "" },
   { model: "Qwen3", R1: 37.57, R2: 47.86, R3: 51.12, type: "Local", note: "" },
-  { model: "DEEPSEEK R1", R1: 42.4, R2: 50.16, R3: 54.2, type: "Local", note: "" }
+  { model: "DEEPSEEK R1", R1: 42.4, R2: 50.16, R3: 55.47, type: "Local", note: "" }
 ]
 
 // LLM Prompt Results
@@ -2569,7 +2569,7 @@ export default function ADFCDashboard() {
                       <li>• <strong>Khuyến nghị:</strong> H100 Local Fine-tune</li>
                       <li>• <strong>Chi phí:</strong> $5.62/hour</li>
                       <li>• <strong>GPU:</strong> H100 SXM5 (80GB)</li>
-                      <li>• <strong>Hiệu suất tốt nhất:</strong> DEEPSEEK ~54.2%</li>
+                      <li>• <strong>Hiệu suất tốt nhất:</strong> DEEPSEEK ~55.47%</li>
                       <li>• <strong>Thời gian:</strong> 1-3 giờ/model</li>
                     </ul>
                   </div>
