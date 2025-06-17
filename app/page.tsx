@@ -2572,6 +2572,70 @@ export default function ADFCDashboard() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* LLM Prompt Template */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BookOpen className="w-5 h-5" />
+                    Prompt Template Sử dụng
+                  </CardTitle>
+                  <CardDescription>
+                    Template prompt được sử dụng để đánh giá tất cả LLM models trong thí nghiệm
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                    <div className="text-green-400 mb-2">// Prompt Template for Vietnamese Fact-Checking</div>
+                    <pre className="whitespace-pre-wrap">
+{`prompt = f"""Bạn là chuyên gia fact-checking tiếng Việt. Hãy thực hiện **ngầm** các bước:
+        1. So khớp và **so sánh số liệu** (nếu có) giữa CONTEXT và CLAIM.
+        2. **So sánh** bất kỳ **giá trị số** hoặc **thời gian** (nếu có) giữa CONTEXT và CLAIM.  
+        3. Kiểm tra xem CLAIM có chèn thêm **thông tin phụ** (extra detail) không xuất hiện trong CONTEXT → nếu có, gán \`NEI\`.
+        4. Đưa ra kết luận:  
+           - \`SUPPORTED\` nếu CLAIM được xác nhận hoàn toàn bởi bằng chứng.  
+           - \`REFUTED\` nếu CLAIM bị bác bỏ trực tiếp.  
+           - \`NEI\` nếu không có đủ thông tin.
+        CONTEXT:
+        {context}
+        
+        CLAIM:
+        {claim}
+        CUỐI CÙNG chỉ trả về **một JSON** duy nhất:
+        {{"Label": "SUPPORTED"}} hoặc {{"Label": "REFUTED"}} hoặc {{"Label": "NEI"}}, không thêm bất cứ chữ nào khác."""`}
+                    </pre>
+                  </div>
+                  
+                  <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 className="font-medium text-blue-800 mb-2">🔍 Đặc điểm Prompt:</h4>
+                    <ul className="text-sm text-blue-700 space-y-1">
+                      <li>• <strong>Structured reasoning:</strong> 4 bước phân tích rõ ràng</li>
+                      <li>• <strong>Numerical focus:</strong> Đặc biệt chú ý so sánh số liệu và thời gian</li>
+                      <li>• <strong>Extra detail detection:</strong> Phát hiện thông tin phụ không có trong context</li>
+                      <li>• <strong>JSON output:</strong> Format chuẩn, dễ parse và đánh giá</li>
+                      <li>• <strong>Vietnamese expertise:</strong> Được thiết kế riêng cho fact-checking tiếng Việt</li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 className="font-medium text-green-800 mb-2">✅ Kết quả Đạt được:</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                      <div>
+                        <p className="font-medium text-green-700">Best Performance:</p>
+                        <p className="text-green-600">phi4-reasoning: 47.65% (R2)</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-green-700">Most Stable:</p>
+                        <p className="text-green-600">qwen3:14b across rounds</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-green-700">Open vs Closed:</p>
+                        <p className="text-green-600">~1-2% performance gap</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Cost & Resource Analysis */}
