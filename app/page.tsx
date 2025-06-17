@@ -2428,6 +2428,17 @@ export default function ADFCDashboard() {
                       </div>
                     ))}
                   </div>
+                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <h4 className="font-medium text-yellow-800 mb-2">📊 Key Insights từ LLM Fine-tune Results:</h4>
+                    <ul className="text-sm text-yellow-700 space-y-1">
+                      <li>• <strong>GPT-4o mini</strong> dẫn đầu toàn bộ với hiệu suất cao nhất (58.15% R3)</li>
+                      <li>• <strong>API models vượt trội:</strong> GPT-4o và Gemini 2.0 đều đạt >56% ở Round cuối</li>
+                      <li>• <strong>Xu hướng tăng hiệu suất qua rounds:</strong> Tất cả models đều cải thiện từ R1 → R3</li>
+                      <li>• <strong>Local models cạnh tranh:</strong> DEEPSEEK R1 đạt 55.47% R3, gần với API models</li>
+                      <li>• <strong>Fine-tuning hiệu quả:</strong> Kết quả cao hơn đáng kể so với prompting thuần túy</li>
+                      <li>• <strong>Gemma3 & Qwen3:</strong> Stable performance với sự cải thiện đều đặn qua các rounds</li>
+                    </ul>
+                  </div>
                 </CardContent>
               </Card>
 
