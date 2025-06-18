@@ -512,6 +512,159 @@ const errorExamples = {
   ],
 }
 
+// Complexity Evaluation Data
+const complexityEvaluationData = [
+  {
+    round: "R1",
+    split: "dev",
+    lcs_ratio: 44.52,
+    nwr: 34.36,
+    jaccard: 15.00,
+    lexical_overlap: 67.18,
+    unique_overlap: 65.64,
+    tfidf_cosine: 47.68,
+    semantic_similarity: 74.64,
+    num_sent_ctx: 11.02,
+    num_sent_clm: 2.04,
+    len_ctx: 295.35,
+    len_clm: 42.29
+  },
+  {
+    round: "R1",
+    split: "test",
+    lcs_ratio: 44.68,
+    nwr: 34.13,
+    jaccard: 14.80,
+    lexical_overlap: 67.42,
+    unique_overlap: 65.87,
+    tfidf_cosine: 47.34,
+    semantic_similarity: 74.41,
+    num_sent_ctx: 11.28,
+    num_sent_clm: 2.04,
+    len_ctx: 300.86,
+    len_clm: 42.47
+  },
+  {
+    round: "R1",
+    split: "train",
+    lcs_ratio: 41.36,
+    nwr: 38.07,
+    jaccard: 16.21,
+    lexical_overlap: 63.52,
+    unique_overlap: 61.93,
+    tfidf_cosine: 47.10,
+    semantic_similarity: 75.31,
+    num_sent_ctx: 9.86,
+    num_sent_clm: 2.06,
+    len_ctx: 249.07,
+    len_clm: 45.39
+  },
+  {
+    round: "R2",
+    split: "dev",
+    lcs_ratio: 33.73,
+    nwr: 47.21,
+    jaccard: 14.70,
+    lexical_overlap: 54.45,
+    unique_overlap: 52.79,
+    tfidf_cosine: 42.65,
+    semantic_similarity: 75.25,
+    num_sent_ctx: 8.72,
+    num_sent_clm: 2.12,
+    len_ctx: 243.44,
+    len_clm: 49.45
+  },
+  {
+    round: "R2",
+    split: "test",
+    lcs_ratio: 34.75,
+    nwr: 46.28,
+    jaccard: 15.29,
+    lexical_overlap: 55.24,
+    unique_overlap: 53.72,
+    tfidf_cosine: 43.91,
+    semantic_similarity: 75.85,
+    num_sent_ctx: 8.42,
+    num_sent_clm: 2.11,
+    len_ctx: 238.32,
+    len_clm: 49.61
+  },
+  {
+    round: "R2",
+    split: "train",
+    lcs_ratio: 34.35,
+    nwr: 45.38,
+    jaccard: 15.87,
+    lexical_overlap: 56.42,
+    unique_overlap: 54.62,
+    tfidf_cosine: 44.32,
+    semantic_similarity: 76.08,
+    num_sent_ctx: 9.34,
+    num_sent_clm: 2.10,
+    len_ctx: 257.46,
+    len_clm: 53.46
+  },
+  {
+    round: "R3",
+    split: "dev",
+    lcs_ratio: 32.70,
+    nwr: 49.69,
+    jaccard: 13.20,
+    lexical_overlap: 51.87,
+    unique_overlap: 50.31,
+    tfidf_cosine: 40.24,
+    semantic_similarity: 73.77,
+    num_sent_ctx: 10.70,
+    num_sent_clm: 2.07,
+    len_ctx: 283.43,
+    len_clm: 48.78
+  },
+  {
+    round: "R3",
+    split: "test",
+    lcs_ratio: 32.04,
+    nwr: 50.44,
+    jaccard: 12.93,
+    lexical_overlap: 51.19,
+    unique_overlap: 49.56,
+    tfidf_cosine: 39.78,
+    semantic_similarity: 73.18,
+    num_sent_ctx: 10.67,
+    num_sent_clm: 2.07,
+    len_ctx: 282.54,
+    len_clm: 48.94
+  },
+  {
+    round: "R3",
+    split: "train",
+    lcs_ratio: 36.05,
+    nwr: 46.82,
+    jaccard: 12.45,
+    lexical_overlap: 54.54,
+    unique_overlap: 53.18,
+    tfidf_cosine: 40.63,
+    semantic_similarity: 72.52,
+    num_sent_ctx: 10.93,
+    num_sent_clm: 2.06,
+    len_ctx: 284.08,
+    len_clm: 42.57
+  }
+];
+
+const complexityMetricsDefinition = [
+  { metric: "lcs_ratio (%)", definition: "Tỷ lệ LCS so với độ dài của claim_tokens, (%)" },
+  { metric: "nwr (%)", definition: "New Word Ratio: % từ trong claim không có trong context" },
+  { metric: "jaccard (%)", definition: "Jaccard Similarity: độ tương đồng tập từ giữa context và claim, (%)" },
+  { metric: "lexical_overlap (%)", definition: "Tỷ lệ token trong claim xuất hiện trong context, (%)" },
+  { metric: "unique_overlap (%)", definition: "Tỷ lệ từ duy nhất của claim cũng có trong context, (%)" },
+  { metric: "tfidf_cosine (%)", definition: "Cosine similarity giữa vector TF–IDF của context và claim, (%)" },
+  { metric: "semantic_similarity (%)", definition: "Cosine similarity giữa embeddings SBERT của context và claim, (%)" },
+  { metric: "num_sent_ctx", definition: "Số câu trong context (đếm thô theo dấu chấm \".\")" },
+  { metric: "num_sent_clm", definition: "Số câu trong claim" },
+  { metric: "len_ctx", definition: "Số token (từ) của context" },
+  { metric: "len_clm", definition: "Số token (từ) của claim" }
+];
+
 const dataSourcesBreakdown = {
   Wikipedia: { total: 9973, percentage: 46.9, rounds: { R1: 2601, R2: 2150, R3: 5222 } },
   VnExpress: { total: 6023, percentage: 28.3, rounds: { R1: 2746, R2: 1155, R3: 2122 } },
@@ -1597,6 +1750,156 @@ export default function ADFCDashboard() {
                 </Card>
               ))}
             </div>
+
+            {/* Complexity Evaluation Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Brain className="w-5 h-5" />
+                  Đánh giá Độ phức tạp Suy luận Dataset
+                </CardTitle>
+                <CardDescription>
+                  Phân tích độ phức tạp suy luận thông qua các metrics word overlap và semantic similarity, sử dụng SBERT để tạo embeddings và tính toán tương quan cosine similarity
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Methodology Description */}
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 className="font-medium text-blue-800 mb-2">📝 Phương pháp Đánh giá:</h4>
+                    <div className="text-sm text-blue-700 space-y-2">
+                      <p><strong>Word Overlap:</strong> Sử dụng Longest Common Subsequence (LCS), New Word Ratio (NWR), Jaccard Similarity (JS), và Lexical Overlap</p>
+                      <p><strong>Semantic Similarity:</strong> Sử dụng khái niệm Related Words, tạo embeddings với SBERT và tính correlation bằng cosine similarity</p>
+                      <p><strong>Reference:</strong> <a href="https://arxiv.org/pdf/1908.10084" target="_blank" className="text-blue-600 underline">Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks</a></p>
+                    </div>
+                  </div>
+
+                  {/* Main Data Table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-2 text-left">Round</th>
+                          <th className="border border-gray-300 p-2 text-left">Split</th>
+                          <th className="border border-gray-300 p-2 text-center">LCS Ratio (%)</th>
+                          <th className="border border-gray-300 p-2 text-center">NWR (%)</th>
+                          <th className="border border-gray-300 p-2 text-center">Jaccard (%)</th>
+                          <th className="border border-gray-300 p-2 text-center">Lexical Overlap (%)</th>
+                          <th className="border border-gray-300 p-2 text-center">Unique Overlap (%)</th>
+                          <th className="border border-gray-300 p-2 text-center">TF-IDF Cosine (%)</th>
+                          <th className="border border-gray-300 p-2 text-center">Semantic Similarity (%)</th>
+                          <th className="border border-gray-300 p-2 text-center">Sent CTX</th>
+                          <th className="border border-gray-300 p-2 text-center">Sent CLM</th>
+                          <th className="border border-gray-300 p-2 text-center">Len CTX</th>
+                          <th className="border border-gray-300 p-2 text-center">Len CLM</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {complexityEvaluationData.map((row, index) => (
+                          <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                            <td className="border border-gray-300 p-2 font-medium">{row.round}</td>
+                            <td className="border border-gray-300 p-2 font-medium capitalize">{row.split}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.lcs_ratio}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.nwr}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.jaccard}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.lexical_overlap}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.unique_overlap}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.tfidf_cosine}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.semantic_similarity}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.num_sent_ctx}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.num_sent_clm}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.len_ctx}</td>
+                            <td className="border border-gray-300 p-2 text-center">{row.len_clm}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Metrics Definition Table */}
+                  <div>
+                    <h4 className="font-medium mb-3">🔍 Giải thích các Metrics:</h4>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                      {complexityMetricsDefinition.map((item, index) => (
+                        <div key={index} className="p-3 border rounded-lg">
+                          <div className="font-medium text-sm">{item.metric}</div>
+                          <div className="text-xs text-gray-600 mt-1">{item.definition}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Visual Analysis */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-medium mb-3">📊 Jaccard Similarity xu hướng giảm</h4>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={complexityEvaluationData.filter(d => d.split === 'train')}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="round" />
+                          <YAxis domain={[10, 20]} />
+                          <Tooltip formatter={(value, name) => [`${value}%`, 'Jaccard Similarity']} />
+                          <Line type="monotone" dataKey="jaccard" stroke="#ef4444" strokeWidth={2} name="Jaccard %" />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div>
+                      <h4 className="font-medium mb-3">📈 New Word Ratio tăng dần</h4>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={complexityEvaluationData.filter(d => d.split === 'train')}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="round" />
+                          <YAxis domain={[30, 50]} />
+                          <Tooltip formatter={(value, name) => [`${value}%`, 'New Word Ratio']} />
+                          <Line type="monotone" dataKey="nwr" stroke="#3b82f6" strokeWidth={2} name="NWR %" />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+
+                  {/* Key Insights */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <h4 className="font-medium text-red-800 mb-2">🔻 Jaccard Similarity giảm</h4>
+                      <div className="text-sm text-red-700 space-y-1">
+                        <div>R1: 16.21% → R3: 12.45%</div>
+                        <div>Độ tương đồng từ vựng giảm dần</div>
+                        <div>Claims ngày càng đa dạng hơn</div>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <h4 className="font-medium text-blue-800 mb-2">📈 New Word Ratio tăng</h4>
+                      <div className="text-sm text-blue-700 space-y-1">
+                        <div>R1: 38.07% → R3: 46.82%</div>
+                        <div>Nhiều từ mới không có trong context</div>
+                        <div>Tăng độ khó suy luận</div>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <h4 className="font-medium text-green-800 mb-2">⚖️ Semantic Similarity ổn định</h4>
+                      <div className="text-sm text-green-700 space-y-1">
+                        <div>R1-R3: ~72-76%</div>
+                        <div>SBERT embeddings tương đối nhất quán</div>
+                        <div>Ngữ nghĩa cấp cao được bảo toàn</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <h4 className="font-medium text-yellow-800 mb-2">🎯 Kết luận về Độ phức tạp Dataset:</h4>
+                    <ul className="text-sm text-yellow-700 space-y-1">
+                      <li>• <strong>Tăng dần độ khó lexical:</strong> Jaccard similarity giảm từ R1 → R3, New Word Ratio tăng</li>
+                      <li>• <strong>Claims adversarial ngày càng tinh vi:</strong> Ít từ chung với context nhưng vẫn giữ được semantic coherence</li>
+                      <li>• <strong>SBERT embeddings ổn định:</strong> Semantic similarity ~72-76% cho thấy claims vẫn có ý nghĩa liên quan đến context</li>
+                      <li>• <strong>R3 thách thức nhất:</strong> Jaccard thấp nhất (12.45%) + NWR cao nhất (46.82%) = độ khó cực đại</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Performance Analysis Tab */}
