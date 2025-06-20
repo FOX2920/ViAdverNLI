@@ -51,10 +51,10 @@ const roundsData = [
     refuted: 37.6,
     nei: 21.3,
     difficulty: "Cơ bản",
-    kappa: 0.8097,
+    kappa: 0.8052,
   },
   {
-    round: "R2",
+    round: "R2", 
     model: "PhoBERT",
     trainingData: "ViNLI + ViWikiFC + ViFactCheck + ViA1",
     samples: 5961,
@@ -62,18 +62,18 @@ const roundsData = [
     refuted: 30.9,
     nei: 39.0,
     difficulty: "Nâng cao",
-    kappa: 0.8099,
+    kappa: 0.8138,
   },
   {
     round: "R3",
-    model: "XLM-R",
+    model: "XLM-R", 
     trainingData: "ViNLI + ViWikiFC + ViFactCheck + ViA1 + ViA2 + ISE-DSC01",
     samples: 9954,
     supported: 31.2,
     refuted: 31.9,
     nei: 36.9,
     difficulty: "Cao cấp",
-    kappa: 0.8099,
+    kappa: 0.7539,
   },
 ]
 
@@ -666,13 +666,41 @@ const complexityMetricsDefinition = [
 ];
 
 const dataSourcesBreakdown = {
-  Wikipedia: { total: 9973, percentage: 46.9, rounds: { R1: 2601, R2: 2150, R3: 5222 } },
-  VnExpress: { total: 6023, percentage: 28.3, rounds: { R1: 2746, R2: 1155, R3: 2122 } },
-  "Báo Lao Động": { total: 1484, percentage: 7.0, rounds: { R1: 0, R2: 389, R3: 1095 } },
-  "Báo Pháp Luật": { total: 1123, percentage: 5.3, rounds: { R1: 0, R2: 630, R3: 493 } },
-  "Báo Chính Phủ": { total: 1114, percentage: 5.2, rounds: { R1: 0, R2: 614, R3: 500 } },
-  "Báo Nhân Dân": { total: 1088, percentage: 5.1, rounds: { R1: 0, R2: 566, R3: 522 } },
-  "Thanh Niên": { total: 457, percentage: 2.1, rounds: { R1: 0, R2: 457, R3: 0 } },
+  "Wiki": {
+    total: 9973,
+    percentage: 46.9,
+    rounds: { R1: 2601, R2: 2150, R3: 5222 }
+  },
+  "VnExpress": {
+    total: 6023,
+    percentage: 28.3,
+    rounds: { R1: 2746, R2: 1155, R3: 2122 }
+  },
+  "Báo Chính Phủ": {
+    total: 1114,
+    percentage: 5.2,
+    rounds: { R1: 0, R2: 614, R3: 500 }
+  },
+  "Báo Lao Động": {
+    total: 1484,
+    percentage: 7.0,
+    rounds: { R1: 0, R2: 389, R3: 1095 }
+  },
+  "Báo Nhân Dân": {
+    total: 1088,
+    percentage: 5.1,
+    rounds: { R1: 0, R2: 566, R3: 522 }
+  },
+  "Báo Pháp Luật": {
+    total: 1123,
+    percentage: 5.3,
+    rounds: { R1: 0, R2: 630, R3: 493 }
+  },
+  "Báo Thanh Niên": {
+    total: 457,
+    percentage: 2.1,
+    rounds: { R1: 0, R2: 457, R3: 0 }
+  }
 }
 
 // Hyperparameters và Training Configuration Data
@@ -839,34 +867,37 @@ const detailedStatsPerRound = [
     round: "R1",
     numSamples: 5347,
     avgClaimLen: 44.02,
-    minClaimLen: 8,
+    minClaimLen: 30,
     maxClaimLen: 126,
     avgContextLen: 271.46,
-    minContextLen: 33,
+    minContextLen: 50,
     maxContextLen: 1935,
-    vocabSize: 21022
+    vocabSize: 21022,
+    kappa: 0.8052
   },
   {
     round: "R2", 
     numSamples: 5961,
-    avgClaimLen: 51.5,
-    minClaimLen: 12,
+    avgClaimLen: 51.50,
+    minClaimLen: 30,
     maxClaimLen: 179,
     avgContextLen: 249.19,
     minContextLen: 50,
     maxContextLen: 1422,
-    vocabSize: 21054
+    vocabSize: 21054,
+    kappa: 0.8138
   },
   {
     round: "R3",
     numSamples: 9954,
     avgClaimLen: 44.86,
-    minClaimLen: 10,
+    minClaimLen: 30,
     maxClaimLen: 198,
     avgContextLen: 283.68,
-    minContextLen: 62,
+    minContextLen: 50,
     maxContextLen: 1783,
-    vocabSize: 25697
+    vocabSize: 25697,
+    kappa: 0.7539
   }
 ]
 
@@ -909,97 +940,98 @@ const jaccardSimilarity = [
 // Dataset Comparison Data from comparison_report.md
 const datasetComparison = [
   {
-    name: "ViAdverNLI (R1-R3)",
-    description: "benchmark NLI adversarial",
-    samples: "~21.3k cặp",
-    dataType: "premise/hypothesis",
-    labels: "3 nhãn NLI",
-    textLength: "premise ~24 từ, hyp ~12-15 từ", 
-    method: "human+model loop",
-    accuracy: "~58% (SOTA)",
-    highlight: "Adversarial 3 rounds",
-    color: "bg-red-50 border-red-200 text-red-800"
+    name: "ViAdverNLI",
+    highlight: "Adversarial fact-checking",
+    description: "Adversarial fact-checking",
+    samples: "21,262 pairs",
+    dataType: "Wiki, VnExpress, News",
+    textLength: "Claim: ~45 chars, Context: ~270 chars",
+    method: "Challenging adversarial benchmark",
+    accuracy: "58%",
+    color: "bg-red-100 border-red-300 text-red-800"
   },
   {
-    name: "ViNLI", 
-    description: "NLI corpus đầu tiên",
-    samples: ">30k cặp",
-    dataType: "premise/hypothesis",
-    labels: "3 nhãn NLI",
-    textLength: "premise ~24.5 từ, hyp ~18.1 từ",
-    method: "manual 5 annotator",
-    accuracy: "~79% (SOTA)",
-    highlight: "Baseline NLI",
-    color: "bg-blue-50 border-blue-200 text-blue-800"
+    name: "VINLI",
+    highlight: "Natural Language Inference", 
+    description: "Natural Language Inference",
+    samples: "> 30,000 pairs",
+    dataType: "Online articles",
+    textLength: "Medium length pairs",
+    method: "Foundation for NLI; lacks adversarial examples",
+    accuracy: "79%",
+    color: "bg-green-100 border-green-300 text-green-800"
   },
   {
     name: "ViWikiFC",
-    description: "Wikipedia-based fact-checking", 
-    samples: ">20k cặp",
-    dataType: "claim + evidence",
-    labels: "3 nhãn FEVER",
-    textLength: "claim ~15-20 từ, evidence ~20-40 từ",
-    method: "manual FEVER style",
-    accuracy: "~79% (SOTA)",
-    highlight: "Wikipedia source",
-    color: "bg-green-50 border-green-200 text-green-800"
+    highlight: "Wikipedia fact-checking",
+    description: "Wikipedia fact-checking", 
+    samples: "> 20,000 claims",
+    dataType: "Vietnamese Wikipedia",
+    textLength: "Wikipedia text length",
+    method: "Strong non-adversarial benchmark for Wikipedia",
+    accuracy: "79%",
+    color: "bg-green-100 border-green-300 text-green-800"
   },
   {
     name: "ViFactCheck",
-    description: "news fact-check benchmark",
-    samples: "7,232 cặp", 
-    dataType: "claim + evidence",
-    labels: "3 nhãn",
-    textLength: "claim ~12-15 từ, evidence ~30-50 từ",
-    method: "manual expert",
-    accuracy: "~62% (SOTA)",
-    highlight: "News articles",
-    color: "bg-yellow-50 border-yellow-200 text-yellow-800"
+    highlight: "Multi-domain fact-checking",
+    description: "Multi-domain fact-checking",
+    samples: "7,232 pairs", 
+    dataType: "Online news",
+    textLength: "Variable length pairs",
+    method: "High baseline performance emphasizes need for adversarial robustness",
+    accuracy: "62%",
+    color: "bg-yellow-100 border-yellow-300 text-yellow-800"
   },
   {
     name: "ISE-DSC01",
-    description: "competition dataset",
-    samples: "~49.7k cặp",
-    dataType: "claim + context", 
-    labels: "3 nhãn",
-    textLength: "claim ~10-20 từ, context ~50-100 từ",
-    method: "auto+manual",
-    accuracy: "~84% (SOTA)",
-    highlight: "Largest dataset",
-    color: "bg-purple-50 border-purple-200 text-purple-800"
+    highlight: "FEVER-like fact verification",
+    description: "FEVER-like fact verification",
+    samples: "48,000+ samples",
+    dataType: "Vietnamese news", 
+    textLength: "Long context passages",
+    method: "Contains naturally occurring adversarial examples",
+    accuracy: "84%",
+    color: "bg-green-100 border-green-300 text-green-800"
   }
 ]
 
 const viadvernliHighlights = [
   {
-    title: "Độ khó cao",
-    description: "Mô hình SOTA chỉ đạt ~58% accuracy, thấp hơn đáng kể so với các dataset khác (~79–84%)",
-    icon: "⚡",
-    impact: "Thử thách mô hình mạnh nhất"
-  },
-  {
-    title: "Quy trình adversarial 3 vòng", 
-    description: "Duy nhất sử dụng human-and-model-in-the-loop để thu thập mẫu gây bẫy cho mô hình",
-    icon: "🔄",
-    impact: "Phương pháp độc đáo"
-  },
-  {
-    title: "Đa dạng ngôn ngữ",
-    description: "Tỷ lệ trùng từ thấp, nhiều cách diễn đạt khác biệt, bao gồm ẩn dụ, thay đổi chi tiết nhỏ", 
-    icon: "🌐",
-    impact: "Linguistic diversity cao"
-  },
-  {
-    title: "Giá trị huấn luyện",
-    description: "Khi huấn luyện trên ViAdverNLI, mô hình cải thiện hiệu quả tổng quát trên các dataset NLI khác",
-    icon: "📈", 
-    impact: "Cross-dataset improvement"
-  },
-  {
-    title: "Bổ sung khoảng trống",
-    description: "Cung cấp benchmark NLI adversarial cho tiếng Việt, mở hướng nghiên cứu robust NLI và fact-checking",
     icon: "🎯",
-    impact: "Research gap filling"
+    title: "Iterative Adversarial Generation",
+    description: "3 rounds with progressively stronger target models (mBERT → PhoBERT → XLM-R)",
+    impact: "Increasing difficulty"
+  },
+  {
+    icon: "🤖", 
+    title: "LLM Ensemble Cross-Evaluation",
+    description: "Multiple LLMs generate and evaluate claims in cross-evaluation framework",
+    impact: "Quality assurance"
+  },
+  {
+    icon: "📊",
+    title: "High Inter-Annotator Agreement", 
+    description: "Fleiss' Kappa > 0.75 for all included samples, ensuring quality",
+    impact: "Reliable benchmark"
+  },
+  {
+    icon: "🌐",
+    title: "Multi-Source Vietnamese Content",
+    description: "Wiki, VnExpress, and 5 official news sources for diversity", 
+    impact: "Domain coverage"
+  },
+  {
+    icon: "💎",
+    title: "Systematic Quality Control",
+    description: "6-stage automated pipeline with pre-filtering and consensus voting",
+    impact: "83.1% retention rate"
+  },
+  {
+    icon: "🔬",
+    title: "Complexity Analysis",
+    description: "Decreasing lexical overlap (15.6% → 12.7%) forces semantic reasoning",
+    impact: "Challenging inference"
   }
 ]
 
@@ -1044,10 +1076,10 @@ export default function ADFCDashboard() {
               <div className="p-3 bg-white bg-opacity-20 rounded-xl">
                 <Brain className="w-8 h-8 text-white" />
               </div>
-              <h1 className="text-5xl font-bold text-white">ViAdverNLI Dashboard</h1>
+              <h1 className="text-5xl font-bold text-white">ViAdverNLI</h1>
             </div>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Phân tích toàn diện bộ dữ liệu Fact-checking & Suy luận ngôn ngữ tự nhiên đối kháng tiếng Việt
+              Novel Adversarial Benchmark Dataset for Vietnamese Fact-checking
             </p>
             <div className="flex flex-wrap justify-center gap-4 mt-6">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-3 flex items-center gap-2">
@@ -1064,11 +1096,11 @@ export default function ADFCDashboard() {
               </div>
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-3 flex items-center gap-2">
                 <Award className="w-5 h-5 text-blue-200" />
-                <span className="text-white font-semibold">Kappa &gt; 0.80</span>
+                <span className="text-white font-semibold">Kappa &gt; 0.75</span>
               </div>
             </div>
             <div className="mt-6 text-blue-100 text-sm">
-              <p>🏆 Bộ dữ liệu thử thách khó nhất cho NLI tiếng Việt • 🎯 SOTA chỉ đạt 58% accuracy</p>
+              <p>🏆 Bộ dữ liệu thử thách khó nhất cho Vietnamese fact-checking • 🎯 SOTA chỉ đạt 58.15% weighted F1</p>
             </div>
           </div>
         </div>
@@ -1097,8 +1129,8 @@ export default function ADFCDashboard() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-gray-600">
-                    Xây dựng bộ dữ liệu đối kháng tiếng Việt cho fact-checking, tạo ra các claim phức tạp để thử thách
-                    khả năng của mô hình AI.
+                    Xây dựng bộ dữ liệu đối kháng đầu tiên cho Vietnamese fact-checking, sử dụng ensemble LLMs trong quy trình 
+                    iterative để tạo ra các claim adversarial thử thách khả năng robustness của mô hình SOTA.
                   </p>
                 </CardContent>
               </Card>
@@ -1127,8 +1159,8 @@ export default function ADFCDashboard() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-gray-600">
-                    Tạo thành công 21,262 mẫu dữ liệu đối kháng chất lượng cao với Fleiss' Kappa &gt; 0.80 (đồng thuận
-                    xuất sắc).
+                    Tạo thành công 21,262 mẫu dữ liệu đối kháng với 83.1% retention rate, Fleiss' Kappa &gt; 0.75 
+                    và performance drop 20+ points so với non-adversarial benchmarks.
                   </p>
                 </CardContent>
               </Card>
@@ -1265,9 +1297,9 @@ export default function ADFCDashboard() {
                     <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                       <h4 className="font-bold text-blue-800 mb-2">📊 Ranking độ khó:</h4>
                       <ol className="text-sm text-blue-700 space-y-1">
-                        <li><strong>1. ViAdverNLI (58%)</strong> - Cực khó 🔴</li>
+                        <li><strong>1. ViAdverNLI (58.15%)</strong> - Cực khó 🔴</li>
                         <li><strong>2. ViFactCheck (62%)</strong> - Khó 🟡</li> 
-                        <li><strong>3. ViNLI (79%)</strong> - Trung bình 🟢</li>
+                        <li><strong>3. VINLI (79%)</strong> - Trung bình 🟢</li>
                         <li><strong>4. ViWikiFC (79%)</strong> - Trung bình 🟢</li>
                         <li><strong>5. ISE-DSC01 (84%)</strong> - Dễ 🟢</li>
                       </ol>
@@ -1626,15 +1658,15 @@ export default function ADFCDashboard() {
                         <div className="space-y-1 text-sm mt-2">
                           <div className="flex justify-between">
                             <span>Trung bình:</span>
-                            <span className="font-medium">{(sim.avgJaccard * 100).toFixed(2)}%</span>
+                            <span className="font-medium">{(Number(sim.avgJaccard) * 100).toFixed(2)}%</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Tối thiểu:</span>
-                            <span className="font-medium">{(sim.minJaccard * 100).toFixed(2)}%</span>
+                            <span className="font-medium">{(Number(sim.minJaccard) * 100).toFixed(2)}%</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Tối đa:</span>
-                            <span className="font-medium">{(sim.maxJaccard * 100).toFixed(2)}%</span>
+                            <span className="font-medium">{(Number(sim.maxJaccard) * 100).toFixed(2)}%</span>
                           </div>
                         </div>
                       </div>
@@ -3312,21 +3344,21 @@ export default function ADFCDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-medium">Round 1</h4>
-                    <div className="text-2xl font-bold text-green-600">0.8097</div>
+                    <div className="text-2xl font-bold text-green-600">0.8052</div>
                     <p className="text-sm text-gray-600">Đồng thuận xuất sắc ⭐⭐⭐</p>
                     <p className="text-xs text-gray-500 mt-1">Mô hình: qwq, deepseek-r1:32b, mistral-small3.1</p>
                   </div>
 
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-medium">Round 2</h4>
-                    <div className="text-2xl font-bold text-green-600">0.8099</div>
+                    <div className="text-2xl font-bold text-green-600">0.8138</div>
                     <p className="text-sm text-gray-600">Đồng thuận xuất sắc ⭐⭐⭐</p>
                     <p className="text-xs text-gray-500 mt-1">Mô hình: granite3.2, phi4-reasoning, qwen3</p>
                   </div>
 
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-medium">Round 3</h4>
-                    <div className="text-2xl font-bold text-green-600">0.8099</div>
+                    <div className="text-2xl font-bold text-green-600">0.7539</div>
                     <p className="text-sm text-gray-600">Đồng thuận xuất sắc ⭐⭐⭐</p>
                     <p className="text-xs text-gray-500 mt-1">Mô hình: phi4-reasoning, qwen3, gpt_4o_mini</p>
                   </div>
