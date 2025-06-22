@@ -180,33 +180,7 @@ export function WeaknessesTab() {
         </CardContent>
       </Card>
 
-      {/* Label Challenge Success */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Mức độ Thử thách theo Nhãn</CardTitle>
-          <CardDescription>Tỷ lệ adversarial examples thành công đánh lừa mô hình theo từng loại nhãn</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart
-              data={[
-                { label: "SUPPORTED", mBERT: 92.03, PhoBERT: 33.82, "XLM-R": 64.01 },
-                { label: "REFUTED", mBERT: 84.95, PhoBERT: 42.61, "XLM-R": 69.74 },
-                { label: "NEI", mBERT: 33.19, PhoBERT: 80.54, "XLM-R": 13.5 },
-              ]}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="mBERT" fill="#ef4444" />
-              <Bar dataKey="PhoBERT" fill="#f97316" />
-              <Bar dataKey="XLM-R" fill="#eab308" />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+
 
       {/* Detailed Analysis */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -214,38 +188,29 @@ export function WeaknessesTab() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Brain className="w-5 h-5" />
-              Phân tích Chi tiết Adversarial Challenges
+              Error Pattern Analysis
             </CardTitle>
+            <CardDescription>Key behavioral patterns identified across baseline models</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-              <h4 className="font-medium text-red-800">🔴 mBERT (Round 1)</h4>
-              <ul className="mt-2 text-sm text-red-700 space-y-1">
-                <li>• Thiên vị mạnh mẽ về nhãn NEI (62.9% dự đoán)</li>
-                <li>• Rất kém với SUPPORTED (92.03% lỗi)</li>
-                <li>• Yếu kém trong xử lý tiếng Việt</li>
-                <li>• Khó hiểu ngữ cảnh phức tạp</li>
-              </ul>
-            </div>
-
-            <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-              <h4 className="font-medium text-orange-800">🟠 PhoBERT (Round 2)</h4>
-              <ul className="mt-2 text-sm text-orange-700 space-y-1">
-                <li>• Khó nhận diện nhãn NEI (80.54% lỗi)</li>
-                <li>• Thiên vị về SUPPORTED và REFUTED</li>
-                <li>• Quá tự tin với các suy luận</li>
-                <li>• Nhầm lẫn giữa SUPPORTED và REFUTED</li>
-              </ul>
-            </div>
-
-            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <h4 className="font-medium text-yellow-800">🟡 XLM-R (Round 3)</h4>
-              <ul className="mt-2 text-sm text-yellow-700 space-y-1">
-                <li>• Thiên vị về nhãn NEI (68.7% dự đoán)</li>
-                <li>• Quá thận trọng trong dự đoán</li>
-                <li>• Khó xử lý claim phức tạp</li>
-                <li>• Kém với REFUTED (69.74% lỗi)</li>
-              </ul>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-3 border rounded-lg">
+                <h4 className="font-medium text-gray-800 mb-2">mBERT (R1)</h4>
+                <p className="text-sm text-gray-600">Strong NEI bias, struggles with Vietnamese context understanding</p>
+                <div className="mt-2 text-xs text-red-600 font-medium">Error Rate: 76.83%</div>
+              </div>
+              
+              <div className="p-3 border rounded-lg">
+                <h4 className="font-medium text-gray-800 mb-2">PhoBERT (R2)</h4>
+                <p className="text-sm text-gray-600">Poor NEI recognition, overconfident in SUPPORTED/REFUTED predictions</p>
+                <div className="mt-2 text-xs text-orange-600 font-medium">Error Rate: 54.74%</div>
+              </div>
+              
+              <div className="p-3 border rounded-lg">
+                <h4 className="font-medium text-gray-800 mb-2">XLM-R (R3)</h4>
+                <p className="text-sm text-gray-600">Over-conservative approach, tendency to predict NEI when uncertain</p>
+                <div className="mt-2 text-xs text-yellow-600 font-medium">Error Rate: 47.20%</div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -254,45 +219,31 @@ export function WeaknessesTab() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Target className="w-5 h-5" />
-              Đề xuất Cải thiện
+              Future Directions
             </CardTitle>
+            <CardDescription>Research directions for improving adversarial robustness</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <h4 className="font-medium">🎯 Cho mBERT:</h4>
-              <ul className="text-sm space-y-1 ml-4">
-                <li>• Tăng cường dữ liệu huấn luyện tiếng Việt</li>
-                <li>• Điều chỉnh ngưỡng để giảm thiên vị NEI</li>
-                <li>• Cải thiện khả năng nhận diện SUPPORTED/REFUTED</li>
-              </ul>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="font-medium">🎯 Cho PhoBERT:</h4>
-              <ul className="text-sm space-y-1 ml-4">
-                <li>• Tăng cường dữ liệu NEI trong training</li>
-                <li>• Điều chỉnh ngưỡng giảm thiên vị SUPPORTED</li>
-                <li>• Cải thiện phân biệt SUPPORTED vs REFUTED</li>
-              </ul>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="font-medium">🎯 Cho XLM-R:</h4>
-              <ul className="text-sm space-y-1 ml-4">
-                <li>• Điều chỉnh ngưỡng giảm thiên vị NEI</li>
-                <li>• Tăng cường dữ liệu SUPPORTED/REFUTED phức tạp</li>
-                <li>• Cải thiện khả năng suy luận từ evidence</li>
-              </ul>
-            </div>
-
-            <div className="pt-3 border-t">
-              <h4 className="font-medium">🔧 Đề xuất chung:</h4>
-              <ul className="text-sm space-y-1 ml-4">
-                <li>• Kết hợp ensemble các mô hình</li>
-                <li>• Cải thiện tiền xử lý dữ liệu</li>
-                <li>• Phát triển mô hình chuyên biệt cho từng nhãn</li>
-                <li>• Áp dụng adversarial training nâng cao</li>
-              </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-medium mb-2">Model Improvements</h4>
+                <ul className="text-sm space-y-1 text-gray-600">
+                  <li>• Adversarial training methods</li>
+                  <li>• Ensemble approaches</li>
+                  <li>• Threshold calibration</li>
+                  <li>• Label-specific architectures</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-medium mb-2">Data Strategies</h4>
+                <ul className="text-sm space-y-1 text-gray-600">
+                  <li>• Enhanced Vietnamese corpora</li>
+                  <li>• Balanced label distribution</li>
+                  <li>• Improved preprocessing</li>
+                  <li>• Cross-domain validation</li>
+                </ul>
+              </div>
             </div>
           </CardContent>
         </Card>
