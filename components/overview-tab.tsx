@@ -32,6 +32,7 @@ import {
 import { roundsData, COLORS } from "@/data/rounds-data"
 import { datasetComparison, viadvernliHighlights } from "@/data/dataset-data"
 import { getDifficultyColor } from "@/utils/chart-utils"
+import { PipelineDiagram } from "./pipeline-diagram"
 
 export function OverviewTab() {
   return (
@@ -235,7 +236,13 @@ export function OverviewTab() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Pipeline Diagram */}
+          <PipelineDiagram />
+          
+          {/* Round Details */}
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold mb-4">Chi tiết từng Round:</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {roundsData.map((round, index) => (
               <div key={round.round} className="relative">
                 <Card className="h-full">
@@ -265,6 +272,7 @@ export function OverviewTab() {
                 )}
               </div>
             ))}
+            </div>
           </div>
         </CardContent>
       </Card>
