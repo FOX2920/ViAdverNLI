@@ -267,6 +267,53 @@ export function OverviewTab() {
           {/* Pipeline Diagram */}
           <PipelineDiagram />
           
+          {/* Context Data Sources */}
+          <div className="mt-6">
+            <Card className="border-l-4 border-l-blue-500">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Database className="w-5 h-5" />
+                  Context Data Sources
+                </CardTitle>
+                <CardDescription>
+                  Nguồn dữ liệu context được sử dụng làm nền tảng cho việc tạo adversarial claims
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 className="font-medium text-blue-800 mb-2">📚 Wikipedia tiếng Việt</h4>
+                    <ul className="text-sm text-blue-700 space-y-1">
+                      <li>• Các bài viết về khoa học, lịch sử, địa lý</li>
+                      <li>• Thông tin chính xác, đáng tin cậy</li>
+                      <li>• Đa dạng chủ đề và lĩnh vực</li>
+                      <li>• Cấu trúc tốt, dễ trích xuất thông tin</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 className="font-medium text-green-800 mb-2">📰 Báo chí Việt Nam</h4>
+                    <ul className="text-sm text-green-700 space-y-1">
+                      <li>• VnExpress, Thanh Niên, Tuổi Trẻ</li>
+                      <li>• Tin tức thời sự, kinh tế, xã hội</li>
+                      <li>• Ngôn ngữ tự nhiên, gần gũi</li>
+                      <li>• Phản ánh thực tế đời sống</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                  <h4 className="font-medium text-gray-800 mb-2">🎯 Tiêu chí lựa chọn Context</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-gray-600">
+                    <div>• Độ dài: 50-500 từ</div>
+                    <div>• Ngôn ngữ: Tiếng Việt chuẩn</div>
+                    <div>• Nội dung: Có thông tin cụ thể</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          
           {/* Round Details */}
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-4">Chi tiết từng Round:</h3>
