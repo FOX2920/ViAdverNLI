@@ -15,7 +15,7 @@
 
 - **21,262 mẫu dữ liệu** được tạo qua 3 rounds đối kháng
 - **Độ khó tăng dần**: R1 (Cơ bản) → R2 (Nâng cao) → R3 (Cao cấp)
-- **Fleiss' Kappa > 0.80**: Đồng thuận xuất sắc giữa các annotator
+- **Fleiss' Kappa**: 2/3 rounds > 0.80 (R1: 0.8052, R2: 0.8138, R3: 0.7539)
 - **Thử thách khó nhất**: SOTA chỉ đạt 58% accuracy (thấp nhất trong các NLI dataset tiếng Việt)
 
 ## 🏗️ Kiến trúc Dự án

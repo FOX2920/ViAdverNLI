@@ -76,8 +76,8 @@ export function OverviewTab() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-gray-600">
-              Tạo thành công 21,262 mẫu dữ liệu đối kháng chất lượng cao với Fleiss' Kappa &gt; 0.80 (đồng thuận
-              xuất sắc).
+                              Tạo thành công 21,262 mẫu dữ liệu đối kháng chất lượng cao với 2/3 rounds đạt Fleiss' Kappa &gt; 0.80 
+                (đồng thuận xuất sắc).
             </p>
           </CardContent>
         </Card>

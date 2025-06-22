@@ -12,7 +12,7 @@ Use 3 rounds with increasingly powerful models (mBERT → PhoBERT → XLM-R) to 
 
 ### Achievements
 
-Successfully created 21,262 high-quality adversarial samples with Fleiss' Kappa > 0.80 (excellent agreement).
+Successfully created 21,262 high-quality adversarial samples with 2/3 rounds achieving Fleiss' Kappa > 0.80 (excellent agreement).
 
 ## 🏆 Key Achievements
 
@@ -450,7 +450,7 @@ CUỐI CÙNG chỉ trả về **một JSON** duy nhất:
 - R2: granite3.2, phi4-reasoning, qwen3
 - R3: phi4-reasoning, qwen3, gpt_4o_mini
 
-**Conclusion**: All 3 rounds achieve Fleiss' Kappa > 0.80, demonstrating very high data quality with excellent agreement between data generation models.
+**Conclusion**: 2 out of 3 rounds achieve Fleiss' Kappa > 0.80 (R1: 0.8052, R2: 0.8138), while R3 achieves 0.7539 (substantial agreement), demonstrating high data quality with good to excellent agreement between data generation models.
 
 ## 🎯 Insights and Recommendations
 

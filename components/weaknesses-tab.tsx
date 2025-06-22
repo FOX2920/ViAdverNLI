@@ -286,8 +286,8 @@ export function WeaknessesTab() {
           <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
             <h4 className="font-medium text-green-800">✅ Kết luận về Chất lượng Dữ liệu</h4>
             <p className="text-sm text-green-700 mt-2">
-              Tất cả 3 rounds đều đạt Fleiss' Kappa {'>'} 0.80, cho thấy chất lượng dữ liệu rất cao với mức độ đồng
-              thuận xuất sắc giữa các mô hình tạo dữ liệu. Điều này đảm bảo tính tin cậy và nhất quán trong bộ dữ
+              2/3 rounds đạt Fleiss' Kappa {'>'} 0.80 (R1: 0.8052, R2: 0.8138), cho thấy chất lượng dữ liệu rất cao. 
+              R3 đạt 0.7539 vẫn được xem là mức đồng thuận tốt. Điều này đảm bảo tính tin cậy và nhất quán trong bộ dữ
               liệu ViAdverNLI.
             </p>
           </div>
