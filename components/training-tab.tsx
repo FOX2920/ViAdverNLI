@@ -19,6 +19,7 @@ import {
   llmLocalHyperparameters,
   plmDetailedResults,
   llmFinetuneResults,
+  llmPromptResults,
   promptTemplate
 } from "@/data/training-data"
 
@@ -447,86 +448,183 @@ export function TrainingTab() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="w-5 h-5" />
-            LLM Fine-tune Results
+            LLM
           </CardTitle>
-          <CardDescription>Hiệu suất mô hình LLM sau fine-tuning</CardDescription>
+          <CardDescription>Hiệu suất mô hình LLM với fine-tuning và prompting approaches</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {llmFinetuneResults.map((model, index) => (
-              <div key={index} className="p-3 border rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-medium">{model.model}</h4>
-                    <Badge variant="outline" className={model.type === 'API' ? 'bg-purple-100 text-purple-800' : 'bg-red-100 text-red-800'}>
-                      {model.type}
-                    </Badge>
-                    {model.note && <Badge variant="secondary">{model.note}</Badge>}
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold text-blue-600">Best: {Math.max(model.R1, model.R2, model.R3)}%</div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 gap-2 text-sm">
-                  <div className="text-center">
-                    <div className="text-gray-500">R1</div>
-                    <div className={`font-medium ${getPerformanceColor(model.R1)}`}>{model.R1}%</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-gray-500">R2</div>
-                    <div className={`font-medium ${getPerformanceColor(model.R2)}`}>{model.R2}%</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-gray-500">R3</div>
-                    <div className={`font-medium ${getPerformanceColor(model.R3)}`}>{model.R3}%</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <h4 className="font-medium text-yellow-800 mb-2">📊 Key Insights từ LLM Fine-tune Results:</h4>
-            <ul className="text-sm text-yellow-700 space-y-1">
-              <li>• <strong>GPT-4o dẫn đầu:</strong> Hiệu suất cao nhất 58.15% R3, tăng mạnh từ 50.70% R1</li>
-              <li>• <strong>Gemini 2.0 Flash runner-up:</strong> 56.72% R3, stable performance qua các rounds</li>
-              <li>• <strong>DEEPSEEK R1 ấn tượng:</strong> 55.72% R3, local model tốt nhất, cạnh tranh với API</li>
-              <li>• <strong>Xu hướng tăng dần:</strong> Tất cả models đều cải thiện đáng kể từ R1 → R3</li>
-              <li>• <strong>Fine-tuning vượt trội:</strong> Hiệu suất cao hơn 10-15% so với prompting thuần túy</li>
-              <li>• <strong>Gap API vs Local:</strong> Chỉ ~3% chênh lệch, cho thấy local models ngày càng mạnh</li>
-              <li>• <strong>Consistency:</strong> Gemma3 và Qwen3 đều ổn định, cải thiện đều đặn qua rounds</li>
-            </ul>
-          </div>
+          <Tabs defaultValue="finetune" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="finetune">Fine-tune</TabsTrigger>
+              <TabsTrigger value="prompting">Prompting</TabsTrigger>
+            </TabsList>
 
-          {/* LLM Fine-tune Prompt Template */}
-          <div className="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-lg">
-            <h4 className="font-medium text-slate-800 mb-3">🔧 Prompt Template cho LLM Fine-tune:</h4>
-            <div className="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto">
-              <div className="text-blue-400 mb-2">// Fine-tune Messages Format</div>
-              <pre className="whitespace-pre-wrap text-xs">
-                {promptTemplate.finetuneTemplate}
-              </pre>
-            </div>
-            
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <h5 className="font-medium text-slate-700 text-sm">✨ Đặc điểm Fine-tune Template:</h5>
-                <ul className="text-xs text-slate-600 space-y-1">
-                  {promptTemplate.features.map((feature, index) => (
-                    <li key={index}>• <strong>{feature.split(':')[0]}:</strong> {feature.split(':')[1]}</li>
-                  ))}
+            <TabsContent value="finetune">
+              <div className="space-y-3">
+                {llmFinetuneResults.map((model, index) => (
+                  <div key={index} className="p-3 border rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-medium">{model.model}</h4>
+                        <Badge variant="outline" className={model.type === 'API' ? 'bg-purple-100 text-purple-800' : 'bg-red-100 text-red-800'}>
+                          {model.type}
+                        </Badge>
+                        {model.note && <Badge variant="secondary">{model.note}</Badge>}
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-blue-600">Best: {Math.max(model.R1, model.R2, model.R3)}%</div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-sm">
+                      <div className="text-center">
+                        <div className="text-gray-500">R1</div>
+                        <div className={`font-medium ${getPerformanceColor(model.R1)}`}>{model.R1}%</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-gray-500">R2</div>
+                        <div className={`font-medium ${getPerformanceColor(model.R2)}`}>{model.R2}%</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-gray-500">R3</div>
+                        <div className={`font-medium ${getPerformanceColor(model.R3)}`}>{model.R3}%</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <h4 className="font-medium text-yellow-800 mb-2">📊 Key Insights từ LLM Fine-tune Results:</h4>
+                <ul className="text-sm text-yellow-700 space-y-1">
+                  <li>• <strong>GPT-4o dẫn đầu:</strong> Hiệu suất cao nhất 58.15% R3, tăng mạnh từ 50.70% R1</li>
+                  <li>• <strong>Gemini 2.0 Flash runner-up:</strong> 56.72% R3, stable performance qua các rounds</li>
+                  <li>• <strong>DEEPSEEK R1 ấn tượng:</strong> 54.20% R3, local model tốt nhất, cạnh tranh với API</li>
+                  <li>• <strong>Xu hướng tăng dần:</strong> Tất cả models đều cải thiện đáng kể từ R1 → R3</li>
+                  <li>• <strong>Fine-tuning vượt trội:</strong> Hiệu suất cao hơn 10-15% so với prompting thuần túy</li>
+                  <li>• <strong>Gap API vs Local:</strong> Chỉ ~3% chênh lệch, cho thấy local models ngày càng mạnh</li>
+                  <li>• <strong>Consistency:</strong> Gemma3 và Qwen3 đều ổn định, cải thiện đều đặn qua rounds</li>
                 </ul>
+              </div>
+
+              {/* LLM Fine-tune Prompt Template */}
+              <div className="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                <h4 className="font-medium text-slate-800 mb-3">🔧 Prompt Template cho LLM Fine-tune:</h4>
+                <div className="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                  <div className="text-blue-400 mb-2">// Fine-tune Messages Format</div>
+                  <pre className="whitespace-pre-wrap text-xs">
+                    {promptTemplate.finetuneTemplate}
+                  </pre>
+                </div>
+                
+                                 <div className="mt-3">
+                   <div className="space-y-2">
+                     <h5 className="font-medium text-slate-700 text-sm">✨ Đặc điểm Fine-tune Template:</h5>
+                     <ul className="text-xs text-slate-600 space-y-1">
+                       {promptTemplate.features.map((feature, index) => (
+                         <li key={index}>• <strong>{feature.split(':')[0]}:</strong> {feature.split(':')[1]}</li>
+                       ))}
+                     </ul>
+                   </div>
+                 </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="prompting">
+              <div className="space-y-3">
+                {llmPromptResults.map((model, index) => (
+                  <div key={index} className="p-3 border rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-medium">{model.model}</h4>
+                        <Badge variant="outline" className={model.type === 'Open' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}>
+                          {model.type}
+                        </Badge>
+                        <Badge variant="secondary">{model.method}</Badge>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-orange-600">Best: {Math.max(model.R1, model.R2, model.R3)}%</div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-sm">
+                      <div className="text-center">
+                        <div className="text-gray-500">R1</div>
+                        <div className={`font-medium ${getPerformanceColor(model.R1)}`}>{model.R1}%</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-gray-500">R2</div>
+                        <div className={`font-medium ${getPerformanceColor(model.R2)}`}>{model.R2}%</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-gray-500">R3</div>
+                        <div className={`font-medium ${getPerformanceColor(model.R3)}`}>{model.R3}%</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
               
-              <div className="space-y-2">
-                <h5 className="font-medium text-slate-700 text-sm">📈 So sánh với Approach khác:</h5>
-                <ul className="text-xs text-slate-600 space-y-1">
-                  {promptTemplate.comparison.map((comparison, index) => (
-                    <li key={index}>• <strong>{comparison.split(':')[0]}:</strong> {comparison.split(':')[1]}</li>
-                  ))}
+              <div className="mt-4 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                <h4 className="font-medium text-orange-800 mb-2">📊 Key Insights từ In-Context Learning Results:</h4>
+                <ul className="text-sm text-orange-700 space-y-1">
+                  <li>• <strong>Performance Gap lớn:</strong> ICL chỉ đạt ~47% tốt nhất, kém fine-tuning 10-15%</li>
+                  <li>• <strong>Qwen3:14b dẫn đầu Open:</strong> 46.72% R2, model reasoning mạnh nhất</li>
+                  <li>• <strong>Closed models cạnh tranh:</strong> o4_mini và Gemini 2.5 Flash đều ~46-47%</li>
+                  <li>• <strong>Inconsistent qua rounds:</strong> R3 performance drop ở hầu hết models</li>
+                  <li>• <strong>Zero-shot limitation:</strong> Khó handle complex adversarial patterns</li>
+                  <li>• <strong>Reasoning models tốt hơn:</strong> Phi4-reasoning, Magistral, Cogito stable</li>
+                  <li>• <strong>Cost vs Performance:</strong> ICL cost thấp nhưng hiệu quả giới hạn</li>
                 </ul>
               </div>
-            </div>
-          </div>
+
+              {/* Vietnamese ICL Prompt Template */}
+              <div className="mt-6 p-4 bg-cyan-50 border border-cyan-200 rounded-lg">
+                <h4 className="font-medium text-cyan-800 mb-3">🔧 Vietnamese In-Context Learning Prompt:</h4>
+                <div className="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                  <div className="text-cyan-400 mb-2">// Vietnamese ICL Structured Prompt</div>
+                  <pre className="whitespace-pre-wrap text-xs">
+{`Bạn là chuyên gia fact-checking tiếng Việt.
+Hãy thực hiện ngầm các bước:
+1. So khớp và so sánh số liệu (nếu có) giữa CONTEXT và CLAIM.
+2. So sánh bất kỳ giá trị số hoặc thời gian (nếu có) giữa CONTEXT và CLAIM.
+3. Kiểm tra xem CLAIM có chèn thêm thông tin phụ không xuất hiện trong CONTEXT → nếu có, gán NEI.
+4. Đưa ra kết luận:
+   • SUPPORTED nếu CLAIM được xác nhận hoàn toàn bởi bằng chứng.
+   • REFUTED nếu CLAIM bị bác bỏ trực tiếp.
+   • NEI nếu không có đủ thông tin.
+
+CONTEXT: {context}
+CLAIM: {claim}
+
+CUỐI CÙNG chỉ trả về một JSON duy nhất:
+{"Label": "SUPPORTED"} hoặc
+{"Label": "REFUTED"} hoặc {"Label": "NEI"},
+không thêm bất cứ chữ nào khác.`}
+                  </pre>
+                </div>
+                
+                <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <h5 className="font-medium text-cyan-700 text-sm">✨ Đặc điểm ICL Prompt:</h5>
+                    <ul className="text-xs text-cyan-600 space-y-1">
+                      <li>• <strong>Vietnamese-specific:</strong> Tối ưu cho ngôn ngữ tiếng Việt</li>
+                      <li>• <strong>Step-by-step:</strong> Hướng dẫn reasoning từng bước</li>
+                      <li>• <strong>Number focus:</strong> Đặc biệt chú ý số liệu và thời gian</li>
+                      <li>• <strong>JSON output:</strong> Structured response cho parsing</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <h5 className="font-medium text-cyan-700 text-sm">📈 Thách thức với ICL:</h5>
+                    <ul className="text-xs text-cyan-600 space-y-1">
+                      <li>• <strong>Context length:</strong> Giới hạn với long documents</li>
+                      <li>• <strong>Complex reasoning:</strong> Khó handle adversarial patterns</li>
+                      <li>• <strong>Hallucination risk:</strong> Tạo ra thông tin không có</li>
+                      <li>• <strong>Consistency:</strong> Performance không ổn định qua rounds</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>

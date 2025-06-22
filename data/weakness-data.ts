@@ -9,13 +9,13 @@ export const weaknessData = [
     errorRate: 62.6,
     mainWeakness: "Thiên vị mạnh về nhãn NEI",
     supportedError: 92.03,
-    refutedError: 84.95,
+    refutedError: 84.95, 
     neiError: 33.19,
     bestLabel: "NEI",
     worstLabel: "SUPPORTED",
   },
   {
-    model: "PhoBERT",
+    model: "PhoBERT", 
     round: "R2",
     totalSamples: 5961,
     incorrectPredictions: 2837,
@@ -67,13 +67,13 @@ export const errorExamples = {
         "Anh Minh Trí, người đang có kế hoạch kết hôn và mong muốn sở hữu ngôi nhà đầu tiên trước khi chào đón thành viên mới, đã quyết định lựa chọn The Infinity vì chính sách thanh toán linh hoạt 0,5% mỗi tháng cùng vị trí thuận tiện, nằm trong khu đô thị vận hành ổn định Charm City tại Dĩ An, nơi cách trung tâm Thủ Đức chỉ 15 phút di chuyển, đảm bảo an toàn pháp lý theo quy định.",
       evidence:
         "Bên cạnh đó, dự án còn nằm trong khu phức hợp Charm City - khu đô thị đã vận hành ổn định tại trung tâm Dĩ An.",
-      trueLabel: "SUPPORTED",
+      trueLabel: "SUPPORTED", 
       predictedLabel: "NEI",
       analysis:
         "mBERT không thể kết nối thông tin từ nhiều phần khác nhau của context để xác nhận claim. Mô hình chỉ tập trung vào evidence được trích dẫn mà không xem xét toàn bộ context, dẫn đến việc bỏ qua các thông tin quan trọng khác như chính sách thanh toán 0,5% mỗi tháng, thời gian di chuyển đến Thủ Đức, và tính pháp lý của dự án.",
     },
     {
-      type: "REFUTED → NEI",
+      type: "REFUTED → NEI", 
       context:
         'Trước 19h: Ăn tối đúng cách, ngủ ngon và kiểm soát cân nặng Ăn tối muộn ảnh hưởng đến việc tiết melatonin, hormone giúp ngủ ngon, từ đó làm giảm chất lượng giấc ngủ. Thiếu ngủ kéo dài có thể liên quan đến nguy cơ tăng cân. Ngoài ra, cơ thể vào ban đêm có xu hướng tích lũy năng lượng thay vì tiêu hao, dẫn đến dư thừa calo nếu ăn tối quá trễ hoặc quá nhiều. Theo bác sĩ Trương, nên ăn tối trước 19h và đảm bảo dạ dày có ít nhất 3 đến 4 tiếng để tiêu hóa trước khi ngủ. Áp dụng nguyên tắc "no 7 phần": 50% rau không tinh bột (bông cải xanh, nấm), 30% protein chất lượng (cá hấp, đậu phụ), 20% tinh bột có chỉ số đường huyết thấp (cơm gạo lứt, khoai lang). Chế biến bằng cách luộc, hấp hoặc làm salad để giảm dầu mỡ. Hạn chế các món chiên xào hoặc nhiều gia vị gây khó tiêu.',
       claim:
@@ -96,7 +96,7 @@ export const errorExamples = {
       evidence:
         "Dịp này, T.Ư Hội Liên hiệp thanh niên Việt Nam đã trao tặng 20 phần quà cho thanh niên công nhân có hoàn cảnh khó khăn, mỗi phần quà trị giá 1 triệu đồng. Với sự tin tưởng và kỳ vọng vào thành công của một nhiệm kỳ mới, năm nay, T.Ư Hội Liên hiệp thanh niên Việt Nam tiếp tục phối hợp cùng TCP Việt Nam tổ chức chuỗi Ngày hội Thanh niên công nhân năm 2025 với chủ đề Thanh niên công nhân - Lan tỏa năng lượng tích cực. Thanh niên công nhân biểu diễn sôi nổi cùng ca sĩ Đông Hùng tại đêm nhạc hội ẢNH: ĐĂNG HẢI Tặng quà thanh niên công nhân Tại đêm nhạc, hàng nghìn thanh niên công nhân được thưởng thức những tiết mục đặc sắc và tham gia giao lưu với các ca sĩ, nghệ sĩ trẻ.",
       trueLabel: "NEI",
-      predictedLabel: "SUPPORTED",
+      predictedLabel: "SUPPORTED", 
       analysis:
         "PhoBERT sai lầm khi kết luận claim được hỗ trợ bởi evidence, mặc dù evidence không đề cập đến một số thông tin quan trọng trong claim: Evidence nói rằng 'T.Ư Hội Liên hiệp thanh niên Việt Nam đã trao tặng 20 phần quà', trong khi claim nói 'TCP Việt Nam đã trao tặng'. Không có thông tin về 'một số phần thưởng đặc biệt như xe máy cho các cá nhân xuất sắc'.",
     },
@@ -161,5 +161,5 @@ export const fleissKappaData = [
     kappa: 0.7539,
     agreement: "Đồng thuận tốt ⭐⭐",
     models: "deepseek-r1:32b, phi4-reasoning:plus, qwen3:32b, gemma3n, gpt_4o_mini, grok_3_mini"
-  }
+    }
 ] 

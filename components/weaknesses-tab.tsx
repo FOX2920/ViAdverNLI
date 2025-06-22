@@ -49,44 +49,80 @@ export function WeaknessesTab() {
 
   return (
     <div className="space-y-6">
+      {/* Success Message */}
+      <Card className="border-l-4 border-l-green-500">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-green-800">
+            <CheckCircle className="w-5 h-5" />
+            ViAdverNLI: Thành công trong việc Thử thách Mô hình AI
+          </CardTitle>
+          <CardDescription>
+            Hiệu suất thấp của các mô hình chứng tỏ ViAdverNLI đã đạt được mục tiêu tạo ra adversarial examples khó khăn. 
+            Đây là điểm MẠNH của dataset, không phải điểm yếu!
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-3 bg-green-50 border border-green-200 rounded">
+              <h4 className="font-medium text-green-800">🎯 Mục tiêu đạt được</h4>
+              <p className="text-sm text-green-700 mt-1">
+                Tạo ra dataset thử thách độ robustness của mô hình NLI tiếng Việt
+              </p>
+            </div>
+            <div className="p-3 bg-blue-50 border border-blue-200 rounded">
+              <h4 className="font-medium text-blue-800">📊 Kết quả mong muốn</h4>
+              <p className="text-sm text-blue-700 mt-1">
+                Hiệu suất thấp = Dataset khó = Benchmark chất lượng cao
+              </p>
+            </div>
+            <div className="p-3 bg-purple-50 border border-purple-200 rounded">
+              <h4 className="font-medium text-purple-800">🔬 Giá trị khoa học</h4>
+              <p className="text-sm text-purple-700 mt-1">
+                Phát hiện điểm yếu của mô hình để cải thiện trong tương lai
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {weaknessData.map((model) => (
-          <Card key={model.model} className="border-l-4 border-l-red-500">
+          <Card key={model.model} className="border-l-4 border-l-amber-500">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-red-500" />
+                <Target className="w-5 h-5 text-amber-500" />
                 {model.model} - {model.round}
               </CardTitle>
-              <CardDescription>Tỷ lệ lỗi: {model.errorRate}%</CardDescription>
+              <CardDescription>Thử thách thành công: {model.errorRate}% bị "đánh lừa"</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <p className="text-sm font-medium text-red-600">Điểm yếu chính:</p>
+                <p className="text-sm font-medium text-amber-600">Thử thách chính được tạo ra:</p>
                 <p className="text-sm text-gray-600">{model.mainWeakness}</p>
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>SUPPORTED</span>
-                  <span className={getPerformanceColor(100 - model.supportedError)}>
-                    {model.supportedError}% lỗi
+                  <span className="text-amber-600 font-medium">
+                    {model.supportedError}% bị thử thách
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>REFUTED</span>
-                  <span className={getPerformanceColor(100 - model.refutedError)}>{model.refutedError}% lỗi</span>
+                  <span className="text-amber-600 font-medium">{model.refutedError}% bị thử thách</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>NEI</span>
-                  <span className={getPerformanceColor(100 - model.neiError)}>{model.neiError}% lỗi</span>
+                  <span className="text-amber-600 font-medium">{model.neiError}% bị thử thách</span>
                 </div>
               </div>
               <div className="pt-2 border-t">
                 <p className="text-sm">
-                  <strong>Nhãn tốt nhất:</strong> {model.bestLabel}
+                  <strong>Nhãn chịu ít thử thách nhất:</strong> {model.bestLabel}
                 </p>
                 <p className="text-sm">
-                  <strong>Nhãn yếu nhất:</strong> {model.worstLabel}
+                  <strong>Nhãn bị thử thách nhiều nhất:</strong> {model.worstLabel}
                 </p>
               </div>
             </CardContent>
@@ -94,11 +130,11 @@ export function WeaknessesTab() {
         ))}
       </div>
 
-      {/* Error Rate Comparison */}
+      {/* Challenge Success Rate Comparison */}
       <Card>
         <CardHeader>
-          <CardTitle>So sánh Tỷ lệ Lỗi Tổng thể</CardTitle>
-          <CardDescription>Tỷ lệ dự đoán sai của các mô hình qua các rounds</CardDescription>
+          <CardTitle>So sánh Mức độ Thử thách Thành công</CardTitle>
+          <CardDescription>Tỷ lệ mô hình bị "đánh lừa" bởi ViAdverNLI - chứng tỏ độ khó của dataset</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -113,11 +149,11 @@ export function WeaknessesTab() {
         </CardContent>
       </Card>
 
-      {/* Error Types Analysis */}
+      {/* Challenge Types Analysis */}
       <Card>
         <CardHeader>
-          <CardTitle>Phân tích Loại Lỗi Phổ biến</CardTitle>
-          <CardDescription>Các loại lỗi phân loại phổ biến nhất của từng mô hình</CardDescription>
+          <CardTitle>Phân tích Loại Thử thách Thành công</CardTitle>
+          <CardDescription>Các patterns adversarial thành công trong việc đánh lừa từng mô hình</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -144,11 +180,11 @@ export function WeaknessesTab() {
         </CardContent>
       </Card>
 
-      {/* Label Performance Comparison */}
+      {/* Label Challenge Success */}
       <Card>
         <CardHeader>
-          <CardTitle>Hiệu suất theo Nhãn</CardTitle>
-          <CardDescription>Tỷ lệ lỗi của từng mô hình trên từng loại nhãn</CardDescription>
+          <CardTitle>Mức độ Thử thách theo Nhãn</CardTitle>
+          <CardDescription>Tỷ lệ adversarial examples thành công đánh lừa mô hình theo từng loại nhãn</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
@@ -178,7 +214,7 @@ export function WeaknessesTab() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Brain className="w-5 h-5" />
-              Phân tích Chi tiết Điểm yếu
+              Phân tích Chi tiết Adversarial Challenges
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -389,6 +425,219 @@ export function WeaknessesTab() {
               </TabsContent>
             ))}
           </Tabs>
+        </CardContent>
+      </Card>
+
+      {/* Detailed Error Examples from Appendix */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Ví dụ Chi tiết về Lỗi từ Baseline Models</CardTitle>
+          <CardDescription>
+            Examples cụ thể từ Paper Appendix cho thấy pattern lỗi của từng model
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="mbert" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="mbert">mBERT (R1)</TabsTrigger>
+              <TabsTrigger value="phobert">PhoBERT (R2)</TabsTrigger>
+              <TabsTrigger value="xlmr">XLM-R (R3)</TabsTrigger>
+            </TabsList>
+
+            {/* mBERT Examples */}
+            <TabsContent value="mbert" className="space-y-4">
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                <h4 className="font-semibold text-red-800 mb-2">❌ Error: SUPPORTED → NEI</h4>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong className="text-green-600">Ground Truth:</strong> SUPPORTED
+                    <br />
+                    <strong className="text-red-600">Prediction:</strong> NEI
+                  </div>
+                  
+                  <div>
+                    <strong>Context:</strong>
+                    <div className="p-2 bg-gray-100 rounded text-xs font-mono">
+                      Có kế hoạch cưới vào đầu năm sau, anh Minh Trí (31 tuổi, làm việc tại Bình Thạnh) đã đặt cọc căn hộ ở Dĩ An. 
+                      Anh chọn dự án The Infinity, nằm cạnh Vincom Plaza, cách Thủ Đức khoảng 10-15 phút di chuyển. 
+                      Với mức thu nhập dao động 35-40 triệu đồng mỗi tháng, anh Trí cho rằng đây là lựa chọn hợp lý khi chủ đầu tư có 
+                      chính sách hỗ trợ thanh toán giãn tiến độ 0,5% mỗi tháng...
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong>Claim:</strong>
+                    <div className="p-2 bg-blue-100 rounded text-xs">
+                      Anh Minh Trí, người đang có kế hoạch kết hôn và mong muốn sở hữu ngôi nhà đầu tiên trước khi chào đón thành viên mới, 
+                      đã quyết định lựa chọn The Infinity vì chính sách thanh toán linh hoạt 0,5% mỗi tháng cùng vị trí thuận tiện...
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong className="text-purple-600">Analysis:</strong>
+                    <div className="text-gray-700">
+                      mBERT fails to connect information from different parts of the context to confirm the claim. 
+                      Model chỉ tập trung vào single piece of evidence mà không xem xét full context, 
+                      miss key information về 0.5% monthly payment policy, travel time, và project legality.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                <h4 className="font-semibold text-orange-800 mb-2">❌ Error: REFUTED → NEI</h4>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong className="text-green-600">Ground Truth:</strong> REFUTED
+                    <br />
+                    <strong className="text-orange-600">Prediction:</strong> NEI
+                  </div>
+                  
+                  <div>
+                    <strong>Context:</strong>
+                    <div className="p-2 bg-gray-100 rounded text-xs font-mono">
+                      Trước 19h: Ăn tối đúng cách, ngủ ngon và kiểm soát cân nặng. Ăn tối muộn ảnh hưởng đến việc tiết melatonin, 
+                      hormone giúp ngủ ngon, từ đó làm giảm chất lượng giấc ngủ... cơ thể vào ban đêm có xu hướng tích lũy năng lượng 
+                      thay vì tiêu hao, dẫn đến dư thừa calo nếu ăn tối quá trễ...
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong>Claim:</strong>
+                    <div className="p-2 bg-red-100 rounded text-xs">
+                      Theo nghiên cứu của bác sĩ Trương, việc tiêu thụ thực phẩm giàu protein sau 20 giờ sẽ giúp cơ thể 
+                      tăng cường trao đổi chất, tránh tích tụ mỡ thừa, vì cơ thể vào ban đêm chuyển hóa năng lượng hiệu quả hơn so với ban ngày.
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong className="text-purple-600">Analysis:</strong>
+                    <div className="text-gray-700">
+                      mBERT không nhận ra direct contradiction. Claim nói rằng eating late boosts metabolism, 
+                      trong khi context explicitly states rằng body tends to store energy at night và advises eating before 7 PM.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* PhoBERT Examples */}
+            <TabsContent value="phobert" className="space-y-4">
+              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <h4 className="font-semibold text-yellow-800 mb-2">❌ Error: NEI → SUPPORTED</h4>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong className="text-green-600">Ground Truth:</strong> NEI
+                    <br />
+                    <strong className="text-yellow-600">Prediction:</strong> SUPPORTED
+                  </div>
+                  
+                  <div>
+                    <strong>Context:</strong>
+                    <div className="p-2 bg-gray-100 rounded text-xs font-mono">
+                      Với sự tin tưởng và kỳ vọng vào thành công của một nhiệm kỳ mới, năm nay, T.Ư Hội Liên hiệp thanh niên Việt Nam 
+                      tiếp tục phối hợp cùng TCP Việt Nam tổ chức chuỗi Ngày hội Thanh niên công nhân năm 2025... 
+                      T.Ư Hội Liên hiệp thanh niên Việt Nam đã trao tặng 20 phần quà cho thanh niên công nhân có hoàn cảnh khó khăn, 
+                      mỗi phần quà trị giá 1 triệu đồng.
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong>Claim:</strong>
+                    <div className="p-2 bg-blue-100 rounded text-xs">
+                      Trong sự kiện 'Lan tỏa năng lượng tích cực' tại Ngày hội Thanh niên công nhân năm 2025, 
+                      TCP Việt Nam đã trao tặng 1 triệu đồng cho 20 thanh niên có hoàn cảnh khó khăn và 
+                      một số phần thưởng đặc biệt như xe máy cho các cá nhân xuất sắc.
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong className="text-purple-600">Analysis:</strong>
+                    <div className="text-gray-700">
+                      PhoBERT incorrectly concludes claim is supported. Nó overlooks fact rằng gift-giving organization 
+                      là "Central Youth Union," không phải "TCP Vietnam" như claim asserts. 
+                      Furthermore, không có mention về special prizes như motorcycles.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* XLM-R Examples */}
+            <TabsContent value="xlmr" className="space-y-4">
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-semibold text-blue-800 mb-2">❌ Error: SUPPORTED → NEI</h4>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong className="text-green-600">Ground Truth:</strong> SUPPORTED
+                    <br />
+                    <strong className="text-blue-600">Prediction:</strong> NEI
+                  </div>
+                  
+                  <div>
+                    <strong>Context:</strong>
+                    <div className="p-2 bg-gray-100 rounded text-xs font-mono">
+                      Nước ngọt hay nước nhạt là loại nước chứa một lượng tối thiểu các muối hòa tan... 
+                      Tất cả các nguồn nước ngọt có xuất phát điểm là từ các cơn mưa... 
+                      Sự cung cấp đủ lượng nước ngọt cần thiết để duy trì sự sống là một vấn đề đáng báo động 
+                      đối với nhiều loài sinh vật, trong đó có con người...
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong>Claim:</strong>
+                    <div className="p-2 bg-green-100 rounded text-xs">
+                      Nước ngọt, bao gồm nước từ mưa và băng tan, vẫn là yếu tố sống còn cho nhiều sinh vật, kể cả con người.
+                    </div>
+                  </div>
+
+                  <div>
+                    <strong className="text-purple-600">Analysis:</strong>
+                    <div className="text-gray-700">
+                      Despite clear supporting information trong context, XLM-R fails to synthesize different pieces of information. 
+                      Model quá cautious và defaults to NEI instead of confirming claim.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          {/* Summary of Error Patterns */}
+          <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+            <h4 className="font-semibold text-gray-800 mb-3">🎯 Summary Error Patterns từ Examples:</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <h5 className="font-medium text-red-600 mb-2">mBERT Issues:</h5>
+                <ul className="text-gray-700 space-y-1">
+                  <li>• Failure to connect distributed information</li>
+                  <li>• Over-cautious with complex claims</li>
+                  <li>• Missing contradiction recognition</li>
+                  <li>• Heavy NEI bias under uncertainty</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-yellow-600 mb-2">PhoBERT Issues:</h5>
+                <ul className="text-gray-700 space-y-1">
+                  <li>• Entity confusion trong Vietnamese</li>
+                  <li>• Missing key details trong claims</li>
+                  <li>• Overconfidence với partial matches</li>
+                  <li>• Poor attention to claim specificity</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-blue-600 mb-2">XLM-R Issues:</h5>
+                <ul className="text-gray-700 space-y-1">
+                  <li>• Information synthesis problems</li>
+                  <li>• Over-cautious với clear evidence</li>
+                  <li>• Difficulty with implicit connections</li>
+                  <li>• Conservative bias trong edge cases</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

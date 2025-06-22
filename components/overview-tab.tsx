@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   BarChart,
   Bar,
@@ -20,13 +21,13 @@ import {
   Brain,
   Database,
   TrendingUp,
-  Shield,
   Target,
   BookOpen,
   Award,
   CheckCircle,
   AlertTriangle,
   XCircle,
+  Settings,
 } from "lucide-react"
 
 import { roundsData, COLORS } from "@/data/rounds-data"
@@ -35,9 +36,49 @@ import { getDifficultyColor } from "@/utils/chart-utils"
 import { PipelineDiagram } from "./pipeline-diagram"
 
 export function OverviewTab() {
+  const constructionRules = {
+    general: [
+      "Capitalize the first letter of sentences and end with proper punctuation",
+      "Ensure correct spelling and grammar with no extra whitespace", 
+      "Use only numerical digits for dates, ages, statistics, and monetary values",
+      "Claims must be closely related to the context content and remain on-topic",
+      "Avoid excessive verbatim copying from context; only direct evidence citations are permitted"
+    ],
+    supported: [
+      "Base claims entirely on information present in the context without external knowledge",
+      "Select information/statistics from context and rephrase using synonyms, voice conversion (active-passive), or syntactic simplification"
+    ],
+    refuted: [
+      "Construct claims containing at least one contradictory or erroneous information compared to the context",
+      "Techniques include altering statistics, negating facts, using antonyms, or confusing entities"
+    ],
+    nei: [
+      "Include information or statistics that cannot be determined as true/false based on context due to insufficient evidence",
+      "Techniques include expanding, narrowing, inferring, or adding information not present in the context"
+    ]
+  }
+
+  const examples = {
+    supported: {
+      context: "Thomas Edison phát minh bóng đèn điện sợi đốt năm 1879.",
+      claim: "Bóng đèn điện sợi đốt đầu tiên được chế tạo bởi Thomas Edison.",
+      explanation: "Claim rephrases context information using voice conversion (active→passive)"
+    },
+    refuted: {
+      context: "Cá voi xanh là động vật nặng nhất (150–200 tấn).",
+      claim: "Cá voi xanh là động vật nhẹ nhất thế giới.",
+      explanation: "Claim contains direct contradiction using antonym (nặng nhất → nhẹ nhất)"
+    },
+    nei: {
+      context: "Anh ấy là sinh viên năm 3.",
+      claim: "Anh ấy sinh năm 2003.",
+      explanation: "Claim adds specific information (birth year) not inferable from context"
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="border-l-4 border-l-blue-500">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -53,20 +94,7 @@ export function OverviewTab() {
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-green-500">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="w-5 h-5" />
-              Phương pháp Đối kháng
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600">
-              Sử dụng 3 rounds với mô hình ngày càng mạnh (mBERT → PhoBERT → XLM-R) để tạo dữ liệu có độ khó tăng
-              dần.
-            </p>
-          </CardContent>
-        </Card>
+
 
         <Card className="border-l-4 border-l-purple-500">
           <CardHeader>
@@ -274,6 +302,179 @@ export function OverviewTab() {
             ))}
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Adversarial Claim Construction Rules */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="w-5 h-5" />
+            Adversarial Claim Construction Rules
+          </CardTitle>
+          <CardDescription>
+            Systematic construction rules để ensure high-quality, challenging examples
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="general" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="general">General Rules</TabsTrigger>
+              <TabsTrigger value="supported">SUPPORTED</TabsTrigger>
+              <TabsTrigger value="refuted">REFUTED</TabsTrigger>
+              <TabsTrigger value="nei">NEI</TabsTrigger>
+            </TabsList>
+
+            {/* General Rules */}
+            <TabsContent value="general" className="space-y-4">
+              <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                <h4 className="font-medium text-gray-800 mb-3">📝 General Claim Construction Rules</h4>
+                <ul className="space-y-2 text-sm">
+                  {constructionRules.general.map((rule, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span>{rule}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                <h4 className="font-medium text-red-800 mb-3">🚫 Additional Guidelines</h4>
+                <ul className="space-y-2 text-sm text-red-700">
+                  <li className="flex items-start gap-2">
+                    <XCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <span><strong>Avoid</strong> creating claims unrelated to the topic</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <XCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <span><strong>Avoid</strong> overusing simple transformations (only synonym replacement or negation)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                    <span><strong>Label priority order:</strong> REFUTED &gt; NEI &gt; SUPPORTED</span>
+                  </li>
+                </ul>
+              </div>
+            </TabsContent>
+
+            {/* SUPPORTED Rules */}
+            <TabsContent value="supported" className="space-y-4">
+              <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                <h4 className="font-medium text-green-800 mb-3">✅ SUPPORTED Claim Construction Principles</h4>
+                <ul className="space-y-2 text-sm text-green-700">
+                  {constructionRules.supported.map((rule, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span>{rule}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-medium text-blue-800 mb-3">💡 Example</h4>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong>Context:</strong>
+                    <div className="p-2 bg-white rounded border text-gray-700">
+                      {examples.supported.context}
+                    </div>
+                  </div>
+                  <div>
+                    <strong>Generated Claim:</strong>
+                    <div className="p-2 bg-green-100 rounded border text-green-800">
+                      {examples.supported.claim}
+                    </div>
+                  </div>
+                  <div>
+                    <strong>Technique:</strong>
+                    <div className="text-blue-600">
+                      {examples.supported.explanation}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* REFUTED Rules */}
+            <TabsContent value="refuted" className="space-y-4">
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                <h4 className="font-medium text-red-800 mb-3">❌ REFUTED Claim Construction Principles</h4>
+                <ul className="space-y-2 text-sm text-red-700">
+                  {constructionRules.refuted.map((rule, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                      <span>{rule}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-medium text-blue-800 mb-3">💡 Example</h4>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong>Context:</strong>
+                    <div className="p-2 bg-white rounded border text-gray-700">
+                      {examples.refuted.context}
+                    </div>
+                  </div>
+                  <div>
+                    <strong>Generated Claim:</strong>
+                    <div className="p-2 bg-red-100 rounded border text-red-800">
+                      {examples.refuted.claim}
+                    </div>
+                  </div>
+                  <div>
+                    <strong>Technique:</strong>
+                    <div className="text-blue-600">
+                      {examples.refuted.explanation}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* NEI Rules */}
+            <TabsContent value="nei" className="space-y-4">
+              <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <h4 className="font-medium text-yellow-800 mb-3">❓ NEI (Not Enough Information) Construction Principles</h4>
+                <ul className="space-y-2 text-sm text-yellow-700">
+                  {constructionRules.nei.map((rule, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <AlertTriangle className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                      <span>{rule}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-medium text-blue-800 mb-3">💡 Example</h4>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong>Context:</strong>
+                    <div className="p-2 bg-white rounded border text-gray-700">
+                      {examples.nei.context}
+                    </div>
+                  </div>
+                  <div>
+                    <strong>Generated Claim:</strong>
+                    <div className="p-2 bg-yellow-100 rounded border text-yellow-800">
+                      {examples.nei.claim}
+                    </div>
+                  </div>
+                  <div>
+                    <strong>Technique:</strong>
+                    <div className="text-blue-600">
+                      {examples.nei.explanation}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
 

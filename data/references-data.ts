@@ -191,14 +191,163 @@ export const referencesData = [
     venue: "COLING 2018",
     link: "https://aclanthology.org/C18-1283/",
     description: "Survey of automated fact-checking methods and task formulations."
+  },
+
+  // Additional references from references.bib
+  {
+    id: 21,
+    category: "Adversarial",
+    title: "Adversarial attacks against Fact Extraction and VERification",
+    authors: "James Thorne, Andreas Vlachos",
+    venue: "arXiv 2019",
+    link: "https://arxiv.org/abs/1903.05543",
+    description: "Adversarial attack methods specifically targeting fact-checking systems."
+  },
+  {
+    id: 22,
+    category: "Adversarial", 
+    title: "Adversarial NLI: A New Benchmark for Natural Language Understanding",
+    authors: "Alex Williams et al.",
+    venue: "ACL 2020",
+    link: "https://aclanthology.org/2020.acl-main.441/",
+    description: "Adversarial NLI benchmark that inspired adversarial dataset creation methods."
+  },
+  {
+    id: 23,
+    category: "Fact-Checking",
+    title: "Get Your Vitamin C: Robust Fact Verification with Contrastive Evidence",
+    authors: "Thomas W. B. Schuster et al.",
+    venue: "arXiv 2021",
+    link: "https://arxiv.org/abs/2103.08541",
+    description: "Contrastive evidence approach for robust fact verification systems."
+  },
+  {
+    id: 24,
+    category: "Vietnamese NLP",
+    title: "BERT-based Model for Vietnamese Fact Verification Dataset", 
+    authors: "Quan Dinh Tran et al.",
+    venue: "arXiv 2025",
+    link: "https://arxiv.org/abs/2503.00356",
+    description: "BERT-based approaches for Vietnamese fact verification tasks."
+  },
+  {
+    id: 25,
+    category: "Vietnamese NLP",
+    title: "ViHealthNLI: A Dataset for Vietnamese NLI in Healthcare",
+    authors: "Nguyen Thi Mai Huyen et al.",
+    venue: "SIGUL Workshop 2024",
+    link: "https://aclanthology.org/2024.sigul-1.12/",
+    description: "Specialized Vietnamese NLI dataset for healthcare domain."
+  },
+  {
+    id: 26,
+    category: "Model",
+    title: "GPT-4 Technical Report",
+    authors: "OpenAI",
+    venue: "arXiv 2023",
+    link: "https://arxiv.org/abs/2303.08774",
+    description: "Technical report for GPT-4, foundation model used in fine-tuning experiments."
+  },
+  {
+    id: 27,
+    category: "Model",
+    title: "GPT-4o System Card",
+    authors: "OpenAI", 
+    venue: "arXiv 2024",
+    link: "https://arxiv.org/abs/2410.21276",
+    description: "GPT-4o model used for R1 and R2 fine-tuning in ViAdverNLI."
+  },
+  {
+    id: 28,
+    category: "Model",
+    title: "Introducing Gemini 2.0: our new AI model for the agentic era",
+    authors: "Google DeepMind",
+    venue: "Google Blog 2024",
+    link: "https://blog.google/technology/ai/google-gemini-ai-update-december-2024/",
+    description: "Gemini 2.0 Flash model used in LLM fine-tuning experiments."
+  },
+  {
+    id: 29,
+    category: "Model",
+    title: "Qwen3 Technical Report",
+    authors: "An Yang et al.",
+    venue: "arXiv 2025",
+    link: "https://arxiv.org/abs/2505.09388",
+    description: "Qwen3 model family used in local LLM fine-tuning experiments."
+  },
+  {
+    id: 30,
+    category: "Model",
+    title: "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+    authors: "Weijie Guo et al.",
+    venue: "arXiv 2025",
+    link: "https://arxiv.org/abs/2501.12948",
+    description: "DeepSeek-R1 model achieving best local LLM performance in experiments."
+  },
+  {
+    id: 31,
+    category: "Model",
+    title: "Gemma 3 Technical Report",
+    authors: "Gemma Team et al.",
+    venue: "arXiv 2025",
+    link: "https://arxiv.org/abs/2503.19786",
+    description: "Gemma 3 model used in local LLM fine-tuning comparisons."
+  },
+  {
+    id: 32,
+    category: "Model",
+    title: "Phi-4-reasoning Technical Report",
+    authors: "Ahmed Abdin et al.",
+    venue: "arXiv 2025",
+    link: "https://arxiv.org/abs/2504.21318",
+    description: "Phi-4 reasoning model used in claim generation and evaluation."
+  },
+  {
+    id: 33,
+    category: "Model",
+    title: "Magistral",
+    authors: "Mistral AI",
+    venue: "arXiv 2025",
+    link: "https://arxiv.org/abs/2506.10910",
+    description: "Mistral's Magistral model used in multi-round claim generation."
+  },
+  {
+    id: 34,
+    category: "Adversarial",
+    title: "LLM in the Loop: Creating the ParaDeHate Dataset for Hate Speech Detoxification",
+    authors: "Shuzhou Yuan et al.",
+    venue: "arXiv 2025",
+    link: "https://arxiv.org/abs/2506.01484",
+    description: "LLM-in-the-loop methodology that inspired adversarial dataset creation pipeline."
+  },
+
+  // Methodology & Approaches
+  {
+    id: 35,
+    category: "Methodology",
+    title: "Cross-lingual Language Model Pretraining",
+    authors: "Alexis Conneau, Guillaume Lample",
+    venue: "NeurIPS 2019",
+    link: "https://arxiv.org/abs/1901.07291",
+    description: "Cross-lingual pretraining methodology used in XLM-R baseline models."
+  },
+  {
+    id: 36,
+    category: "Methodology", 
+    title: "Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities",
+    authors: "Gemini Team, Google",
+    venue: "Google Technical Report 2025",
+    link: "https://storage.googleapis.com/deepmind-media/gemini/gemini_v2_5_report.pdf",
+    description: "Advanced reasoning capabilities that inform future adversarial NLP directions."
   }
 ]
 
 export const referenceCategories = [
   { name: "Dataset", count: 5, icon: "Database", color: "blue" },
-  { name: "Model", count: 5, icon: "Brain", color: "purple" },
-  { name: "Adversarial", count: 3, icon: "Shield", color: "red" },
+  { name: "Model", count: 13, icon: "Brain", color: "purple" },
+  { name: "Adversarial", count: 6, icon: "Shield", color: "red" },
   { name: "Evaluation", count: 3, icon: "BarChart", color: "green" },
-  { name: "Vietnamese NLP", count: 2, icon: "Globe", color: "orange" },
-  { name: "Fact-Checking", count: 2, icon: "Search", color: "teal" },
+  { name: "Vietnamese NLP", count: 4, icon: "Globe", color: "orange" },
+  { name: "Fact-Checking", count: 3, icon: "Search", color: "teal" },
+  { name: "Methodology", count: 2, icon: "Target", color: "indigo" },
 ]

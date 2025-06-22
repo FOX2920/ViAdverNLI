@@ -14,6 +14,7 @@ import {
   Search,
   ExternalLink,
   Filter,
+  Target,
 } from "lucide-react"
 
 import { referencesData, referenceCategories } from "@/data/references-data"
@@ -26,6 +27,7 @@ function getIconComponent(iconName: string) {
     BarChart,
     Globe,
     Search,
+    Target,
   }
   return icons[iconName] || Database
 }
@@ -38,6 +40,7 @@ function getColorClass(color: string) {
     green: "text-green-600",
     orange: "text-orange-600",
     teal: "text-teal-600",
+    indigo: "text-indigo-600",
   }
   return colors[color] || "text-gray-600"
 }
@@ -60,7 +63,7 @@ export function ReferencesTab() {
   return (
     <div className="space-y-6">
       {/* Reference Categories */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">
         <Card className="text-center">
           <CardContent className="p-4">
             <Database className="w-8 h-8 mx-auto text-blue-600 mb-2" />
@@ -97,6 +100,16 @@ export function ReferencesTab() {
             <h3 className="font-medium">Evaluation</h3>
             <p className="text-2xl font-bold text-green-600">
               {referencesData.filter(ref => ref.category === "Evaluation").length}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="text-center">
+          <CardContent className="p-4">
+            <Target className="w-8 h-8 mx-auto text-indigo-600 mb-2" />
+            <h3 className="font-medium">Methodology</h3>
+            <p className="text-2xl font-bold text-indigo-600">
+              {referencesData.filter(ref => ref.category === "Methodology").length}
             </p>
           </CardContent>
         </Card>
@@ -144,7 +157,7 @@ export function ReferencesTab() {
 
       {/* References by Category */}
       <Tabs defaultValue="All" value={selectedCategory} onValueChange={setSelectedCategory}>
-        <TabsList className="grid w-full grid-cols-7">
+        <TabsList className="grid w-full grid-cols-8">
           <TabsTrigger value="All">Tất cả</TabsTrigger>
           <TabsTrigger value="Dataset">Datasets</TabsTrigger>
           <TabsTrigger value="Model">Models</TabsTrigger>
@@ -152,6 +165,7 @@ export function ReferencesTab() {
           <TabsTrigger value="Evaluation">Evaluation</TabsTrigger>
           <TabsTrigger value="Vietnamese NLP">VN NLP</TabsTrigger>
           <TabsTrigger value="Fact-Checking">Fact-Check</TabsTrigger>
+          <TabsTrigger value="Methodology">Method</TabsTrigger>
         </TabsList>
 
         <TabsContent value={selectedCategory} className="mt-6">
@@ -215,7 +229,7 @@ export function ReferencesTab() {
           <CardTitle>Thống kê Tài liệu Tham khảo</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
             <div className="text-center">
               <p className="text-2xl font-bold text-blue-600">{referencesData.length}</p>
               <p className="text-sm text-gray-600">Tổng số tài liệu</p>
@@ -245,6 +259,14 @@ export function ReferencesTab() {
                 ).length}
               </p>
               <p className="text-sm text-gray-600">Liên quan đến tiếng Việt</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-indigo-600">
+                {referencesData.filter(ref => 
+                  ref.venue.includes("2025")
+                ).length}
+              </p>
+              <p className="text-sm text-gray-600">Công trình 2025</p>
             </div>
           </div>
         </CardContent>

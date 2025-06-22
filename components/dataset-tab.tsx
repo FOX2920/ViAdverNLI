@@ -30,9 +30,9 @@ import {
 } from "lucide-react"
 
 import { roundsData, COLORS } from "@/data/rounds-data"
-import { 
-  dataSourcesBreakdown, 
-  detailedStatsPerRound, 
+import {
+  dataSourcesBreakdown,
+  detailedStatsPerRound,
   dataOriginDistribution,
   splitDistribution,
   jaccardSimilarity,
@@ -475,11 +475,11 @@ export function DatasetTab() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Brain className="w-5 h-5" />
-            Đánh giá Độ phức tạp Suy luận Dataset
+            <Brain className="w-5 w-5" />
+            Đánh giá Độ phức tạp Suy luận Dataset  
           </CardTitle>
           <CardDescription>
-            Phân tích độ phức tạp suy luận thông qua các metrics word overlap và semantic similarity, sử dụng SBERT để tạo embeddings và tính toán tương quan cosine similarity
+            Phân tích độ phức tạp suy luận thông qua các metrics word overlap và semantic similarity từ paper Table 7
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -488,134 +488,220 @@ export function DatasetTab() {
             <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <h4 className="font-medium text-blue-800 mb-2">📝 Phương pháp Đánh giá:</h4>
               <div className="text-sm text-blue-700 space-y-2">
-                <p><strong>Word Overlap:</strong> Sử dụng Longest Common Subsequence (LCS), New Word Ratio (NWR), Jaccard Similarity (JS), và Lexical Overlap</p>
-                <p><strong>Semantic Similarity:</strong> Sử dụng khái niệm Related Words, tạo embeddings với SBERT và tính correlation bằng cosine similarity</p>
+                <p><strong>Word Overlap:</strong> Sử dụng Longest Common Subsequence (LCS), New Word Ratio (NWR), Jaccard Similarity, Lexical Overlap</p>
+                <p><strong>Semantic Similarity:</strong> Sử dụng SBERT embeddings với cosine similarity</p>
                 <p><strong>Reference:</strong> <a href="https://arxiv.org/pdf/1908.10084" target="_blank" className="text-blue-600 underline">Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks</a></p>
               </div>
             </div>
 
-            {/* Main Data Table */}
+            {/* Complexity Analysis Table from Paper */}
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse border border-gray-300">
                 <thead>
                   <tr className="bg-gray-100">
                     <th className="border border-gray-300 p-2 text-left">Round</th>
                     <th className="border border-gray-300 p-2 text-left">Split</th>
-                    <th className="border border-gray-300 p-2 text-center">LCS Ratio (%)</th>
+                    <th className="border border-gray-300 p-2 text-center">LCS (%)</th>
                     <th className="border border-gray-300 p-2 text-center">NWR (%)</th>
                     <th className="border border-gray-300 p-2 text-center">Jaccard (%)</th>
-                    <th className="border border-gray-300 p-2 text-center">Lexical Overlap (%)</th>
-                    <th className="border border-gray-300 p-2 text-center">Unique Overlap (%)</th>
-                    <th className="border border-gray-300 p-2 text-center">TF-IDF Cosine (%)</th>
-                    <th className="border border-gray-300 p-2 text-center">Semantic Similarity (%)</th>
-                    <th className="border border-gray-300 p-2 text-center">Sent CTX</th>
-                    <th className="border border-gray-300 p-2 text-center">Sent CLM</th>
-                    <th className="border border-gray-300 p-2 text-center">Len CTX</th>
-                    <th className="border border-gray-300 p-2 text-center">Len CLM</th>
+                    <th className="border border-gray-300 p-2 text-center">Lex. Overlap (%)</th>
+                    <th className="border border-gray-300 p-2 text-center">Unique (%)</th>
+                    <th className="border border-gray-300 p-2 text-center">TF-IDF (%)</th>
+                    <th className="border border-gray-300 p-2 text-center">Semantic (%)</th>
+                    <th className="border border-gray-300 p-2 text-center">Ctx Len</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {complexityEvaluationData.map((row, index) => (
-                    <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <td className="border border-gray-300 p-2 font-medium">{row.round}</td>
-                      <td className="border border-gray-300 p-2 font-medium capitalize">{row.split}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.lcs_ratio}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.nwr}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.jaccard}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.lexical_overlap}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.unique_overlap}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.tfidf_cosine}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.semantic_similarity}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.num_sent_ctx}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.num_sent_clm}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.len_ctx}</td>
-                      <td className="border border-gray-300 p-2 text-center">{row.len_clm}</td>
-                    </tr>
-                  ))}
+                  {/* R1 Data */}
+                  <tr className="bg-green-50">
+                    <td rowSpan={3} className="border border-gray-300 p-2 font-medium bg-green-100">R1</td>
+                    <td className="border border-gray-300 p-2">Train</td>
+                    <td className="border border-gray-300 p-2 text-center">41.36</td>
+                    <td className="border border-gray-300 p-2 text-center">38.07</td>
+                    <td className="border border-gray-300 p-2 text-center">16.21</td>
+                    <td className="border border-gray-300 p-2 text-center">63.52</td>
+                    <td className="border border-gray-300 p-2 text-center">61.93</td>
+                    <td className="border border-gray-300 p-2 text-center">47.10</td>
+                    <td className="border border-gray-300 p-2 text-center">75.31</td>
+                    <td className="border border-gray-300 p-2 text-center">249.07</td>
+                  </tr>
+                  <tr className="bg-green-50">
+                    <td className="border border-gray-300 p-2">Dev</td>
+                    <td className="border border-gray-300 p-2 text-center">44.52</td>
+                    <td className="border border-gray-300 p-2 text-center">34.36</td>
+                    <td className="border border-gray-300 p-2 text-center">15.00</td>
+                    <td className="border border-gray-300 p-2 text-center">67.18</td>
+                    <td className="border border-gray-300 p-2 text-center">65.64</td>
+                    <td className="border border-gray-300 p-2 text-center">47.68</td>
+                    <td className="border border-gray-300 p-2 text-center">74.64</td>
+                    <td className="border border-gray-300 p-2 text-center">295.35</td>
+                  </tr>
+                  <tr className="bg-green-50">
+                    <td className="border border-gray-300 p-2">Test</td>
+                    <td className="border border-gray-300 p-2 text-center">44.68</td>
+                    <td className="border border-gray-300 p-2 text-center">34.13</td>
+                    <td className="border border-gray-300 p-2 text-center">14.80</td>
+                    <td className="border border-gray-300 p-2 text-center">67.42</td>
+                    <td className="border border-gray-300 p-2 text-center">65.87</td>
+                    <td className="border border-gray-300 p-2 text-center">47.34</td>
+                    <td className="border border-gray-300 p-2 text-center">74.41</td>
+                    <td className="border border-gray-300 p-2 text-center">300.86</td>
+                  </tr>
+                  
+                  {/* R2 Data */}
+                  <tr className="bg-yellow-50">
+                    <td rowSpan={3} className="border border-gray-300 p-2 font-medium bg-yellow-100">R2</td>
+                    <td className="border border-gray-300 p-2">Train</td>
+                    <td className="border border-gray-300 p-2 text-center">34.35</td>
+                    <td className="border border-gray-300 p-2 text-center">45.38</td>
+                    <td className="border border-gray-300 p-2 text-center">15.87</td>
+                    <td className="border border-gray-300 p-2 text-center">56.42</td>
+                    <td className="border border-gray-300 p-2 text-center">54.62</td>
+                    <td className="border border-gray-300 p-2 text-center">44.32</td>
+                    <td className="border border-gray-300 p-2 text-center">76.08</td>
+                    <td className="border border-gray-300 p-2 text-center">257.46</td>
+                  </tr>
+                  <tr className="bg-yellow-50">
+                    <td className="border border-gray-300 p-2">Dev</td>
+                    <td className="border border-gray-300 p-2 text-center">33.73</td>
+                    <td className="border border-gray-300 p-2 text-center">47.21</td>
+                    <td className="border border-gray-300 p-2 text-center">14.70</td>
+                    <td className="border border-gray-300 p-2 text-center">54.45</td>
+                    <td className="border border-gray-300 p-2 text-center">52.79</td>
+                    <td className="border border-gray-300 p-2 text-center">42.65</td>
+                    <td className="border border-gray-300 p-2 text-center">75.25</td>
+                    <td className="border border-gray-300 p-2 text-center">243.44</td>
+                  </tr>
+                  <tr className="bg-yellow-50">
+                    <td className="border border-gray-300 p-2">Test</td>
+                    <td className="border border-gray-300 p-2 text-center">34.75</td>
+                    <td className="border border-gray-300 p-2 text-center">46.28</td>
+                    <td className="border border-gray-300 p-2 text-center">15.29</td>
+                    <td className="border border-gray-300 p-2 text-center">55.24</td>
+                    <td className="border border-gray-300 p-2 text-center">53.72</td>
+                    <td className="border border-gray-300 p-2 text-center">43.91</td>
+                    <td className="border border-gray-300 p-2 text-center">75.85</td>
+                    <td className="border border-gray-300 p-2 text-center">238.32</td>
+                  </tr>
+                  
+                  {/* R3 Data */}
+                  <tr className="bg-red-50">
+                    <td rowSpan={3} className="border border-gray-300 p-2 font-medium bg-red-100">R3</td>
+                    <td className="border border-gray-300 p-2">Train</td>
+                    <td className="border border-gray-300 p-2 text-center">36.05</td>
+                    <td className="border border-gray-300 p-2 text-center">46.82</td>
+                    <td className="border border-gray-300 p-2 text-center">12.45</td>
+                    <td className="border border-gray-300 p-2 text-center">54.54</td>
+                    <td className="border border-gray-300 p-2 text-center">53.18</td>
+                    <td className="border border-gray-300 p-2 text-center">40.63</td>
+                    <td className="border border-gray-300 p-2 text-center">72.52</td>
+                    <td className="border border-gray-300 p-2 text-center">284.08</td>
+                  </tr>
+                  <tr className="bg-red-50">
+                    <td className="border border-gray-300 p-2">Dev</td>
+                    <td className="border border-gray-300 p-2 text-center">32.70</td>
+                    <td className="border border-gray-300 p-2 text-center">49.69</td>
+                    <td className="border border-gray-300 p-2 text-center">13.20</td>
+                    <td className="border border-gray-300 p-2 text-center">51.87</td>
+                    <td className="border border-gray-300 p-2 text-center">50.31</td>
+                    <td className="border border-gray-300 p-2 text-center">40.24</td>
+                    <td className="border border-gray-300 p-2 text-center">73.77</td>
+                    <td className="border border-gray-300 p-2 text-center">283.43</td>
+                  </tr>
+                  <tr className="bg-red-50">
+                    <td className="border border-gray-300 p-2">Test</td>
+                    <td className="border border-gray-300 p-2 text-center">32.04</td>
+                    <td className="border border-gray-300 p-2 text-center">50.44</td>
+                    <td className="border border-gray-300 p-2 text-center">12.93</td>
+                    <td className="border border-gray-300 p-2 text-center">51.19</td>
+                    <td className="border border-gray-300 p-2 text-center">49.56</td>
+                    <td className="border border-gray-300 p-2 text-center">39.78</td>
+                    <td className="border border-gray-300 p-2 text-center">73.18</td>
+                    <td className="border border-gray-300 p-2 text-center">282.54</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
 
-            {/* Metrics Definition Table */}
-            <div>
-              <h4 className="font-medium mb-3">🔍 Giải thích các Metrics:</h4>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {complexityMetricsDefinition.map((item, index) => (
-                  <div key={index} className="p-3 border rounded-lg">
-                    <div className="font-medium text-sm">{item.metric}</div>
-                    <div className="text-xs text-gray-600 mt-1">{item.definition}</div>
-                  </div>
-                ))}
+            {/* Analysis Summary */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                <h4 className="font-medium text-green-800 mb-2">📈 Key Findings:</h4>
+                <ul className="text-sm text-green-700 space-y-1">
+                  <li><strong>Decreasing Lexical Overlap:</strong> R1 (66.04%) → R3 (52.53%)</li>
+                  <li><strong>Increasing New Word Ratio:</strong> R1 (35.52%) → R3 (48.98%)</li>
+                  <li><strong>Reduced LCS Ratio:</strong> R1 (43.52%) → R3 (33.60%)</li>
+                  <li><strong>Stable Semantic Similarity:</strong> 74-76% across rounds</li>
+                </ul>
+              </div>
+              
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 className="font-medium text-blue-800 mb-2">🎯 Implications:</h4>
+                <ul className="text-sm text-blue-700 space-y-1">
+                  <li>• Claims ít phụ thuộc vào exact word matches hơn</li>
+                  <li>• Round sau giới thiệu vocabulary mới nhiều hơn</li>  
+                  <li>• Common subsequences ngắn hơn giữa claims và contexts</li>
+                  <li>• Semantic coherence được duy trì dù lexical overlap giảm</li>
+                </ul>
               </div>
             </div>
 
-            {/* Visual Analysis */}
+            {/* Visualization */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-medium mb-3">📊 Jaccard Similarity xu hướng giảm</h4>
+                <h4 className="font-medium mb-3">Trend Độ phức tạp qua Rounds</h4>
                 <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={complexityEvaluationData.filter(d => d.split === 'train')}>
+                  <LineChart data={[
+                    { round: "R1", lexicalOverlap: 66.04, newWordRatio: 35.52, semantic: 74.79 },
+                    { round: "R2", lexicalOverlap: 55.37, newWordRatio: 46.29, semantic: 75.73 },
+                    { round: "R3", lexicalOverlap: 52.53, newWordRatio: 48.98, semantic: 73.16 }
+                  ]}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="round" />
-                    <YAxis domain={[10, 20]} />
-                    <Tooltip formatter={(value, name) => [`${value}%`, 'Jaccard Similarity']} />
-                    <Line type="monotone" dataKey="jaccard" stroke="#ef4444" strokeWidth={2} name="Jaccard %" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="lexicalOverlap" stroke="#ef4444" name="Lexical Overlap %" strokeWidth={2} />
+                    <Line type="monotone" dataKey="newWordRatio" stroke="#3b82f6" name="New Word Ratio %" strokeWidth={2} />
+                    <Line type="monotone" dataKey="semantic" stroke="#10b981" name="Semantic Similarity %" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
 
               <div>
-                <h4 className="font-medium mb-3">📈 New Word Ratio tăng dần</h4>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={complexityEvaluationData.filter(d => d.split === 'train')}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="round" />
-                    <YAxis domain={[30, 50]} />
-                    <Tooltip formatter={(value, name) => [`${value}%`, 'New Word Ratio']} />
-                    <Line type="monotone" dataKey="nwr" stroke="#3b82f6" strokeWidth={2} name="NWR %" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
+                <h4 className="font-medium mb-3">Complexity Validation</h4>
+                <div className="space-y-3">
+                  <div className="p-3 border rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium">Adversarial Generation Validation</span>
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">
+                      Các metrics confirm rằng iterative process thành công tạo ra increasingly challenging examples
+                    </p>
+                  </div>
+                  
+                  <div className="p-3 border rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium">Linguistic Quality</span>
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">
+                      Semantic similarity ổn định cho thấy coherence được duy trì
+                    </p>
+                  </div>
 
-            {/* Key Insights */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                <h4 className="font-medium text-red-800 mb-2">🔻 Jaccard Similarity giảm</h4>
-                <div className="text-sm text-red-700 space-y-1">
-                  <div>R1: 16.21% → R3: 12.45%</div>
-                  <div>Độ tương đồng từ vựng giảm dần</div>
-                  <div>Claims ngày càng đa dạng hơn</div>
+                  <div className="p-3 border rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium">Progressive Difficulty</span>
+                      <TrendingUp className="w-5 h-5 text-blue-500" />
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">
+                      Pattern matching → deeper understanding requirement qua các rounds
+                    </p>
+                  </div>
                 </div>
               </div>
-
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <h4 className="font-medium text-blue-800 mb-2">📈 New Word Ratio tăng</h4>
-                <div className="text-sm text-blue-700 space-y-1">
-                  <div>R1: 38.07% → R3: 46.82%</div>
-                  <div>Nhiều từ mới không có trong context</div>
-                  <div>Tăng độ khó suy luận</div>
-                </div>
-              </div>
-
-              <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                <h4 className="font-medium text-green-800 mb-2">⚖️ Semantic Similarity ổn định</h4>
-                <div className="text-sm text-green-700 space-y-1">
-                  <div>R1-R3: ~72-76%</div>
-                  <div>SBERT embeddings tương đối nhất quán</div>
-                  <div>Ngữ nghĩa cấp cao được bảo toàn</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <h4 className="font-medium text-yellow-800 mb-2">🎯 Kết luận về Độ phức tạp Dataset:</h4>
-              <ul className="text-sm text-yellow-700 space-y-1">
-                <li>• <strong>Tăng dần độ khó lexical:</strong> Jaccard similarity giảm từ R1 → R3, New Word Ratio tăng</li>
-                <li>• <strong>Claims adversarial ngày càng tinh vi:</strong> Ít từ chung với context nhưng vẫn giữ được semantic coherence</li>
-                <li>• <strong>SBERT embeddings ổn định:</strong> Semantic similarity ~72-76% cho thấy claims vẫn có ý nghĩa liên quan đến context</li>
-                <li>• <strong>R3 thách thức nhất:</strong> Jaccard thấp nhất (12.45%) + NWR cao nhất (46.82%) = độ khó cực đại</li>
-              </ul>
             </div>
           </div>
         </CardContent>

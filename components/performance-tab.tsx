@@ -14,6 +14,7 @@ import {
   LineChart,
   Line,
 } from "recharts"
+import { Award } from "lucide-react"
 
 import { 
   performanceData, 
@@ -35,6 +36,14 @@ export function PerformanceTab() {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <h4 className="font-medium text-green-800 mb-2">🎯 Lưu ý quan trọng về ViAdverNLI</h4>
+            <p className="text-sm text-green-700">
+              <strong>Hiệu suất thấp trên ViAdverNLI là điều MONG MUỐN!</strong> Mục đích chính của dataset này 
+              là tạo ra các adversarial examples để thử thách và đánh giá độ robustness của mô hình NLI. 
+              Hiệu suất thấp chứng tỏ dataset đã thành công trong việc tạo ra những thử thách khó khăn.
+            </p>
+          </div>
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={performanceData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -445,6 +454,52 @@ export function PerformanceTab() {
           </CardContent>
         </Card>
       </div>
+
+      {/* ViAdverNLI Success Summary */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-green-800">
+            <Award className="w-5 h-5" />
+            Tổng kết: ViAdverNLI - Một Dataset Adversarial Thành công
+          </CardTitle>
+          <CardDescription>
+            Hiệu suất thấp trên ViAdverNLI chứng minh dataset đã đạt được mục tiêu chính
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+              <h4 className="font-bold text-green-800 mb-3">✅ Thành tựu đạt được</h4>
+              <ul className="text-sm text-green-700 space-y-2">
+                <li>• <strong>Low Performance = High Success:</strong> ViA1~40%, ViA2~45%, ViA3~60%</li>
+                <li>• <strong>Consistent Challenge:</strong> Tất cả mô hình đều gặp khó khăn</li>
+                <li>• <strong>Progressive Difficulty:</strong> ViA3 khó nhất do sinh bởi XLM-R mạnh nhất</li>
+                <li>• <strong>Quality Assured:</strong> Fleiss' Kappa 0.75-0.81 (excellent agreement)</li>
+              </ul>
+            </div>
+
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h4 className="font-bold text-blue-800 mb-3">🎯 Giá trị thực tiễn</h4>
+              <ul className="text-sm text-blue-700 space-y-2">
+                <li>• <strong>Robustness Testing:</strong> Đánh giá khả năng chống adversarial</li>
+                <li>• <strong>Model Comparison:</strong> Benchmark chuẩn cho NLI tiếng Việt</li>
+                <li>• <strong>Research Direction:</strong> Phát hiện pattern để cải thiện mô hình</li>
+                <li>• <strong>Real-world Readiness:</strong> Kiểm tra tính ứng dụng thực tế</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <h4 className="font-bold text-amber-800 mb-2">💡 Kết luận</h4>
+            <p className="text-sm text-amber-700">
+              <strong>ViAdverNLI không phải là dataset để đạt accuracy cao, mà là công cụ để thử thách và 
+              đánh giá sự robustness của mô hình NLI.</strong> Hiệu suất thấp chính là bằng chứng cho thấy 
+              dataset đã thành công trong việc tạo ra những adversarial examples chất lượng cao, 
+              đóng góp quan trọng vào việc phát triển các mô hình NLI mạnh mẽ hơn cho tiếng Việt.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 } 

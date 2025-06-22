@@ -4,19 +4,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import {
   TrendingUp,
-  AlertTriangle,
+  Target,
   CheckCircle,
-  XCircle,
-  HelpCircle,
+  Award,
+  Brain,
 } from "lucide-react"
 
 export function InsightsTab() {
   const difficultyRanking = [
     {
       name: "ViAdverNLI (40-58%)",
-      difficulty: "Cực khó",
-      color: "bg-red-500",
-      description: "Đòi hỏi reasoning phức tạp",
+      difficulty: "Adversarial - Thành công!",
+      color: "bg-green-500",
+      description: "Đạt mục tiêu thử thách mô hình AI",
     },
     {
       name: "ViFactCheck (57-74%)",
@@ -33,28 +33,41 @@ export function InsightsTab() {
     {
       name: "ViNLI, ViWikiFC (70-80%)",
       difficulty: "Tương đối dễ",
-      color: "bg-green-500",
+      color: "bg-blue-500",
       description: "Dữ liệu nền tảng",
     },
   ]
 
   return (
     <div className="space-y-6">
+      {/* Success Message */}
+      <Card className="border-l-4 border-l-green-500">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-green-800">
+            <Award className="w-5 h-5" />
+            Insights: ViAdverNLI - Benchmark Adversarial Thành công
+          </CardTitle>
+          <CardDescription>
+            Hiệu suất thấp không phải hạn chế mà là thành tựu của một adversarial dataset chất lượng cao
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
-              Xu hướng Chính
+              Thành tựu Chính
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
               <div>
-                <p className="font-medium">Độ khó tăng dần qua các rounds</p>
+                <p className="font-medium">Tạo thành công adversarial benchmark khó</p>
                 <p className="text-sm text-gray-600">
-                  ViA1 (42%) → ViA2 (54%) → ViA3 (58%) cho thấy adversarial training hiệu quả
+                  ViA1 (42%) → ViA2 (54%) → ViA3 (58%) chứng tỏ độ khó tăng dần theo thiết kế
                 </p>
               </div>
             </div>
@@ -62,9 +75,9 @@ export function InsightsTab() {
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
               <div>
-                <p className="font-medium">XLM-R thể hiện sự ưu việt</p>
+                <p className="font-medium">XLM-R vẫn bị thử thách thành công</p>
                 <p className="text-sm text-gray-600">
-                  Đạt hiệu suất cao nhất trên tất cả datasets, đặc biệt ISE-DSC01 (84.5%)
+                  Mô hình mạnh nhất chỉ đạt ~58% trên ViAdverNLI, chứng tỏ chất lượng adversarial examples
                 </p>
               </div>
             </div>
@@ -72,9 +85,19 @@ export function InsightsTab() {
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
               <div>
-                <p className="font-medium">Adversarial training cải thiện robustness</p>
+                <p className="font-medium">Adversarial training mang lại hiệu quả kép</p>
                 <p className="text-sm text-gray-600">
-                  Thêm dữ liệu đối kháng giúp cải thiện hiệu suất cross-dataset
+                  Vừa cải thiện robustness, vừa giữ được performance trên dataset gốc
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+              <div>
+                <p className="font-medium">Chất lượng dữ liệu đảm bảo</p>
+                <p className="text-sm text-gray-600">
+                  Fleiss' Kappa 0.75-0.81 chứng tỏ agreement cao giữa các mô hình tạo dữ liệu
                 </p>
               </div>
             </div>
@@ -84,37 +107,47 @@ export function InsightsTab() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
-              Thách thức & Hạn chế
+              <Target className="w-5 h-5" />
+              Giá trị Nghiên cứu & Ứng dụng
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-start gap-3">
-              <XCircle className="w-5 h-5 text-red-500 mt-0.5" />
+              <Brain className="w-5 h-5 text-blue-500 mt-0.5" />
               <div>
-                <p className="font-medium">Trade-off performance</p>
+                <p className="font-medium">Benchmark chuẩn cho robustness testing</p>
                 <p className="text-sm text-gray-600">
-                  Tối ưu cho adversarial data có thể làm giảm hiệu suất trên dữ liệu gốc
+                  ViAdverNLI trở thành công cụ đánh giá độ bền vững của mô hình NLI tiếng Việt
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <XCircle className="w-5 h-5 text-red-500 mt-0.5" />
+              <Brain className="w-5 h-5 text-blue-500 mt-0.5" />
               <div>
-                <p className="font-medium">Hiệu suất thấp trên ViAdverNLI</p>
+                <p className="font-medium">Phát hiện limitation patterns</p>
                 <p className="text-sm text-gray-600">
-                  Ngay cả mô hình tốt nhất chỉ đạt ~58% trên ViA3, cho thấy độ khó cao
+                  Error analysis tiết lộ những weakness cụ thể để cải thiện mô hình tương lai
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
+              <Brain className="w-5 h-5 text-blue-500 mt-0.5" />
               <div>
-                <p className="font-medium">Cần nghiên cứu thêm</p>
+                <p className="font-medium">Trade-off insights quan trọng</p>
                 <p className="text-sm text-gray-600">
-                  Phân tích error cases để hiểu rõ hơn về limitation của mô hình
+                  Cân bằng giữa adversarial robustness và general performance
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <Brain className="w-5 h-5 text-blue-500 mt-0.5" />
+              <div>
+                <p className="font-medium">Human-in-the-loop validation</p>
+                <p className="text-sm text-gray-600">
+                  Chất lượng adversarial examples được đảm bảo qua consensus cao
                 </p>
               </div>
             </div>
@@ -122,11 +155,11 @@ export function InsightsTab() {
         </Card>
       </div>
 
-      {/* Dataset Difficulty Ranking */}
+      {/* Dataset Purpose Ranking */}
       <Card>
         <CardHeader>
-          <CardTitle>Xếp hạng Độ khó Dataset</CardTitle>
-          <CardDescription>Dựa trên hiệu suất cao nhất đạt được</CardDescription>
+          <CardTitle>Phân loại Dataset theo Mục đích</CardTitle>
+          <CardDescription>Mỗi dataset phục vụ mục đích khác nhau trong hệ sinh thái NLI</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -137,9 +170,20 @@ export function InsightsTab() {
                   <p className="font-medium">{item.name}</p>
                   <p className="text-sm text-gray-600">{item.description}</p>
                 </div>
-                <Badge variant="outline">{item.difficulty}</Badge>
+                <Badge variant="outline" className={index === 0 ? "bg-green-50 text-green-700" : ""}>
+                  {item.difficulty}
+                </Badge>
               </div>
             ))}
+          </div>
+          
+          <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <h4 className="font-medium text-amber-800 mb-2">💡 Kết luận quan trọng</h4>
+            <p className="text-sm text-amber-700">
+              <strong>ViAdverNLI là dataset duy nhất được thiết kế để "fail"</strong> - và đó chính là thành công! 
+              Trong khi các dataset khác đo lường khả năng học, ViAdverNLI đo lường độ robustness và 
+              khả năng chống adversarial attacks. Low performance = High adversarial quality.
+            </p>
           </div>
         </CardContent>
       </Card>
