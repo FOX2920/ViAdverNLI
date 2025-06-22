@@ -20,7 +20,6 @@ import {
   adversarialImpact, 
   detailedPerformanceData, 
   getPerformanceColor,
-  methodComparisonData,
   performanceSummary
 } from "@/data/performance-data"
 
@@ -51,32 +50,7 @@ export function PerformanceTab() {
         </CardContent>
       </Card>
 
-      {/* Method Comparison Chart */}
-      <Card>
-        <CardHeader>
-          <CardTitle>So sánh Hiệu suất các Phương pháp</CardTitle>
-          <CardDescription>
-            So sánh hiệu suất tốt nhất của PLM, LLM Fine-tune và LLM Prompt trên R1, R2, R3
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart
-              data={methodComparisonData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="round" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="PLM" fill="#10b981" name="PLM (Best: XLM-R/phoBERT)" />
-              <Bar dataKey="LLM Fine-tune" fill="#8b5cf6" name="LLM Fine-tune (GPT-4o)" />
-              <Bar dataKey="LLM Prompt" fill="#3b82f6" name="LLM Prompt (phi4-reasoning)" />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+
 
       {/* Adversarial Training Impact */}
       <Card>
@@ -104,7 +78,7 @@ export function PerformanceTab() {
       </Card>
 
       {/* Performance Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm">Hiệu suất Cao nhất (PLM)</CardTitle>
@@ -122,16 +96,6 @@ export function PerformanceTab() {
           <CardContent>
             <div className="text-2xl font-bold text-purple-600">{performanceSummary.llmBest.value}%</div>
             <p className="text-xs text-gray-600">{performanceSummary.llmBest.model} trên {performanceSummary.llmBest.dataset}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm">Best Prompt Model</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{performanceSummary.promptBest.value}%</div>
-            <p className="text-xs text-gray-600">{performanceSummary.promptBest.model}</p>
           </CardContent>
         </Card>
 

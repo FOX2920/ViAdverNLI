@@ -263,18 +263,12 @@ export const getPerformanceColor = (value: number): string => {
   return "bg-red-100 text-red-800"
 }
 
-// Method comparison data
-export const methodComparisonData = [
-  { round: "R1", PLM: 47.22, "LLM Fine-tune": 50.70, "LLM Prompt": 45.51 },
-  { round: "R2", PLM: 54.55, "LLM Fine-tune": 57.95, "LLM Prompt": 47.65 },
-  { round: "R3", PLM: 66.89, "LLM Fine-tune": 58.15, "LLM Prompt": 42.88 }
-]
+
 
 // Performance summary stats
 export const performanceSummary = {
   plmBest: { value: 66.89, model: "PhoBERT", dataset: "R3" },
   llmBest: { value: 58.15, model: "GPT-4o mini", dataset: "R3" },
-  promptBest: { value: 47.65, model: "phi4-reasoning:14b", dataset: "R2" },
   costEffective: { value: 66.89, model: "PhoBERT", note: "Free on Kaggle" },
   llmFinetuneDetails: {
     R1_R2: { model: "GPT-4o", note: "Sử dụng GPT-4o cho Round 1 và 2" },
