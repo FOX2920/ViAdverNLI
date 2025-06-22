@@ -202,12 +202,31 @@ export const plmDetailedResults = {
 
 // LLM Fine-tune Results
 export const llmFinetuneResults = [
-  { model: "GPT-4o (GPT-4o mini for R3)", type: "API", R1: 50.70, R2: 57.95, R3: 58.15, note: "Best Overall" },
+  { model: "GPT-4o (R1,R2) / GPT-4o mini (R3)", type: "API", R1: 50.70, R2: 57.95, R3: 58.15, note: "Best Overall - R3 dùng GPT-4o mini" },
   { model: "Gemini 2.0 Flash", type: "API", R1: 47.08, R2: 52.93, R3: 56.72, note: null },
   { model: "Gemma3", type: "Local", R1: 41.66, R2: 50.68, R3: 53.77, note: null },
   { model: "Qwen3", type: "Local", R1: 37.57, R2: 47.86, R3: 51.12, note: null },
   { model: "Deepseek-r1:32b", type: "Local", R1: 42.40, R2: 50.16, R3: 54.20, note: "Best Local" }
 ]
+
+// Detailed GPT Fine-tune Information
+export const gptFinetuneDetails = {
+  round1: {
+    model: "GPT-4o",
+    performance: 50.70,
+    note: "GPT-4o finetune cho Round 1"
+  },
+  round2: {
+    model: "GPT-4o", 
+    performance: 57.95,
+    note: "GPT-4o finetune cho Round 2"
+  },
+  round3: {
+    model: "GPT-4o mini",
+    performance: 58.15,
+    note: "GPT-4o mini finetune cho Round 3 - Cost-effective với performance tốt"
+  }
+}
 
 // LLM Prompt Results (In-context Learning)
 export const llmPromptResults = [

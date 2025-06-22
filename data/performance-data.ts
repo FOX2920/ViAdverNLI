@@ -275,5 +275,9 @@ export const performanceSummary = {
   plmBest: { value: 66.89, model: "PhoBERT", dataset: "R3" },
   llmBest: { value: 58.15, model: "GPT-4o mini", dataset: "R3" },
   promptBest: { value: 47.65, model: "phi4-reasoning:14b", dataset: "R2" },
-  costEffective: { value: 66.89, model: "PhoBERT", note: "Free on Kaggle" }
+  costEffective: { value: 66.89, model: "PhoBERT", note: "Free on Kaggle" },
+  llmFinetuneDetails: {
+    R1_R2: { model: "GPT-4o", note: "Sử dụng GPT-4o cho Round 1 và 2" },
+    R3: { model: "GPT-4o mini", note: "Sử dụng GPT-4o mini cho Round 3 (58.15%)" }
+  }
 } 
