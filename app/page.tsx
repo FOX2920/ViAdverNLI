@@ -28,7 +28,7 @@ import { WeaknessesTab } from "@/components/weaknesses-tab"
 import { InsightsTab } from "@/components/insights-tab"
 import { ReferencesTab } from "@/components/references-tab"
 import { RelatedWorkTab } from "@/components/related-work-tab"
-import { MethodologyTab } from "@/components/methodology-tab"
+
 
 export default function ViAdverNLIDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
@@ -86,7 +86,7 @@ export default function ViAdverNLIDashboard() {
 
           <CardContent className="p-6">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-9 mb-6 bg-gray-100/80 p-1 rounded-lg">
+              <TabsList className="grid w-full grid-cols-8 mb-6 bg-gray-100/80 p-1 rounded-lg">
                 <TabsTrigger value="overview" className="flex items-center gap-2 data-[state=active]:bg-white">
                   <Award className="w-4 h-4" />
                   Overview
@@ -95,10 +95,7 @@ export default function ViAdverNLIDashboard() {
                   <BookOpen className="w-4 h-4" />
                   Related Work
                 </TabsTrigger>
-                <TabsTrigger value="methodology" className="flex items-center gap-2 data-[state=active]:bg-white">
-                  <Target className="w-4 h-4" />
-                  Methodology
-                </TabsTrigger>
+
                 <TabsTrigger value="dataset" className="flex items-center gap-2 data-[state=active]:bg-white">
                   <Database className="w-4 h-4" />
                   Dataset
@@ -133,9 +130,7 @@ export default function ViAdverNLIDashboard() {
                 <RelatedWorkTab />
               </TabsContent>
 
-              <TabsContent value="methodology" className="space-y-6">
-                <MethodologyTab />
-              </TabsContent>
+
 
               <TabsContent value="dataset" className="space-y-6">
                 <DatasetTab />
