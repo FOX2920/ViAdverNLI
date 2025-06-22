@@ -182,72 +182,7 @@ export function WeaknessesTab() {
 
 
 
-      {/* Detailed Analysis */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="w-5 h-5" />
-              Error Pattern Analysis
-            </CardTitle>
-            <CardDescription>Key behavioral patterns identified across baseline models</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-3 border rounded-lg">
-                <h4 className="font-medium text-gray-800 mb-2">mBERT (R1)</h4>
-                <p className="text-sm text-gray-600">Strong NEI bias, struggles with Vietnamese context understanding</p>
-                <div className="mt-2 text-xs text-red-600 font-medium">Error Rate: 76.83%</div>
-              </div>
-              
-              <div className="p-3 border rounded-lg">
-                <h4 className="font-medium text-gray-800 mb-2">PhoBERT (R2)</h4>
-                <p className="text-sm text-gray-600">Poor NEI recognition, overconfident in SUPPORTED/REFUTED predictions</p>
-                <div className="mt-2 text-xs text-orange-600 font-medium">Error Rate: 54.74%</div>
-              </div>
-              
-              <div className="p-3 border rounded-lg">
-                <h4 className="font-medium text-gray-800 mb-2">XLM-R (R3)</h4>
-                <p className="text-sm text-gray-600">Over-conservative approach, tendency to predict NEI when uncertain</p>
-                <div className="mt-2 text-xs text-yellow-600 font-medium">Error Rate: 47.20%</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="w-5 h-5" />
-              Future Directions
-            </CardTitle>
-            <CardDescription>Research directions for improving adversarial robustness</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h4 className="font-medium mb-2">Model Improvements</h4>
-                <ul className="text-sm space-y-1 text-gray-600">
-                  <li>• Adversarial training methods</li>
-                  <li>• Ensemble approaches</li>
-                  <li>• Threshold calibration</li>
-                  <li>• Label-specific architectures</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h4 className="font-medium mb-2">Data Strategies</h4>
-                <ul className="text-sm space-y-1 text-gray-600">
-                  <li>• Enhanced Vietnamese corpora</li>
-                  <li>• Balanced label distribution</li>
-                  <li>• Improved preprocessing</li>
-                  <li>• Cross-domain validation</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Fleiss Kappa Analysis */}
       <Card>
