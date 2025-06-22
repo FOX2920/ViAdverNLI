@@ -45,7 +45,7 @@ export function InsightsTab() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-green-800">
             <Award className="w-5 h-5" />
-            Insights: ViAdverNLI - Benchmark Adversarial Thành công
+            Key Research Insights
           </CardTitle>
           <CardDescription>
             Hiệu suất thấp không phải hạn chế mà là thành tựu của một adversarial dataset chất lượng cao

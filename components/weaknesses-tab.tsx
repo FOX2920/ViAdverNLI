@@ -54,7 +54,7 @@ export function WeaknessesTab() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-green-800">
             <CheckCircle className="w-5 h-5" />
-            ViAdverNLI: Thành công trong việc Thử thách Mô hình AI
+            Adversarial Testing Results
           </CardTitle>
           <CardDescription>
             Hiệu suất thấp của các mô hình chứng tỏ ViAdverNLI đã đạt được mục tiêu tạo ra adversarial examples khó khăn. 

@@ -460,7 +460,7 @@ export function PerformanceTab() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-green-800">
             <Award className="w-5 h-5" />
-            Tổng kết: ViAdverNLI - Một Dataset Adversarial Thành công
+            Tổng kết: Dataset Adversarial Evaluation
           </CardTitle>
           <CardDescription>
             Hiệu suất thấp trên ViAdverNLI chứng minh dataset đã đạt được mục tiêu chính
