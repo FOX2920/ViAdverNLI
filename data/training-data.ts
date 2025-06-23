@@ -180,22 +180,22 @@ export const plmDetailedResults = {
   mBERT: [
     { evidence: "top1", R1: 27.73, R2: 50.86, R3: 62.42 },
     { evidence: "top2", R1: 24.94, R2: 12.95, R3: 63.53 },
-    { evidence: "top3", R1: 39.48, R2: 32.54, R3: 60.18 },
-    { evidence: "top4", R1: 25.72, R2: 45.51, R3: 61.96 },
-    { evidence: "full_context", R1: 37.05, R2: 16.83, R3: 61.48 }
+    { evidence: "top3", R1: 39.48, R2: 32.47, R3: 60.18 },
+    { evidence: "top4", R1: 25.72, R2: 45.35, R3: 61.90 },
+    { evidence: "full_context", R1: 37.05, R2: 16.83, R3: 61.46 }
   ],
-  PhoBERT: [
+  pho_BERT: [
     { evidence: "top1", R1: 40.57, R2: 43.96, R3: 53.45 },
-    { evidence: "top2", R1: 47.37, R2: 42.53, R3: 65.20 },
+    { evidence: "top2", R1: 29.77, R2: 42.53, R3: 65.20 },
     { evidence: "top3", R1: 41.92, R2: 44.74, R3: 61.85 },
-    { evidence: "top4", R1: 44.41, R2: 47.54, R3: 66.89 },
+    { evidence: "top4", R1: 44.41, R2: 47.54, R3: 54.34 },
     { evidence: "full_context", R1: 43.10, R2: 26.03, R3: 64.48 }
   ],
   "XLM-R": [
     { evidence: "top1", R1: 29.93, R2: 47.36, R3: 64.62 },
-    { evidence: "top2", R1: 29.77, R2: 54.55, R3: 55.99 },
+    { evidence: "top2", R1: 47.37, R2: 55.99, R3: 65.19 },
     { evidence: "top3", R1: 47.22, R2: 50.79, R3: 65.18 },
-    { evidence: "top4", R1: 30.72, R2: 48.26, R3: 54.34 },
+    { evidence: "top4", R1: 30.72, R2: 48.26, R3: 66.89 },
     { evidence: "full_context", R1: 33.41, R2: 11.70, R3: 64.02 }
   ]
 }

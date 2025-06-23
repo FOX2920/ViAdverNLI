@@ -100,13 +100,13 @@ export default function ViAdverNLIDashboard() {
                   <Database className="w-4 h-4" />
                   Dataset
                 </TabsTrigger>
-                <TabsTrigger value="training" className="flex items-center gap-2 data-[state=active]:bg-white">
-                  <Settings className="w-4 h-4" />
-                  Training
-                </TabsTrigger>
                 <TabsTrigger value="performance" className="flex items-center gap-2 data-[state=active]:bg-white">
                   <TrendingUp className="w-4 h-4" />
                   Performance
+                </TabsTrigger>
+                <TabsTrigger value="training" className="flex items-center gap-2 data-[state=active]:bg-white">
+                  <Settings className="w-4 h-4" />
+                  Training
                 </TabsTrigger>
                 <TabsTrigger value="weaknesses" className="flex items-center gap-2 data-[state=active]:bg-white">
                   <XCircle className="w-4 h-4" />
@@ -136,12 +136,12 @@ export default function ViAdverNLIDashboard() {
                 <DatasetTab />
               </TabsContent>
 
-              <TabsContent value="training" className="space-y-6">
-                <TrainingTab />
-              </TabsContent>
-
               <TabsContent value="performance" className="space-y-6">
                 <PerformanceTab />
+              </TabsContent>
+
+              <TabsContent value="training" className="space-y-6">
+                <TrainingTab />
               </TabsContent>
 
               <TabsContent value="weaknesses" className="space-y-6">
