@@ -499,11 +499,11 @@ export function TrainingTab() {
             <ul className="text-sm text-yellow-700 space-y-1">
               <li>• <strong>GPT-4o dẫn đầu:</strong> Hiệu suất cao nhất 58.15% R3, tăng mạnh từ 50.70% R1</li>
               <li>• <strong>Gemini 2.0 Flash runner-up:</strong> 56.72% R3, stable performance qua các rounds</li>
-                  <li>• <strong>DEEPSEEK R1 ấn tượng:</strong> 54.20% R3, local model tốt nhất, cạnh tranh với API</li>
+              <li>• <strong>Deepseek-r1 ấn tượng:</strong> 55.72% R3, local model tốt nhất, cạnh tranh với API</li>
+              <li>• <strong>Thứ hạng Local models:</strong> Deepseek-r1 (55.72%) &gt; Gemma3 (53.77%) &gt; Qwen3 (51.44%)</li>
               <li>• <strong>Xu hướng tăng dần:</strong> Tất cả models đều cải thiện đáng kể từ R1 → R3</li>
               <li>• <strong>Fine-tuning vượt trội:</strong> Hiệu suất cao hơn 10-15% so với prompting thuần túy</li>
-              <li>• <strong>Gap API vs Local:</strong> Chỉ ~3% chênh lệch, cho thấy local models ngày càng mạnh</li>
-              <li>• <strong>Consistency:</strong> Gemma3 và Qwen3 đều ổn định, cải thiện đều đặn qua rounds</li>
+              <li>• <strong>Gap API vs Local:</strong> Chỉ ~2.5% chênh lệch (58.15% vs 55.72%), local models ngày càng mạnh</li>
             </ul>
           </div>
 
